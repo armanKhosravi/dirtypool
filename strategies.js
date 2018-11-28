@@ -1,4 +1,3 @@
-/* global parseFloat */
 function avg (timeInSeconds) {
     var r = Math.random();
     r/=10;
