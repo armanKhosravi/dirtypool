@@ -1,3 +1,296 @@
+
+
+/*
+ function lead1(alpha, gamma, attempts) {
+ var state = 0;
+ var willBeSelfish = false;
+ var youPublished = 0;
+ var othersPublished = 0;
+ var youHided = 0;
+ var cycleCounter = 0;
+ var totalMined = 0;
+ while (cycleCounter < attempts) {
+ totalMined++;
+ willBeSelfish = nextBlockPrediction(alpha);
+ if (state === 0) {
+ cycleCounter++;
+ if (willBeSelfish) {
+ state = 1;
+ youHided++;
+ }
+ else {
+ state = 0;
+ othersPublished++;
+ }
+ } else if (state > 0) {
+ if (willBeSelfish) {
+ state++;
+ youHided++;
+ }
+ else {
+ state = -1*state;
+ othersPublished++; //temporary reward 1
+ youHided--;
+ youPublished++; //temporary reward 2
+ }
+ }
+ else if (state === -1) {
+ var rand = Math.random();
+ if (rand < alpha) {
+ state = 0;
+ youPublished++; //temporary reward 2 is fixed
+ othersPublished--; //temporary reward 1 is deleted
+ }
+ else if (rand <alpha + gamma*(1-alpha)){
+ state = 0;
+ othersPublished++; //temporary reward 2 is fixed
+ othersPublished--; //temporary reward 1 is deleted
+ 
+ }
+ else {
+ state = 0;
+ othersPublished++; //temporary reward 1 is fixed
+ youPublished--; //temporary reward 2 is deleted
+ }
+ }
+ else if (state < -1) {
+ var rand = Math.random();
+ if (rand < alpha) {
+ state--;
+ youHided++;
+ }
+ else if (rand <alpha + gamma*(1-alpha)){
+ state++;
+ othersPublished++;
+ youHided--;
+ youPublished++;
+ othersPublished--;
+ 
+ }
+ else {
+ state++;
+ othersPublished++;
+ youPublished++;
+ youHided--;
+ }
+ }
+ 
+ 
+ }
+ var totalPublished = youPublished + othersPublished;
+ var yourRelativePerformance = (100 * youPublished / totalPublished).toPrecision(4);
+ var theirRelativePerformance = (100 * othersPublished / totalPublished).toPrecision(4);
+ var apparentHashrate = (youPublished / totalPublished).toPrecision(4);
+ var tApparentHashrate = theoreticalApparentHashrateAfterDificultyAdjustment(alpha, gamma)[1].toPrecision(4);
+ var relativeChange = Math.round(100 * (apparentHashrate - tApparentHashrate) / tApparentHashrate) / 100;
+ var difficultyChange = (100 * totalPublished / totalMined).toPrecision(4);
+ var result = [youPublished, othersPublished, totalPublished, yourRelativePerformance, theirRelativePerformance, apparentHashrate, tApparentHashrate, relativeChange, difficultyChange, totalMined];
+ return result;
+ }
+ 
+ function lead2(alpha, gamma, attempts) {
+ var state = 0;
+ var willBeSelfish = false;
+ var youPublished = 0;
+ var othersPublished = 0;
+ var youHided = 0;
+ var cycleCounter = 0;
+ var totalMined = 0;
+ while (cycleCounter < attempts) {
+ totalMined++;
+ willBeSelfish = nextBlockPrediction(alpha);
+ if (state === 0) {
+ cycleCounter++;
+ 
+ if (willBeSelfish) {
+ state = 1;
+ youHided++;
+ }
+ else {
+ state = 0;
+ othersPublished++;
+ }
+ } else if (state > 0) {
+ if (willBeSelfish) {
+ state++;
+ youHided++;
+ }
+ else {
+ state = -1*state;
+ //othersPublished++; //temporary reward 1
+ youHided--;
+ //youPublished++; //temporary reward 2
+ }
+ }
+ else if (state === -1) {
+ var rand = Math.random();
+ if (rand < alpha) {
+ state = 0;
+ youPublished = youPublished + 2; //temporary reward 2 is fixed
+ //othersPublished--; //temporary reward 1 is deleted
+ }
+ else if (rand <alpha + gamma*(1-alpha)){
+ state = 0;
+ //othersPublished++; //temporary reward 2 is fixed
+ //othersPublished--; //temporary reward 1 is deleted
+ 
+ }
+ else {
+ state = 0;
+ othersPublished++; //temporary reward 1 is fixed
+ //youPublished--; //temporary reward 2 is deleted
+ }
+ }
+ else if (state < -1) {
+ var rand = Math.random();
+ if (rand < alpha) {
+ state--;
+ youPublished++; //temporary reward 2 is fixed
+ //othersPublished--; //temporary reward 1 is deleted
+ }
+ else if (rand <alpha + gamma*(1-alpha)){
+ state++;
+ othersPublished++; //temporary reward 2 is fixed
+ //othersPublished--; //temporary reward 1 is deleted
+ 
+ }
+ else {
+ state++;
+ othersPublished++; //temporary reward 1 is fixed
+ //youPublished--; //temporary reward 2 is deleted
+ }
+ }
+ 
+ 
+ }
+ 
+ var totalPublished = youPublished + othersPublished;
+ var yourRelativePerformance = (100 * youPublished / totalPublished).toPrecision(4);
+ var theirRelativePerformance = (100 * othersPublished / totalPublished).toPrecision(4);
+ var apparentHashrate = (youPublished / totalPublished).toPrecision(4);
+ var tApparentHashrate = theoreticalApparentHashrateAfterDificultyAdjustment(alpha, gamma)[1].toPrecision(4);
+ var relativeChange = Math.round(100 * (apparentHashrate - tApparentHashrate) / tApparentHashrate) / 100;
+ var difficultyChange = (100 * totalPublished / totalMined).toPrecision(4);
+ var result = [youPublished, othersPublished, totalPublished, yourRelativePerformance, theirRelativePerformance, apparentHashrate, tApparentHashrate, relativeChange, difficultyChange, totalMined];
+ return result;
+ }
+ 
+ function lead(alpha, gamma, attempts) {
+ var state = 0;
+ var willBeSelfish = false;
+ var primeState = false;
+ var youPublished = 0;
+ var othersPublished = 0;
+ var youHided = 0;
+ var cycleCounter = 0;
+ var totalMined = 0;
+ while (cycleCounter < attempts) {
+ totalMined++;
+ willBeSelfish = nextBlockPrediction(alpha);
+ switch (state) {
+ case 0:
+ cycleCounter++;
+ if (primeState){
+ rand = Math.random();
+ if (rand < alpha) {
+ youPublished += (1 + youHided);
+ }
+ else if (rand < alpha + gamma * (1 - alpha)) {
+ youPublished += youHided;
+ othersPublished++;
+ }
+ else {
+ othersPublished += (1 + youHided);
+ }
+ youHided = 0;
+ primeState = false;
+ }
+ else{
+ primeState = false;
+ willBeSelfish = nextBlockPrediction(alpha);
+ state = willBeSelfish ? 1 : 0;
+ if (!willBeSelfish) {
+ othersPublished++;
+ }
+ }   
+ break;
+ case -1:
+ if (!willBeSelfish) {
+ state = -2;
+ primeState = true;
+ }
+ else {
+ state = -200; // 0''
+ primeState = true;
+ youHided += 1;
+ }
+ break;
+ case -2:
+ if (!willBeSelfish) {
+ state = 0;
+ othersPublished += (3 + youHided);
+ youHided = 0;
+ }
+ else{
+ state++;
+ youHided += 1;
+ }
+ break;
+ default:
+ if (primeState){
+ rand = Math.random();
+ if (rand < alpha) {
+ state++;
+ }
+ else if (rand < alpha + gamma * (1 - alpha)) {
+ youPublished += youHided;
+ youHided = 0;
+ state--;
+ youHided++;
+ }
+ else{
+ state--;
+ youHided++;
+ }
+ }
+ else{
+ willBeSelfish = nextBlockPrediction(alpha);
+ if (willBeSelfish) {
+ state++;
+ }
+ else {
+ primeState = true;
+ state--;
+ youHided++;
+ }
+ }
+ break;
+ }
+ }
+ var totalPublished = youPublished + othersPublished;
+ var yourRelativePerformance = (100 * youPublished / totalPublished).toPrecision(4);
+ var theirRelativePerformance = (100 * othersPublished / totalPublished).toPrecision(4);
+ var apparentHashrate = (youPublished / totalPublished).toPrecision(4);
+ var tApparentHashrate = theoreticalApparentHashrateAfterDificultyAdjustment(alpha, gamma)[1].toPrecision(4);
+ var relativeChange = Math.round(100 * (apparentHashrate - tApparentHashrate) / tApparentHashrate) / 100;
+ var difficultyChange = (100 * totalPublished / totalMined).toPrecision(4);
+ var result = [youPublished, othersPublished, totalPublished, yourRelativePerformance, theirRelativePerformance, apparentHashrate, tApparentHashrate, relativeChange, difficultyChange, totalMined];
+ return result;
+ }
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*  to acheive more consistent P.
     var check = (selfishTheory[1]-0.05<selfishSim[1] && selfishSim[1]<selfishTheory[1]+0.05)? true:false;
     var check = (leadTheory[1]-0.05<leadSim[1] && leadSim[1]<leadTheory[1]+0.05)? true:false;
