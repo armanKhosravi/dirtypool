@@ -72,13 +72,13 @@ function simulate() {
     var t4Theory = theoreticalProfits(a, g, 12.5, 10, 't4', t4Stats[2], initialPoint);
     var equalForkTheory = theoreticalProfits(a, g, 12.5, 10, 'e', equalForkStats[2], initialPoint);
 
-    var hCrt1 = theoreticalProfits(a, g, 12.5, avg(honestSec), 'h', honestStats[2], initialPoint)[1].toFixed(4);
-    var sCrt1 = theoreticalProfits(a, g, 12.5, avg(selfishSec), 's', selfishStats[2], initialPoint)[1].toFixed(4);
-    var lCrt1 = theoreticalProfits(a, g, 12.5, avg(leadSec), 'l', leadStats[2], initialPoint)[1].toFixed(4);
-    var t2Crt1 = theoreticalProfits(a, g, 12.5, avg(t2Sec), 't2', t2Stats[2], initialPoint)[1].toFixed(4);
-    var t3Crt1 = theoreticalProfits(a, g, 12.5, avg(t3Sec), 't3', t3Stats[2], initialPoint)[1].toFixed(4);
-    var t4Crt1 = theoreticalProfits(a, g, 12.5, avg(t4Sec), 't4', t4Stats[2], initialPoint)[1].toFixed(4);
-    var eCrt1 = theoreticalProfits(a, g, 12.5, avg(equalForkSec), 'e', equalForkStats[2], initialPoint)[1].toFixed(4);
+    var hCrt1 = (theoreticalProfits(a, g, 12.5, avg(honestSec), 'h', honestStats[2], initialPoint)[0] / avrg(honestSec)).toFixed(4);
+    var sCrt1 = (theoreticalProfits(a, g, 12.5, avg(selfishSec), 's', selfishStats[2], initialPoint)[0] / avrg(selfishSec)).toFixed(4);
+    var lCrt1 = (theoreticalProfits(a, g, 12.5, avg(leadSec), 'l', leadStats[2], initialPoint)[0] / avrg(leadSec)).toFixed(4);
+    var t2Crt1 = (theoreticalProfits(a, g, 12.5, avg(t2Sec), 't2', t2Stats[2], initialPoint)[0] / avrg(t2Sec)).toFixed(4);
+    var t3Crt1 = (theoreticalProfits(a, g, 12.5, avg(t3Sec), 't3', t3Stats[2], initialPoint)[0] / avrg(t3Sec)).toFixed(4);
+    var t4Crt1 = (theoreticalProfits(a, g, 12.5, avg(t4Sec), 't4', t4Stats[2], initialPoint)[0] / avrg(t4Sec)).toFixed(4);
+    var eCrt1 = (theoreticalProfits(a, g, 12.5, avg(equalForkSec), 'e', equalForkStats[2], initialPoint)[0] / avrg(equalForkSec)).toFixed(4);
     var hBadge = 0;
     var sBadge = (100 * sCrt1 / hCrt1 - 100) >= 0 ? 'If (&alpha;,&gamma;) = (' + a + ',' + g + ') SELFISH strategy would be ' + (100 * sCrt1 / hCrt1 - 100).toFixed(1) + ' %' + ' MORE profitable than being HONEST.' : 'If (&alpha;,&gamma;) = (' + a + ',' + g + ') SELFISH strategy would be ' + (100 - 100 * sCrt1 / hCrt1).toFixed(1) + ' %' + ' LESS profitable than being HONEST.';
     var lBadge = (100 * lCrt1 / hCrt1 - 100) >= 0 ? 'If (&alpha;,&gamma;) = (' + a + ',' + g + ') LEAD strategy would be ' + (100 * lCrt1 / hCrt1 - 100).toFixed(1) + ' %' + ' MORE profitable than being HONEST.' : 'If (&alpha;,&gamma;) = (' + a + ',' + g + ') LEAD strategy would be ' + (100 - 100 * lCrt1 / hCrt1).toFixed(1) + ' %' + ' LESS profitable than profitable being HONEST.';
@@ -227,15 +227,15 @@ function table() {
 
 function profitabilityChart(){
     var data = {
-        labels: ["Honest", "Selfish", "Lead", "2-Trail", "3-Trail", "4-Trail", "Equal Fork"],
+        labels: ["Honest", "Selfish"/*, "Lead", "2-Trail", "3-Trail", "4-Trail", "Equal Fork"*/],
         datasets: [{
-                label: "Profitability Ratio",
+                label: "Revenue Ratio",
                 backgroundColor: "#f04836",
                 borderColor: "#f04836",
                 borderWidth: 1,
                 hoverBackgroundColor: "white",
                 hoverBorderColor: "#f04836",
-                data: [pureCellVlues.hCrt1, pureCellVlues.sCrt1, pureCellVlues.lCrt1, pureCellVlues.t2Crt1, pureCellVlues.t3Crt1, pureCellVlues.t4Crt1, pureCellVlues.eCrt1]
+                data: [pureCellVlues.hCrt1, pureCellVlues.sCrt1/*, pureCellVlues.lCrt1, pureCellVlues.t2Crt1, pureCellVlues.t3Crt1, pureCellVlues.t4Crt1, pureCellVlues.eCrt1*/]
             }]
     };
 
@@ -268,9 +268,10 @@ function drawBadge() {
         badge1.style.opacity = '1';
         badge2.style.opacity = '1';
         document.getElementById("sBadge").innerHTML = pureCellVlues.sdc < 1 ? pureCellVlues.sBadge + ' (Difficulty didn\'t changed)' : pureCellVlues.sBadge + ' ( Difficulty changed)';
-        document.getElementById("lBadge").innerHTML = pureCellVlues.ldc < 1 ? pureCellVlues.lBadge + ' (Difficulty didn\'t changed)' : pureCellVlues.lBadge + ' ( Difficulty changed)';
+        /*document.getElementById("lBadge").innerHTML = pureCellVlues.ldc < 1 ? pureCellVlues.lBadge + ' (Difficulty didn\'t changed)' : pureCellVlues.lBadge + ' ( Difficulty changed)';
         document.getElementById("t2Badge").innerHTML = pureCellVlues.t2dc < 1 ? pureCellVlues.t2Badge + ' (Difficulty didn\'t changed)' : pureCellVlues.t2Badge + ' ( Difficulty changed)';
         document.getElementById("t3Badge").innerHTML = pureCellVlues.t3dc < 1 ? pureCellVlues.t3Badge + ' (Difficulty didn\'t changed)' : pureCellVlues.t3Badge + ' ( Difficulty changed)';
         document.getElementById("t4Badge").innerHTML = pureCellVlues.t4dc < 1 ? pureCellVlues.t4Badge + ' (Difficulty didn\'t changed)' : pureCellVlues.t4Badge + ' ( Difficulty changed)';
         document.getElementById("eBadge").innerHTML = pureCellVlues.edc < 1 ? pureCellVlues.eBadge + ' (Difficulty didn\'t changed)' : pureCellVlues.eBadge + ' ( Difficulty changed)';
+        */
 }

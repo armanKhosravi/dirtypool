@@ -1,6 +1,11 @@
-
 function nextBlockPrediction(alpha) {
     return Math.random() < alpha;
+}
+function avrg(timeInSeconds) {
+    var r = Math.random();
+    r /= 10;
+    r += 0.95;
+    return r;
 }
 function avg(timeInSeconds) {
     var r = Math.random();
