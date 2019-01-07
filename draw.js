@@ -235,7 +235,7 @@ function profitabilityChart(){
                 borderWidth: 1,
                 hoverBackgroundColor: "white",
                 hoverBorderColor: "#f04836",
-                data: [pureCellVlues.hCrt1, pureCellVlues.sCrt1/*, pureCellVlues.lCrt1, pureCellVlues.t2Crt1, pureCellVlues.t3Crt1, pureCellVlues.t4Crt1, pureCellVlues.eCrt1*/]
+                data: [pureCellVlues.hCrt1, pureCellVlues.sCrt1, pureCellVlues.lCrt1, pureCellVlues.t2Crt1, pureCellVlues.t3Crt1, pureCellVlues.t4Crt1, pureCellVlues.eCrt1]
             }]
     };
 
@@ -268,10 +268,9 @@ function drawBadge() {
         badge1.style.opacity = '1';
         badge2.style.opacity = '1';
         document.getElementById("sBadge").innerHTML = pureCellVlues.sdc < 1 ? pureCellVlues.sBadge + ' (Difficulty didn\'t changed)' : pureCellVlues.sBadge + ' ( Difficulty changed)';
-        /*document.getElementById("lBadge").innerHTML = pureCellVlues.ldc < 1 ? pureCellVlues.lBadge + ' (Difficulty didn\'t changed)' : pureCellVlues.lBadge + ' ( Difficulty changed)';
+        document.getElementById("lBadge").innerHTML = pureCellVlues.ldc < 1 ? pureCellVlues.lBadge + ' (Difficulty didn\'t changed)' : pureCellVlues.lBadge + ' ( Difficulty changed)';
         document.getElementById("t2Badge").innerHTML = pureCellVlues.t2dc < 1 ? pureCellVlues.t2Badge + ' (Difficulty didn\'t changed)' : pureCellVlues.t2Badge + ' ( Difficulty changed)';
         document.getElementById("t3Badge").innerHTML = pureCellVlues.t3dc < 1 ? pureCellVlues.t3Badge + ' (Difficulty didn\'t changed)' : pureCellVlues.t3Badge + ' ( Difficulty changed)';
         document.getElementById("t4Badge").innerHTML = pureCellVlues.t4dc < 1 ? pureCellVlues.t4Badge + ' (Difficulty didn\'t changed)' : pureCellVlues.t4Badge + ' ( Difficulty changed)';
         document.getElementById("eBadge").innerHTML = pureCellVlues.edc < 1 ? pureCellVlues.eBadge + ' (Difficulty didn\'t changed)' : pureCellVlues.eBadge + ' ( Difficulty changed)';
-        */
 }
