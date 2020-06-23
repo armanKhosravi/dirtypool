@@ -42,14 +42,14 @@ function theoreticalProfits(a, g, b, t, strategy, totalPublished, initialPoint) 
     t = parseFloat(t);
     switch (strategy) {
         case 's': // Selfish Mining Strategy
-            var apparentHashrate = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? (q - ((1 - g) * (1 - q) * (1 - q) * q * (1 - q - q)) ./ ((1 + (1 - q) * q) * (1 - q - q) + (1 - q) * q)) * ((1 - q - q + (1 - q) * q * (1 - q - q) + (1 - q) * q) ./ ((1 - q) * (1 - q) * q + 1 - q - q)) :
-                    (a - ((1 - g) * (1 - a) * (1 - a) * a * (1 - a - a)) / ((1 + (1 - a) * a) * (1 - a - a) + (1 - a) * a)) * ((1 - a - a + (1 - a) * a * (1 - a - a) + (1 - a) * a) / ((1 - a) * (1 - a) * a + 1 - a - a));
+            var apparentHashrate = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? q - (1 - g) * (((1 - q) * (1 - q) * q * (1 - q - q)) ./ (((1 + (1 - q) * q) * (1 - q - q) + (1 - q) * q))) :
+                    (q - ((1 - g) * (1 - q) * (1 - q) * q * (1 - q - q)) ./ ((1 + (1 - q) * q) * (1 - q - q) + (1 - q) * q)) * ((1 - q - q + (1 - q) * q * (1 - q - q) + (1 - q) * q) ./ ((1 - q) * (1 - q) * q + 1 - q - q));
             var revenueRatio = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? (a - (1 - g) * (((1 - a) * (1 - a) * a* (1 - a - a)) / (((1 + (1 - a) * a) * (1 - a - a)+(1 - a) * a)))) * b / t : 
                     ((a - ((1 - g) * (1 - a) * (1 - a) * a * (1 - a - a)) / ((1 + (1 - a) * a) * (1 - a - a) + (1 - a) * a)) * ((1 - a - a + (1 - a) * a * (1 - a - a) + (1 - a) * a) / ((1 - a) * (1 - a) * a + 1 - a - a))) * b / t;
             break;
         case 'l': // Lead Mining Strategy
-            var apparentHashrate = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? a - (((1 - a) * a * (1 - a - a) * (1 - g)) / g) * ((1 - (1 - a) * (1 - g) * (2 / (1 + Math.sqrt(1 - 4 * (1 - g) * (1 - a) * a)))) / (1 - a + (1 - a) * a - a)) :
-                    a * ((1 - a + (1 - a) * a - a * a) / (1 - a + (1 - a) * a - a)) - (((1 - a) * a * (1 - a - a) * (1 - g)) / (g)) * ((1 - (1 - a) * (1 - g) * (2 / (1 + Math.sqrt(1 - 4 * (1 - g) * (1 - a) * a)))) / (1 - a + (1 - a) * a - a));
+            var apparentHashrate = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? q - (((1 - q) * q * (1 - q - q) * (1 - g)) / g) * ((1 - (1 - q) * (1 - g) * (2 / (1 + Math.sqrt(1 - 4 * (1 - g) * (1 - q) * q)))) / (1 - q + (1 - q) * q - q)) :
+                    q * ((1 - q + (1 - q) * q - q * q) / (1 - q + (1 - q) * q - q)) - (((1 - q) * q * (1 - q - q) * (1 - g)) / (g)) * ((1 - (1 - q) * (1 - g) * (2 / (1 + Math.sqrt(1 - 4 * (1 - g) * (1 - q) * q)))) / (1 - q + (1 - q) * q - q));
             var revenueRatio = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? (a - (((1 - a) * a * (1 - a - a) * (1 - g)) / g) * ((1 - (1 - a) * (1 - g) * (2 / (1 + Math.sqrt(1 - 4 * (1 - g) * (1 - a) * a)))) / (1 - a + (1 - a) * a - a))) * b / t :
                     (a * ((1 - a + (1 - a) * a - a * a) / (1 - a + (1 - a) * a - a)) - (((1 - a) * a * (1 - a - a) * (1 - g)) / (g)) * ((1 - (1 - a) * (1 - g) * (2 / (1 + Math.sqrt(1 - 4 * (1 - g) * (1 - a) * a)))) / (1 - a + (1 - a) * a - a))) * b / t;
             break;
