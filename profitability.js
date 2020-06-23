@@ -41,8 +41,8 @@ function theoreticalProfits(a, g, b, t, strategy, totalPublished, initialPoint) 
     t = parseFloat(t);
     switch (strategy) {
         case 's': // Selfish Mining Strategy
-            var apparentHashrate = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? a - (1 - g) * (((1 - a) * (1 - a) * a* (1 - a - a)) / (((1 + (1 - a) * a) * (1 - a - a)+(1 - a) * a))) :
-                    (a - ((1 - g) * (1 - a) * (1 - a) * a * (1 - a - a)) / ((1 + (1 - a) * a) * (1 - a - a) + (1 - a) * a)) * ((1 - a - a + (1 - a) * a * (1 - a - a) + (1 - a) * a) / ((1 - a) * (1 - a) * a + 1 - a - a));
+            var apparentHashrate = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? a - (1 - g) .* (((1 - a) .* (1 - a) .* a .* (1 - a - a)) ./ (((1 + (1 - a) .* a) .* (1 - a - a) + (1 - a) .* a))) :
+                (a - ((1 - g) .* (1 - a) .* (1 - a) .* a .* (1 - a - a)) ./ ((1 + (1 - a) .* a) .* (1 - a - a) + (1 - a) .* a)) .* ((1 - a - a + (1 - a) .* a .* (1 - a - a) + (1 - a) .* a) ./ ((1 - a) .* (1 - a) .* a + 1 - a - a));
             var revenueRatio = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? (a - (1 - g) * (((1 - a) * (1 - a) * a* (1 - a - a)) / (((1 + (1 - a) * a) * (1 - a - a)+(1 - a) * a)))) * b / t : 
                     ((a - ((1 - g) * (1 - a) * (1 - a) * a * (1 - a - a)) / ((1 + (1 - a) * a) * (1 - a - a) + (1 - a) * a)) * ((1 - a - a + (1 - a) * a * (1 - a - a) + (1 - a) * a) / ((1 - a) * (1 - a) * a + 1 - a - a))) * b / t;
             break;
