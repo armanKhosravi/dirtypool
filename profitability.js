@@ -36,12 +36,13 @@ function simulatedProfits(a, g, b, t, strategy, youPublished, totalPublished, to
 function theoreticalProfits(a, g, b, t, strategy, totalPublished, initialPoint) {
     // for defining initialPoint later outside this function you have to use: var initialPoint = Math.floor(Math.random() * 2016) + 1;  Returns a random integer between 1 and 2016 (1 and 2016 are included).
     a = parseFloat(a);
+    var q = parseFloat(a); 
     g = parseFloat(g);
     b = parseFloat(b);
     t = parseFloat(t);
     switch (strategy) {
         case 's': // Selfish Mining Strategy
-            var apparentHashrate = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? a - (1 - g) * (((1 - a) * (1 - a) * a* (1 - a - a)) / (((1 + (1 - a) * a) * (1 - a - a)+(1 - a) * a))) :
+            var apparentHashrate = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? (q - ((1 - g) * (1 - q) * (1 - q) * q * (1 - q - q)) ./ ((1 + (1 - q) * q) * (1 - q - q) + (1 - q) * q)) * ((1 - q - q + (1 - q) * q * (1 - q - q) + (1 - q) * q) ./ ((1 - q) * (1 - q) * q + 1 - q - q)) :
                     (a - ((1 - g) * (1 - a) * (1 - a) * a * (1 - a - a)) / ((1 + (1 - a) * a) * (1 - a - a) + (1 - a) * a)) * ((1 - a - a + (1 - a) * a * (1 - a - a) + (1 - a) * a) / ((1 - a) * (1 - a) * a + 1 - a - a));
             var revenueRatio = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? (a - (1 - g) * (((1 - a) * (1 - a) * a* (1 - a - a)) / (((1 + (1 - a) * a) * (1 - a - a)+(1 - a) * a)))) * b / t : 
                     ((a - ((1 - g) * (1 - a) * (1 - a) * a * (1 - a - a)) / ((1 + (1 - a) * a) * (1 - a - a) + (1 - a) * a)) * ((1 - a - a + (1 - a) * a * (1 - a - a) + (1 - a) * a) / ((1 - a) * (1 - a) * a + 1 - a - a))) * b / t;
