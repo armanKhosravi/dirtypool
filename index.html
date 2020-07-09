@@ -1,0 +1,5414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Dirty Pool</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+<link rel="stylesheet" href="index.css">
+<link rel="stylesheet" href="draw.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script src="https://cdn.babylonjs.com/viewer/babylon.viewer.js"></script>
+	
+						
+</head>
+						
+<body>
+	
+	
+	
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-red w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold;" id="mySidebar">
+<br>
+<a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft" style="width:100%;font-size:22px">Close Menu</a>
+<div class="w3-container">
+<h3 class="w3-bar-item" style= "text-align: center"><b>Selfish & Stubborn Mining Strategies</b></h3>
+</div>
+<div class="w3-bar-block">
+<a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a>
+<a href="#selfish" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Selfish Mining</a>
+<a href="#stubborn" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Stubborn Mining</a>
+<a href="#try" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Try It Yourself</a>
+<a href="#simulation" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Simulation</a>
+<a href="#visualization" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Visualization</a>
+<a href="#ppp" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Pre-Profitability Period</a>
+<a href="#stats" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Stats</a>
+<a href="#formulation" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Formulation</a>
+<a href="#read" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Read More</a>
+<a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Contact</a>
+</div>
+</nav>
+<!-- Top menu on small screens -->
+<header class="w3-container w3-top w3-hide-large w3-red w3-xlarge w3-padding">
+<a href="javascript:void(0)" class="w3-button w3-red w3-margin-right" onclick="w3_open()">☰</a>
+<span>Selfish Mining & Stubborn Mining Simulation</span>
+</header>
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:340px;margin-right:40px">
+<!-- Header -->
+<div class="w3-container" style="margin-top:80px">
+<h1 class="w3-xxxlarge" align="center">
+<b>Dirty Pool<br>A full fledged simuilation for selfish mining in Bitcoin</b>
+</h1>
+</div>
+<!-- Selfish -->
+<div class="w3-container" id="selfish" style="margin-top:75px" align="justify">
+<h1 class="w3-xxlarge w3-text-red"><b>Selfish mining.</b></h1>
+<hr style="width:50px;border:5px solid #f04836" class="w3-round">
+<p>
+In year 2010, user RHorning described the idea of selfish mining in the Bitcoin forum <a href="https://bitcointalk.org/index.php?topic=2227.0"><b>bitcointalk</b></a>. The forum user provided simulation results for the attack, at the time called the mining cartel attack. Later in 2013 the term selfish mining and its formal description was introduced by Cornell researchers Emin Gün Sirer and Ittay Eyal in the paper <a href="https://arxiv.org/abs/1311.0243"><b>Majority is not enough: Bitcoin mining is vulnerable</b>.</a>
+</p>
+<p>
+The selfish mining attack is a method for mining pools to increase their returns by not playing fair.
+</p>
+<p>
+The selfish miner continues to mine the next block but not broadcast it. They continue to do so maintaining their lead. This way there would be a hidden fork in the blockchain which can only be seen by the selfish miner. When the rest of the network is about to catch up with the selfish miner then the selfish miner releases their portion of solved blocks into the blockchain.
+</p>
+<p>
+The result is that their chain and proof of work is longer and more difficult so the rest of the network adopts their block solutions and they claim the block rewards.
+</p>
+</div>
+<!-- Stubborn -->
+<div class="w3-container" id="stubborn" style="margin-top:75px" align="justify">
+<h1 class="w3-xxlarge w3-text-red"><b>Stubborn mining.</b></h1>
+<hr style="width:50px;border:5px solid #f04836" class="w3-round">
+<p>
+After introducing selfish mining some further researches showed that more generalized selfish mining strategies could be even more profitable.
+</p>
+<p>
+for example <a href="https://arxiv.org/abs/1312.7013"><b>Theoretical Bitcoin Attacks with less than Half of the Computational Power (draft)</b></a>
+</p>
+<p>
+and specially <a href="https://users.cs.duke.edu/~kartik/papers/5_stubborn_eclipse.pdf"><b>Stubborn Mining: Generalizing Selfish Mining and Combining with an Eclipse Attack</b></a>
+</p>
+<p>
+provided a comprehensive generalization of selfish mining and also introduced different names for each of its variations:
+</p>
+<p><b>Lead Stubborn Mining Strategy</b></p>
+<p>
+A Lead Stubborn Miner waits until the honest miners catch up with him to broadcast all of his secret blocks as opposed to the selfish miner who does not take the risk of being caught by the honest miners and broadcasts his blocks if his advance shrinks to one block.
+</p>
+<p><b>j–Trail Stubborn Mining Strategy</b></p>
+<p>
+trail Stubborn Mining is an amelioration of Lead Stubborn Mining. When a trail Stubborn Miner's private chain falls behind the public chain, they may decide to continue mining on it anyway, in the hope of catching up. We consider a family of trail stubborn strategies parameterized by a threshold j, such that a j–trail stubborn miner accepts the public blockchain only when their private chain falls behind the public chain by j + 1 blocks). So by definition the 1–trail stubborn mining is the same as lead stubborn mining. Here we study only 2–trail, 3–trail and 4–trail stubborn mining since the other trail stubborn strategies can be easily dominated by other strategies.
+</p>
+<p><b>Equal Fork Stubborn Mining Strategy</b></p>
+<p>
+An Equal Fork Stubborn Miner waits for the official blockchain to overcome his secret fork by one block. He/she only gives up when the length of the official blockchain is equal to the length of his secret fork plus one.
+</p>
+</div>
+<!-- Try -->
+<div class="w3-container" id="try" style="margin-top:75px" align="justify">
+<h1 class="w3-xxlarge w3-text-red"><b>Try it yourself.</b></h1>
+<hr style="width:50px;border:5px solid #f04836" class="w3-round">
+<p>
+Of course these strategies are not generally more profitable than the honest mining strategy. For example if you own even a 25% hash rate share of the network (which is usually denoted by &alpha;), being a selfish miner would never be more profitable than being an honest miner unless for some reason more than half of the other miners chose to mine on the fork you have created (which is usually denoted by &gamma;).
+</p>
+<p>
+If you are interested in seeing when you can exploit the network by being a selfish or a stubborn miner in the next section you can find a simulation of these strategies. You can change the sliders and click the simulate button to see that in comparison with an honest miner, which strategy is more profitable and by how much.
+</p>
+<p>
+This is a simulation based on a random number generator used in the simulation of mining a block, so every time you push the button the results would be a little bit different.
+</p>
+So
+<ul class="b">
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&alpha;&nbsp; is your hash rate share of the network.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&gamma;&nbsp; is the proportion of honest miners who mine on the fork you created.</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;n&nbsp; is the number of attack cycles you're willing to perform.</li>
+</ul>
+</div>
+<!-- Simulation -->
+<div class="w3-container" id="simulation" style="margin-top:75px" align="justify">
+<h1 class="w3-xxlarge w3-text-red"><b>Simulate.</b></h1>
+<hr style="width:50px;border:5px solid #f04836" class="w3-round">
+<div class="w3-cell-row">
+<div class="slidecontainer w3-container w3-cell">
+<p style="font-size:12px">&alpha;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&VerticalBar;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="demoAlpha"></span></p>
+<input type="range" min="0.01" max="0.5" step="0.01" value="0.25" class="slider" id="alpha">
+<p style="font-size:12px">&gamma;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&VerticalBar;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="demoGamma"></span></p>
+<input type="range" min="0.01" max="1" step="0.01" value="0.5" class="slider" id="gamma">
+<p style="font-size:12px">n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&VerticalBar;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="demoAttempts"></span></p>
+<input type="range" min="1" max="20000" value="666" step="1" class="slider" id="attempts">
+<button class="button" type="button" onclick="simulate(), profitabilityChart(), table(), drawBadge()"> <span>Simulate!</span></button>
+</div>
+<div class="w3-container w3-cell" style="vertical-align: middle">
+<canvas id="chart1"></canvas>
+</div>
+</div>
+<p id="test"></p>
+<div class="w3-container badge" id="badge1">
+<p>In other words</p>
+<ul class="w3-ul w3-red">
+<li id="sBadge"></li>
+<li id="lBadge"></li>
+<li id="t2Badge"></li>
+<li id="t3Badge"></li>
+<li id="t4Badge"></li>
+<li id="eBadge"></li>
+</ul>
+</div>
+<div class="w3-container badge" id="badge2">
+<br>
+<ul class="w3-ul w3-red">
+<li style="color: #f04836; background: white; border:1px solid #f04836">
+<b>NOTE </b>: If you set n very low, selfish and stubborn strategies won't be more profitable than being honest, no matter how high your &alpha; and &gamma; are (because before first difficulty adjustment profitability of selfish and stubborn mining are always less or at best equal to honest mining).
+</li>
+</ul>
+</div>
+</div>
+
+<!-- Visualization -->
+<div class="w3-container" id="visualization" style="margin-top:75px" align="justify">
+<h1 class="w3-xxlarge w3-text-red"><b>Let's Visualize.</b></h1>
+<hr style="width:50px;border:5px solid #f04836" class="w3-round">
+
+<div>
+In this webpage you can easily calculate the profitability for any chosen &alpha; and &gamma; and see which strategy performs better in that specific situation. Now let's do the same for the whole range of &alpha; and &gamma;, this gives us a <b>2-dimentional graph</b> to compare the performance of different strategies. Below you can see the expected results from analytical study (<a href="https://arxiv.org/abs/1805.08281"><b>On Profitability of Selfish Mining</b></a>) on the left and the results of our simulation on the right.
+<br><video width="100%" autoplay muted loop>
+<source src="Models/3.mp4" type="video/mp4">
+Your browser does not support HTML5 video.
+</video>
+<p>
+	The simulation you find on this website is based on <b>finite-state machine</b>, just like previous works (such as <a href="https://users.cs.duke.edu/~kartik/papers/5_stubborn_eclipse.pdf"><b>Stubborn Mining: Generalizing Selfish Mining and Combining with an Eclipse Attack</b></a>) which lacks the implementation of time, therefore cannot be used to calculate <b>time before profitability</b>. To analyze time we need anothger type of simulation. By simulating a peer-to-peer network we can acheive this, since this way we have a real network and different nodes to simulate different mining strategies.
+	</p>
+	<p>Study of <b>time before profitability</b> is not the only advantage of a peer-to-peer network simulation, study shows the resaults obtained by such simulations are much more reliable. Here you can see some <b>finitr-state machine</b> simulations and compare the resutls with a <b>peer-to-peer network simulation.</b></p>
+<br><img 
+src="Figures/compare1.svg" width="100%"/>
+<br><br><br><br>
+Below you see how a peer-to-peer network simulation can more reliable since the accuracy of the results is not as dependent to the number of runs of the simulation as finite-state machine simulations.
+	<br><br><img 
+src="Figures/compare2.svg" width="100%"/>
+	<p class="w3-xlarge w3-text-black" style="margin-top:75px"><b>Let's add another dimension.</b></p>	
+	<p>By considering the <b>Apparent Hashrate</b> as the third dimension we can better understand why there is not a dominant strategy for any choice of &alpha; and &gamma;. To do so for each strategy we consider a surface which for any choice of <b>&alpha;</b> and <b>&gamma;</b> shows the <b>apparent hashrate (&alpha;')</b> of the strategy. Take a look at this visualization to understand better.
+		
+	<br>
+		
+		
+		
+<video width="80%" autoplay muted loop id="myVideo2">
+<source src="Models/2.mp4" type="video/mp4">
+Your browser does not support HTML5 video.
+</video>
+		
+		
+	<p>
+	Now we can compare the expected results based on <a href="https://arxiv.org/abs/1805.08281"><b>On Profitability of Selfish Mining</b></a> and our simulation including the apprent hashrate.
+	</p>
+
+		
+		<br>
+		<video width="100%" autoplay muted loop>
+<source src="Models/5.mp4" type="video/mp4">
+Your browser does not support HTML5 video.
+</video>
+	<div>Now let's take a closer look at the surfaces and how they compete with each other. First we visualize<sup>*</sup> honest and selfish mining surfaces then we combine them toghether to see how they perform against each other.
+	<br>(<sup>*</sup>You can rotate the 3D models.)
+		<br>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	<div class="row">
+  <div class="column">	<p class="w3-large w3-text-black" style="margin-top:75px"><b><span style="color: red">Honest</span> mining Surface.</b></p></div>	
+				
+  <div class="column"><babylon model="Models/h.glb"></babylon></div>
+	  
+	  
+	  
+</div>
+	<div class="row">
+  <div class="column">	<p class="w3-large w3-text-black" style="margin-top:75px"><b><span style="color: red">Selfish</span> mining Surface.</b></p></div>
+  <div class="column"><babylon model="Models/s.glb"></babylon></div>
+</div>
+	<div class="row">
+  <div class="column">	<p class="w3-large w3-text-black" style="margin-top:75px"><b><span style="color: red">Honest</span> & <span style="color: red">Selfish</span> mining against each other.</b></p></div>
+  <div class="column"><babylon model="Models/hs.glb"></babylon></div>
+</div>
+	
+
+	<div style="margin-top:75px">Now let's include other strategies as well to see which strategy is the best in which is the worst for the spesific values of &alpha;; and &gamma;. When we combine the surfaces, we see where eachs strategy performs better, also we get a rough idea of how much better the winner strategy performs. Below you can compare all the surafaces together.</div>
+
+
+	<div class="row">
+  <div class="column">	<p class="w3-large w3-text-black" style="margin-top:75px"><b><span style="color: red">All the strategies</span> against each other.</b></p></div>
+  <div class="column"><babylon model="Models/all-analytical.glb"></babylon></div>
+</div>
+	
+	<div class="row">
+  <div class="column">	<p class="w3-large w3-text-black" style="margin-top:75px"><b><span style="color: red">Simulated</span> results.</b></p></div>
+  <div class="column"><babylon model="Models/all-simulation.glb"></babylon></div>
+</div>
+	
+	
+	<p class="w3-xlarge w3-text-black" style="margin-top:75px"><b>Number of Difficulty Adjustment.</b></p>	
+	
+	
+	
+	<p>Time analysis of the attack cycles as previously mentioned in the introduction has been initially considered in <a href="https://arxiv.org/abs/1805.08281"><b>On Profitability of Selfish Mining</b></a>. They proved an unprecedented
+property of a network including a block withholding strategy; no strategy is
+more profitable than the honest strategy before a difficulty adjustment. This
+means there would be no benefit of adopting a block withholding strategy in
+short term, no matter how high is your hashrate share or propagation factor,
+since the attacker has to wait for the difficulty adjustment to start its profit.
+Apparently, the block withholding strategies exploit a flaw in the difficulty
+adjustment formula since the parameter used to update the mining difficulty
+is supposed to measure the actual hashing power of the network and In the
+presence of a block withholding miner, this is no longer applicable.
+</p>	
+	
+	
+	<p>If we consider the number of difficulty adjustments as the third dimension then we get this visualization.</p>
+	<br>
+	<video width="50%" autoplay muted loop id="myVideo1">
+<source src="Models/1.mp4" type="video/mp4">
+Your browser does not support HTML5 video.
+</video>
+	<p>In the next visualization we see the optimal strategy before and after the difficulty
+adjustment, based on analytical results of <a href="https://arxiv.org/abs/1805.08281"><b>On Profitability of Selfish Mining</b></a> on the left, which shows these strategies can only become profitable after the difficulty adjustment,
+otherwise, the honest mining will remain the optimal strategy.
+Now let’s compare that with the results obtained by our peer-to-peer simulation. Yoy see on the right we included the exact diagram of our simulated results which you see earlier but this time in different sections of increasing mined blocks, specifically each section is exactly one
+block behind the next difficulty adjustment to demonstrate the full impact
+of each adjustment.
+</p>
+	
+	
+
+	
+	
+	<div class="row">
+  <div class="column"><img src="Figures/t.svg" height="100%"/></div>
+  <div class="column"><img src="Figures/s.svg" height="100%"/></div>
+</div>
+	
+	
+	<p>
+</p>
+	
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	<!-- Pre-Profitability Period -->
+<div class="w3-container" id="ppp" style="margin-top:75px" align="justify">
+<h1 class="w3-xxlarge w3-text-red"><b>Pre&ndash;Profitability Period.</b></h1>
+<hr style="width:50px;border:5px solid #f04836" class="w3-round">
+<p>
+After finding the winner strategy in the previous section, it's very important to realize which strategy leads to profit in a shorter time period. Time before profit or pre-profitibily period is the minimum time for a strategy such that the number of blocks mined by the selfish miner in the official blockchain would be greater than the average number of blocks mined by the miner if they chose to mine honestly from the beginning. You can read more about this in <a href="https://arxiv.org/abs/1805.08281"><b>On Profitability of Selfish Mining</b></a>.
+</p>
+<p>
+Now let's compare the simulation results<sup>*</sup>  with the findings of the <a href="https://arxiv.org/abs/1805.08281"><b>On Profitability of Selfish Mining</b></a> specially the part related to time before profit.
+</p>
+<p>
+<sup>*</sup> The folowing results come from another more sophisticated simulation that the one you find on this webpage.
+</p>
+<p>
+The minimum time in which the attacker becomes profitable has been studied in
+<a href="https://arxiv.org/abs/1805.08281"><b> On Profitability of Selfish Mining</b></a> for the first time. It means the duration of time in which the attacker
+overcomes the honest miners. Such an analysis of time, was not possible
+using only Markov models. The authors used their new approach to model
+the duration of the attack cycles and consequently they could compute that
+how long it would take for the selfish mining strategy to become profitable,
+as the previously proved such a block withholding strategy is not profitable
+at the beginning before any difficulty change.
+</p>
+<p>
+Below you can see if we consider γ = 0.50 and compute the time after which the selfish mining
+strategy becomes more profitable than the honest mining strategy for values of &alpha;, we'll see
+in the first figure (from <a href="https://arxiv.org/abs/1805.08281"><b> On Profitability of Selfish Mining</b></a>), the selfish miner needs at least 25% of the
+computing hash power of the pool (α ≈ 0.25) to start to overcome the honest strategy
+and by increasing the hashing power, the time it needs to surpass the honest
+strategy decreases until it reaches its minimum which is around three weeks
+and three days at the hashrate share of α ≈ 0.43. It is very interesting that
+after this point Increasing the hasrate share leads to a longer waiting period before surpassing honest miners so higher computation power does not always mean
+the profitability will be reached sooner. This could be the result of the greater
+distance between the apparent hashrate of the mega-powerful selfish miner
+and the honest miners because it needs a lot more work to surpass honest
+miners by a huge margin rather than a small one. Another interesting point
+in this study is, increasing the hashrate share of the selfish miner leads at
+most to the duration of four weeks, consequently for a propagation factor of
+fifty percent, there would be an optimum point for hashrate share of a selfish
+miner between twenty-five and fifty percent hashrate share which leads to a
+duration of fewer than four weeks.
+</p>
+On the other hand in the second figure which is based on the results of our simulation we can see the
+same pattern. Specifically, the minimum pre-profitability period occurs at α ≈ 0.42 in around two weeks and two days. In general, the pre-profitability period in the simulation is a little bit less than expected
+analytical results of <a href="https://arxiv.org/abs/1805.08281"><b> On Profitability of Selfish Mining</b></a>. This could be the result of the fact that
+the performance of the selfish mining strategy in action in terms of apparent
+hashrate (as you can see yourself in the simulation) the apparent hashrate of selfish mining strategy
+is lower than the expected analytical results of <a href="https://arxiv.org/abs/1805.08281"><b> On Profitability of Selfish Mining</b></a> and since it is easier for
+the attacker to achieve less apparent hashrate than more, the pre-profitability period
+can be shorter.
+	
+	
+	
+	<div class="row">
+  <div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Expected <span style="color: red">Time Before Profitability of Selfish Strategy</span> based on <a href="https://arxiv.org/abs/1805.08281"><b>On Profitability of Selfish Mining</b></a> for propagation factor of 50% (&gamma;=0.50).</b></p></div>
+  <div class="columnR"><img src="Figures/analytical.jpg" style="width:300px;height:300px;"></div>
+</div>
+	
+	<div class="row">
+  <div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Simulated <span style="color: red">Time Before Profitabilty of Selfish Strategy</span> based on our peer-to-peer network simulation for propagation factor of 50% (&gamma;=0.50).</b></p></div>
+  <div class="columnR"><img src="Figures/simulation_selfish.jpg" style="width:300px;height:300px;"></div>
+</div>
+
+
+In the next figures we can see the same pattern in all strategies for different hashrate
+shares and propagation factors of &gamma;=0.15, &gamma;=0.50 and &gamma;=0.85.
+		<div class="row">
+  <div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Simulated <span style="color: red">Time Before Profitabilty of All Strategies</span> based on our peer-to-peer network simulation for propagation factor of 15% (&gamma;=0.15).</b></p></div>
+  <div class="columnR"><img src="Figures/simulation_all_15.jpg" style="width:300px;height:300px;"></div>
+</div>
+	<div class="row">
+  <div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Simulated <span style="color: red">Time Before Profitabilty of All Strategies</span> based on our peer-to-peer network simulation for propagation factor of 50% (&gamma;=0.50).</b></p></div>
+  <div class="columnR"><img src="Figures/simulation_all.jpg" style="width:300px;height:300px;"></div>
+</div>
+	<div class="row">
+  <div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Simulated <span style="color: red">Time Before Profitabilty of All Strategies</span> based on our peer-to-peer network simulation for propagation factor of 85% (&gamma;=0.85).</b></p></div>
+  <div class="columnR"><img src="Figures/simulation_all_85.jpg" style="width:300px;height:300px;"></div>
+</div>
+<b>
+We can see the same pattern in each strategy which consits of having a decrease in time before profitability by increasing the hashrate share until we reach the minimum time and start to see an increase until we get around 4 weeks as the time before profitability. 
+</b>
+	<p>
+	We can also compare difficulty adjustments of different strategies. To do so we use difficulty-hashrate diagram since the difficulty adjustment of selfish mining does not depend on the propagation factor (&gamma;). To uderstand why you can read proposition 5.1 in <a href="https://arxiv.org/abs/1805.08281"><b>On Profitability of Selfish Mining</b></a>. Now let's takea look at expected results for selfish mining and compare it with the simulated data. 
+	</p>
+	
+	<div class="row">
+	<div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Expected <span style="color: red">Difficulty Adjestment for Selfish Strategy</span> based on <a href="https://arxiv.org/abs/1805.08281"><b>On Profitability of Selfish Mining</b></a> for hashrate shares between 0% to 50% (&alpha;∈[0,0.50]).</b></p></div>
+	<div class="columnR"><img src="Figures/delta_S_analytical.png" style="width:300px;height:300px;"></div>
+	</div>
+
+	<div class="row">
+	<div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Simulated <span style="color: red">Difficulty Adjestment for Selfish Strategy</span> based on our peer-to-peer network simulation for hashrate shares between 0% to 50% (&alpha;∈[0,0.50]).</b></p></div>
+	<div class="columnR"><img src="Figures/delta_S_sim.png" style="width:300px;height:300px;"></div>
+	</div>
+	
+	<div class="row">
+	<div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Simulated <span style="color: red">Difficulty Adjestment for All Strategies</span> based on our peer-to-peer network simulation for hashrate shares between 0% to 50% (&alpha;∈[0,0.50]).</b></p></div>
+	<div class="columnR"><img src="Figures/delta_all_sim.png" style="width:300px;height:300px;"></div>
+	</div>
+	
+	<p>
+		Based on <a href="https://arxiv.org/abs/1805.08281"><b>On Profitability of Selfish Mining</b></a> the difficulty of a pool containing selfish mining is alwasys between 1 and 2, this is exactly the case in our simulation as can be seen in the previous visualizations.
+	</p>
+	
+	
+	
+	
+</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+</div>
+
+</div>
+<!-- Stats -->
+<div class="w3-container" id="stats" style="margin-top:150px" align="justify">
+<h1 class="w3-xxlarge w3-text-red"><b>Need more stats?</b></h1>
+<hr style="width:50px;border:5px solid #f04836" class="w3-round">
+<p>
+<b>First you can go back and change the &alpha; , &gamma; and n again and click simulate.</b>
+</p>
+<h1 style="text-align: center">POOL STATS</h1>
+<p>
+Here you can find some information about the mining blocks of different strategies based on your chosen &alpha; , &gamma; and n.
+</p>
+<div class="tbl-header">
+<table cellpadding="0" cellspacing="0" border="0">
+<thead>
+<tr>
+<th></th>
+<th>Honest<br>Mining</th>
+<th>Selfish<br>Mining</th>
+<th>Lead<br>Stubborn Mining</th>
+<th>2 – Trail<br>Stubborn Mining</th>
+<th>3 – Trail<br>Stubborn Mining</th>
+<th>4 – Trail<br>Stubborn Mining</th>
+<th>Equal Fork<br>Stubborn Mining</th>
+</tr>
+</thead>
+</table>
+</div>
+<div class="tbl-content">
+<table cellpadding="0" cellspacing="0" border="0">
+<tbody>
+<tr>
+<td>You Published</td>
+<td id="hyp"></td>
+<td id="syp"></td>
+<td id="lyp"></td>
+<td id="t2yp"></td>
+<td id="t3yp"></td>
+<td id="t4yp"></td>
+<td id="eyp"></td>
+</tr>
+<tr>
+<td>Others Published</td>
+<td id="hop"></td>
+<td id="sop"></td>
+<td id="lop"></td>
+<td id="t2op"></td>
+<td id="t3op"></td>
+<td id="t4op"></td>
+<td id="eop"></td>
+</tr>
+<tr>
+<td>Total Blocks Published</td>
+<td id="htbp"></td>
+<td id="stbp"></td>
+<td id="ltbp"></td>
+<td id="t2tbp"></td>
+<td id="t3tbp"></td>
+<td id="t4tbp"></td>
+<td id="etbp"></td>
+</tr>
+<tr>
+<td>Orphaned Blocks</td>
+<td id="hob"></td>
+<td id="sob"></td>
+<td id="lob"></td>
+<td id="t2ob"></td>
+<td id="t3ob"></td>
+<td id="t4ob"></td>
+<td id="eob"></td>
+</tr>
+<tr>
+<td>Total Blocks Mined</td>
+<td id="htbm"></td>
+<td id="stbm"></td>
+<td id="ltbm"></td>
+<td id="t2tbm"></td>
+<td id="t3tbm"></td>
+<td id="t4tbm"></td>
+<td id="etbm"></td>
+</tr>
+<tr>
+<td>Orphaned Percentage</td>
+<td id="hobp"></td>
+<td id="sobp"></td>
+<td id="lobp"></td>
+<td id="t2obp"></td>
+<td id="t3obp"></td>
+<td id="t4obp"></td>
+<td id="eobp"></td>
+</tr>
+<tr>
+<td>You Published % of all blocks</td>
+<td id="hypp"></td>
+<td id="sypp"></td>
+<td id="lypp"></td>
+<td id="t2ypp"></td>
+<td id="t3ypp"></td>
+<td id="t4ypp"></td>
+<td id="eypp"></td>
+</tr>
+<tr>
+<td>Others Published % of all blocks</td>
+<td id="hopp"></td>
+<td id="sopp"></td>
+<td id="lopp"></td>
+<td id="t2opp"></td>
+<td id="t3opp"></td>
+<td id="t4opp"></td>
+<td id="eopp"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<br>
+<br>
+<h1 style="text-align: center">PROFITABILITY</h1>
+<p>
+Here you can find some information about the apparent hash rate, profitability, difficulty changes and attack duration of different strategies based on your chosen &alpha; , &gamma; and n.
+</p>
+<div class="tbl-header">
+<table cellpadding="0" cellspacing="0" border="0">
+<thead>
+<tr>
+<th></th>
+<th>Honest<br>Mining</th>
+<th>Selfish<br>Mining</th>
+<th>Lead<br>Stubborn Mining</th>
+<th>2 – Trail<br>Stubborn Mining</th>
+<th>3 – Trail<br>Stubborn Mining</th>
+<th>4 – Trail<br>Stubborn Mining</th>
+<th>Equal Fork<br>Stubborn Mining</th>
+</tr>
+</thead>
+</table>
+</div>
+<div class="tbl-content">
+<table cellpadding="0" cellspacing="0" border="0">
+<tbody>
+<tr>
+<td>Your Real Hash Rate</td>
+<td id="hyrh"></td>
+<td id="syrh"></td>
+<td id="lyrh"></td>
+<td id="t2yrh"></td>
+<td id="t3yrh"></td>
+<td id="t4yrh"></td>
+<td id="eyrh"></td>
+</tr>
+<tr>
+<td>Your Apparent Hash Rate</td>
+<td id="hyah"></td>
+<td id="syah"></td>
+<td id="lyah"></td>
+<td id="t2yah"></td>
+<td id="t3yah"></td>
+<td id="t4yah"></td>
+<td id="eyah"></td>
+</tr>
+<tr>
+<td>Your Profitability Ratio</td>
+<td id="hypr"></td>
+<td id="sypr"></td>
+<td id="lypr"></td>
+<td id="t2ypr"></td>
+<td id="t3ypr"></td>
+<td id="t4ypr"></td>
+<td id="eypr"></td>
+</tr>
+<tr>
+<td>Difficulty Changed</td>
+<td id="hdc"></td>
+<td id="sdc"></td>
+<td id="ldc"></td>
+<td id="t2dc"></td>
+<td id="t3dc"></td>
+<td id="t4dc"></td>
+<td id="edc"></td>
+</tr>
+<tr>
+<td>Difficulty Will Change To</td>
+<td id="hdwc"></td>
+<td id="sdwc"></td>
+<td id="ldwc"></td>
+<td id="t2dwc"></td>
+<td id="t3dwc"></td>
+<td id="t4dwc"></td>
+<td id="edwc"></td>
+</tr>
+<td>Attack Cycles Duration</td>
+<td id="hacd"></td>
+<td id="sacd"></td>
+<td id="lacd"></td>
+<td id="t2acd"></td>
+<td id="t3acd"></td>
+<td id="t4acd"></td>
+<td id="eacd"></td>
+</tbody>
+</table>
+</div>
+<br>
+<br>
+<h1 style="text-align: center">THEORETICS</h1>
+<p>
+Here you can find the expected theoretical values of the apparent hash rate and profitability ratio of different strategies based on your chosen &alpha; , &gamma; and n.
+<br><a href="#formulation" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white"><b>For more information click here</b></a>
+</p>
+<div class="tbl-header">
+<table cellpadding="0" cellspacing="0" border="0">
+<thead>
+<tr>
+<th></th>
+<th>Honest<br>Mining</th>
+<th>Selfish<br>Mining</th>
+<th>Lead<br>Stubborn Mining</th>
+<th>2 – Trail<br>Stubborn Mining</th>
+<th>3 – Trail<br>Stubborn Mining</th>
+<th>4 – Trail<br>Stubborn Mining</th>
+<th>Equal Fork<br>Stubborn Mining</th>
+</tr>
+</thead>
+</table>
+</div>
+<div class="tbl-content">
+<table cellpadding="0" cellspacing="0" border="0">
+<tbody>
+<tr>
+<td>Your Apparent Hash Rate Would Be</td>
+<td id="htah"></td>
+<td id="stah"></td>
+<td id="ltah"></td>
+<td id="t2tah"></td>
+<td id="t3tah"></td>
+<td id="t4tah"></td>
+<td id="etah"></td>
+</tr>
+<tr>
+<td>Your Profitability Ratio Would Be</td>
+<td id="htpr"></td>
+<td id="stpr"></td>
+<td id="ltpr"></td>
+<td id="t2tpr"></td>
+<td id="t3tpr"></td>
+<td id="t4tpr"></td>
+<td id="etpr"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Formulation -->
+<div class="w3-container" id="formulation" style="margin-top:75px" align="justify">
+<h1 class="w3-xxlarge w3-text-red"><b>Mathematical formulation.</b></h1>
+<hr style="width:50px;border:5px solid #f04836" class="w3-round">
+<p>
+Although some mathematical formulations for these strategies have been developed before, they usually lack a consideration of the time(duration) of the attack and also the proper analysis of the costs of the attack. For example in
+<a href="https://arxiv.org/abs/1507.06183"><b>Optimal Selfish Mining Strategies in Bitcoin</b></a>
+selfish mining strategies are considered to be optimal. The same goes for some textbooks like
+<a href="https://press.princeton.edu/titles/10908.html"><b>Bitcoin and Cryptocurrency Technologies</b></a> and
+<a href="https://dl.acm.org/citation.cfm?id=3002702"><b>Distributed Ledger Technology: The Science of the Blockchain</b></a> .
+</p>
+<p>
+In contrast in year 2018 three articles
+<a href="https://arxiv.org/abs/1805.08281"><b>On Profitability of Selfish Mining</b></a> , <a href="https://arxiv.org/abs/1808.01041"><b>On Profitability of Stubborn Mining</b></a> and <a href="https://arxiv.org/abs/1811.09322"><b>On Profitability of Trailing Mining</b></a>
+were published providing a deep and comprehensive study on these strategies.
+</p>
+<div>
+<p>
+Let's take a look at some parts of the these articles.
+</p>
+<p>
+As you know
+</p>
+<ul class="b">
+<li>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<math>
+<mi>&alpha;</mi>
+</math>
+&nbsp; is your hash rate share of the network.
+</li>
+<li>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<math>
+<mi>&beta;</mi>
+</math>
+&nbsp; is the others' hash rate share of the network ( 
+<math>
+<mi>
+&#x03B2;<!-- β -->
+</mi>
+<mo>=</mo>
+<mn>1</mn>
+<mo>
+&#x2212;<!-- − -->
+</mo>
+<mi>
+&#x03B1;<!-- α -->
+</mi>
+</math>
+) .
+</li>
+<li>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<math>
+<mi>&lambda;</mi>
+</math>
+&nbsp; is the relative hashing power of the attacker ( 
+<math>
+<mi>
+&#x03BB;<!-- λ -->
+</mi>
+<mo>=</mo>
+<mstyle displaystyle="true" scriptlevel="0">
+<mfrac>
+<mi>
+&#x03B1;<!-- α -->
+</mi>
+<mi>
+&#x03B2;<!-- β -->
+</mi>
+</mfrac>
+</mstyle>
+<mo>&lt;</mo>
+<mn>1</mn>
+</math>
+) .
+</li>
+<li>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<math>
+<mi>&gamma;</mi>
+</math>
+&nbsp; is the proportion of honest miners who mine on the fork you created.
+</li>
+</ul>
+<p>
+you should also know
+</p>
+<ul class="b">
+<li>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<math>
+<mi>b</mi>
+</math>
+&nbsp; is the reward for finding a block.
+</li>
+<li>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<math>
+<msub>
+<mi>&tau;</mi>
+<mrow>
+<mi>0</mi>
+</mrow>
+</msub>
+</math>
+&nbsp; is the average inter-block validation time (which is around 10 minutes for bitcoin).
+</li>
+</ul>
+<p>
+now we define
+</p>
+<ul class="b">
+<li>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<math>
+<mi>A</mi>
+</math>
+&nbsp; as your <b>Apparent Hash Rate</b> (find the definition below).
+</li>
+<li>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<math>
+<mi>P</mi>
+</math>
+&nbsp; as your <b>Profitability Ratio</b> (find the definition below).
+</li>
+</ul>
+<p>
+First of all your <b>Hash Rate</b> ( 
+<math>
+<mi>&alpha;</mi>
+</math>
+) means that we expect in the long term the average proportion of blocks mined by you would be also 
+<math>
+<mi>&alpha;</mi>
+</math>
+. Then since you are adapting a selfish or stubborn strategy the average proportion of blocks mined by you could be different than 
+<math>
+<mi>&alpha;</mi>
+</math>
+so we define your <b>Apparent Hash Rate</b> ( 
+<math>
+<mi>A</mi>
+</math>
+) which is a function of 
+<math>
+<mi>&alpha;</mi>
+</math>
+and 
+<math>
+<mi>&gamma;</mi>
+</math>
+. On the other hand <b>Profitability Ratio</b> ( 
+<math>
+<mi>P</mi>
+</math>
+) is a function of 
+<math>
+<mi>&alpha;</mi>
+</math>
+, 
+<math>
+<mi>&gamma;</mi>
+</math>
+, 
+<math>
+<mi>b</mi>
+</math>
+and 
+<math>
+<msub>
+<mi>&tau;</mi>
+<mrow>
+<mi>0</mi>
+</mrow>
+</msub>
+</math>
+which is the benchmark for the comparison of different strategies, more precisely, strategy 
+<math>
+<mi>x</mi>
+</math>
+is more profitable than strategy 
+<math>
+<mi>y</mi>
+</math>
+if and only if 
+<math>
+<msub>
+<mi>P</mi>
+<mrow>
+<mi>y</mi>
+</mrow>
+</msub>
+</math>
+<math>
+<mo>&lt;</mo>
+</math>
+<math>
+<msub>
+<mi>P</mi>
+<mrow>
+<mi>x</mi>
+</mrow>
+</msub>
+</math>
+.
+</p>
+<p>
+For example profitability ratio of selfish mining strategy ( 
+<math>
+<msub>
+<mi>P</mi>
+<mrow>
+<mi>sm</mi>
+</mrow>
+</msub>
+</math>
+) has different values before and after difficulty adjustment:
+<br><br>
+<!-- \scriptsize P_{sm}=\begin{cases}\left(\alpha-\left(1-\gamma\right)\dfrac{\beta^{2}\alpha\left(\beta-\alpha\right)}{\left(1+\beta\alpha\right)\left(\beta-\alpha\right)+\beta\alpha}\right)\cdot\dfrac{b}{\tau_{0}} & before\enspace difficulty\enspace adjustment\\\left(\alpha-\left(1-\gamma\right)\dfrac{\beta^{2}\left(\beta-\alpha\right)\left(\beta-\alpha\right)}{\left(1+\beta\alpha\right)\left(\beta-\alpha\right)+\beta\alpha}\right)\cdot\dfrac{\beta-\alpha+\beta\alpha\left(\beta-\alpha\right)\beta\alpha}{\beta^{2}\alpha+\beta-\alpha}\cdot\dfrac{b}{\tau_{0}} & after\enspace difficulty\enspace adjustment\end{cases} --> 
+<math xmlns="http://www.w3.org/1998/Math/MathML" >
+<mstyle mathsize="0.7em">
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>s</mi>
+<mi>m</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<mrow>
+<mo>{</mo>
+<mtable columnalign="left left" rowspacing=".2em" columnspacing="1em" displaystyle="false">
+<mtr>
+<mtd>
+<mrow>
+<mo>(</mo>
+<mi>
+	&#x03B1;<!-- α -->
+</mi>
+<mo>
+	&#x2212;<!-- − -->
+</mo>
+<mrow>
+	<mo>(</mo>
+	<mn>1</mn>
+	<mo>
+		&#x2212;<!-- − -->
+	</mo>
+	<mi>
+		&#x03B3;<!-- γ -->
+	</mi>
+	<mo>)</mo>
+</mrow>
+<mstyle displaystyle="true" scriptlevel="0">
+	<mfrac>
+		<mrow>
+			<msup>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mrow class="MJX-TeXAtom-ORD">
+					<mn>2</mn>
+				</mrow>
+			</msup>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+			<mrow>
+				<mo>(</mo>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+				<mo>)</mo>
+			</mrow>
+		</mrow>
+		<mrow>
+			<mrow>
+				<mo>(</mo>
+				<mn>1</mn>
+				<mo>+</mo>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+				<mo>)</mo>
+			</mrow>
+			<mrow>
+				<mo>(</mo>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+				<mo>)</mo>
+			</mrow>
+			<mo>+</mo>
+			<mi>
+				&#x03B2;<!-- β -->
+			</mi>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+		</mrow>
+	</mfrac>
+</mstyle>
+<mo>)</mo>
+</mrow>
+<mo>
+&#x22C5;<!-- ⋅ -->
+</mo>
+<mstyle displaystyle="true" scriptlevel="0">
+<mfrac>
+	<mi>b</mi>
+	<msub>
+		<mi>
+			&#x03C4;<!-- τ -->
+		</mi>
+		<mrow class="MJX-TeXAtom-ORD">
+			<mn>0</mn>
+		</mrow>
+	</msub>
+</mfrac>
+</mstyle>
+</mtd>
+<mtd>
+<mi>b</mi>
+<mi>e</mi>
+<mi>f</mi>
+<mi>o</mi>
+<mi>r</mi>
+<mi>e</mi>
+<mspace width=".5em" />
+<mi>d</mi>
+<mi>i</mi>
+<mi>f</mi>
+<mi>f</mi>
+<mi>i</mi>
+<mi>c</mi>
+<mi>u</mi>
+<mi>l</mi>
+<mi>t</mi>
+<mi>y</mi>
+<mspace width=".5em" />
+<mi>a</mi>
+<mi>d</mi>
+<mi>j</mi>
+<mi>u</mi>
+<mi>s</mi>
+<mi>t</mi>
+<mi>m</mi>
+<mi>e</mi>
+<mi>n</mi>
+<mi>t</mi>
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+<mrow>
+<mo>(</mo>
+<mi>
+	&#x03B1;<!-- α -->
+</mi>
+<mo>
+	&#x2212;<!-- − -->
+</mo>
+<mrow>
+	<mo>(</mo>
+	<mn>1</mn>
+	<mo>
+		&#x2212;<!-- − -->
+	</mo>
+	<mi>
+		&#x03B3;<!-- γ -->
+	</mi>
+	<mo>)</mo>
+</mrow>
+<mstyle displaystyle="true" scriptlevel="0">
+	<mfrac>
+		<mrow>
+			<msup>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mrow class="MJX-TeXAtom-ORD">
+					<mn>2</mn>
+				</mrow>
+			</msup>
+			<mrow>
+				<mo>(</mo>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+				<mo>)</mo>
+			</mrow>
+			<mrow>
+				<mo>(</mo>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+				<mo>)</mo>
+			</mrow>
+		</mrow>
+		<mrow>
+			<mrow>
+				<mo>(</mo>
+				<mn>1</mn>
+				<mo>+</mo>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+				<mo>)</mo>
+			</mrow>
+			<mrow>
+				<mo>(</mo>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+				<mo>)</mo>
+			</mrow>
+			<mo>+</mo>
+			<mi>
+				&#x03B2;<!-- β -->
+			</mi>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+		</mrow>
+	</mfrac>
+</mstyle>
+<mo>)</mo>
+</mrow>
+<mo>
+&#x22C5;<!-- ⋅ -->
+</mo>
+<mstyle displaystyle="true" scriptlevel="0">
+<mfrac>
+	<mrow>
+		<mi>
+			&#x03B2;<!-- β -->
+		</mi>
+		<mo>
+			&#x2212;<!-- − -->
+		</mo>
+		<mi>
+			&#x03B1;<!-- α -->
+		</mi>
+		<mo>+</mo>
+		<mi>
+			&#x03B2;<!-- β -->
+		</mi>
+		<mi>
+			&#x03B1;<!-- α -->
+		</mi>
+		<mrow>
+			<mo>(</mo>
+			<mi>
+				&#x03B2;<!-- β -->
+			</mi>
+			<mo>
+				&#x2212;<!-- − -->
+			</mo>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+			<mo>)</mo>
+		</mrow>
+		<mi>
+			&#x03B2;<!-- β -->
+		</mi>
+		<mi>
+			&#x03B1;<!-- α -->
+		</mi>
+	</mrow>
+	<mrow>
+		<msup>
+			<mi>
+				&#x03B2;<!-- β -->
+			</mi>
+			<mrow class="MJX-TeXAtom-ORD">
+				<mn>2</mn>
+			</mrow>
+		</msup>
+		<mi>
+			&#x03B1;<!-- α -->
+		</mi>
+		<mo>+</mo>
+		<mi>
+			&#x03B2;<!-- β -->
+		</mi>
+		<mo>
+			&#x2212;<!-- − -->
+		</mo>
+		<mi>
+			&#x03B1;<!-- α -->
+		</mi>
+	</mrow>
+</mfrac>
+</mstyle>
+<mo>
+&#x22C5;<!-- ⋅ -->
+</mo>
+<mstyle displaystyle="true" scriptlevel="0">
+<mfrac>
+	<mi>b</mi>
+	<msub>
+		<mi>
+			&#x03C4;<!-- τ -->
+		</mi>
+		<mrow class="MJX-TeXAtom-ORD">
+			<mn>0</mn>
+		</mrow>
+	</msub>
+</mfrac>
+</mstyle>
+</mtd>
+<mtd>
+<mi>a</mi>
+<mi>f</mi>
+<mi>t</mi>
+<mi>e</mi>
+<mi>r</mi>
+<mspace width=".5em" />
+<mi>d</mi>
+<mi>i</mi>
+<mi>f</mi>
+<mi>f</mi>
+<mi>i</mi>
+<mi>c</mi>
+<mi>u</mi>
+<mi>l</mi>
+<mi>t</mi>
+<mi>y</mi>
+<mspace width=".5em" />
+<mi>a</mi>
+<mi>d</mi>
+<mi>j</mi>
+<mi>u</mi>
+<mi>s</mi>
+<mi>t</mi>
+<mi>m</mi>
+<mi>e</mi>
+<mi>n</mi>
+<mi>t</mi>
+</mtd>
+</mtr>
+</mtable>
+<mo fence="true" stretchy="true"></mo>
+</mrow>
+</mstyle>
+</math>
+<br><br>
+</p>
+<p>
+This fact also holds for apparent hash rate of selfish mining strategy ( 
+<math>
+<msub>
+<mi>A</mi>
+<mrow>
+<mi>sm</mi>
+</mrow>
+</msub>
+</math>
+) :
+<br><br>
+<!-- \scriptsize {A}_{sm}=\begin{cases}\enspace\alpha-\left(1-\gamma\right)\dfrac{\beta^{2}\alpha\left(\beta-\alpha\right)}{\left(1+\beta\alpha\right)\left(\beta-\alpha\right)+\beta\alpha} & before\enspace difficulty\enspace adjustment\\\left(\alpha-\left(1-\gamma\right)\dfrac{\beta^{2}\left(\beta-\alpha\right)\left(\beta-\alpha\right)}{\left(1+\beta\alpha\right)\left(\beta-\alpha\right)+\beta\alpha}\right)\cdot\dfrac{\beta-\alpha+\beta\alpha\left(\beta-\alpha\right)\beta\alpha}{\beta^{2}\alpha+\beta-\alpha} & after\enspace difficulty\enspace adjustment\end{cases} --> 
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle mathsize="0.7em">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>A</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>s</mi>
+<mi>m</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<mrow>
+<mo>{</mo>
+<mtable columnalign="left left" rowspacing=".2em" columnspacing="1em" displaystyle="false">
+<mtr>
+<mtd>
+<mrow>
+	<mo style="color:white">(</mo>
+	<mi>
+		&#x03B1;<!-- α -->
+	</mi>
+	<mo>
+		&#x2212;<!-- − -->
+	</mo>
+	<mrow>
+		<mo>(</mo>
+		<mn>1</mn>
+		<mo>
+			&#x2212;<!-- − -->
+		</mo>
+		<mi>
+			&#x03B3;<!-- γ -->
+		</mi>
+		<mo>)</mo>
+	</mrow>
+	<mstyle displaystyle="true" scriptlevel="0">
+		<mfrac>
+			<mrow>
+				<msup>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mrow class="MJX-TeXAtom-ORD">
+						<mn>2</mn>
+					</mrow>
+				</msup>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+				<mrow>
+					<mo>(</mo>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+			</mrow>
+			<mrow>
+				<mrow>
+					<mo>(</mo>
+					<mn>1</mn>
+					<mo>+</mo>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+				<mrow>
+					<mo>(</mo>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+				<mo>+</mo>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+			</mrow>
+		</mfrac>
+	</mstyle>
+	<mo style="color:white">)</mo>
+</mrow>
+</mtd>
+<mtd>
+<mi>b</mi>
+<mi>e</mi>
+<mi>f</mi>
+<mi>o</mi>
+<mi>r</mi>
+<mi>e</mi>
+<mspace width=".5em" />
+<mi>d</mi>
+<mi>i</mi>
+<mi>f</mi>
+<mi>f</mi>
+<mi>i</mi>
+<mi>c</mi>
+<mi>u</mi>
+<mi>l</mi>
+<mi>t</mi>
+<mi>y</mi>
+<mspace width=".5em" />
+<mi>a</mi>
+<mi>d</mi>
+<mi>j</mi>
+<mi>u</mi>
+<mi>s</mi>
+<mi>t</mi>
+<mi>m</mi>
+<mi>e</mi>
+<mi>n</mi>
+<mi>t</mi>
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+<mrow>
+	<mo>(</mo>
+	<mi>
+		&#x03B1;<!-- α -->
+	</mi>
+	<mo>
+		&#x2212;<!-- − -->
+	</mo>
+	<mrow>
+		<mo>(</mo>
+		<mn>1</mn>
+		<mo>
+			&#x2212;<!-- − -->
+		</mo>
+		<mi>
+			&#x03B3;<!-- γ -->
+		</mi>
+		<mo>)</mo>
+	</mrow>
+	<mstyle displaystyle="true" scriptlevel="0">
+		<mfrac>
+			<mrow>
+				<msup>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mrow class="MJX-TeXAtom-ORD">
+						<mn>2</mn>
+					</mrow>
+				</msup>
+				<mrow>
+					<mo>(</mo>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+				<mrow>
+					<mo>(</mo>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+			</mrow>
+			<mrow>
+				<mrow>
+					<mo>(</mo>
+					<mn>1</mn>
+					<mo>+</mo>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+				<mrow>
+					<mo>(</mo>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+				<mo>+</mo>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+			</mrow>
+		</mfrac>
+	</mstyle>
+	<mo>)</mo>
+</mrow>
+<mo>
+	&#x22C5;<!-- ⋅ -->
+</mo>
+<mstyle displaystyle="true" scriptlevel="0">
+	<mfrac>
+		<mrow>
+			<mi>
+				&#x03B2;<!-- β -->
+			</mi>
+			<mo>
+				&#x2212;<!-- − -->
+			</mo>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+			<mo>+</mo>
+			<mi>
+				&#x03B2;<!-- β -->
+			</mi>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+			<mrow>
+				<mo>(</mo>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+				<mo>)</mo>
+			</mrow>
+			<mi>
+				&#x03B2;<!-- β -->
+			</mi>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+		</mrow>
+		<mrow>
+			<msup>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mrow class="MJX-TeXAtom-ORD">
+					<mn>2</mn>
+				</mrow>
+			</msup>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+			<mo>+</mo>
+			<mi>
+				&#x03B2;<!-- β -->
+			</mi>
+			<mo>
+				&#x2212;<!-- − -->
+			</mo>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+		</mrow>
+	</mfrac>
+</mstyle>
+</mtd>
+<mtd>
+<mi>a</mi>
+<mi>f</mi>
+<mi>t</mi>
+<mi>e</mi>
+<mi>r</mi>
+<mspace width=".5em" />
+<mi>d</mi>
+<mi>i</mi>
+<mi>f</mi>
+<mi>f</mi>
+<mi>i</mi>
+<mi>c</mi>
+<mi>u</mi>
+<mi>l</mi>
+<mi>t</mi>
+<mi>y</mi>
+<mspace width=".5em" />
+<mi>a</mi>
+<mi>d</mi>
+<mi>j</mi>
+<mi>u</mi>
+<mi>s</mi>
+<mi>t</mi>
+<mi>m</mi>
+<mi>e</mi>
+<mi>n</mi>
+<mi>t</mi>
+</mtd>
+</mtr>
+</mtable>
+<mo fence="true" stretchy="true"></mo>
+</mrow>
+</mstyle>
+</mrow>
+</math>
+<br><br>
+</p>
+<p>
+The reason for that as described in the article is: 
+</p>
+<blockquote style='font-style: italic'>
+&ldquo;The protocol underestimates the real hashing power in the network since only the blocks that are in the (offcial) blockchain are taken into account. The number of orphan blocks grows in the presence of a selfish miner and a signicant
+amount of honest hash rate is lost. The average time used by the network to validate
+blocks increases. After 2016 blocks, a difficulty adjustment is done automatically
+ignoring the production of orphan blocks. Despite the fact that the total hashing
+power of the network remains the same, the new difficulty is lower than it should be,
+and the block validation time decreases. So the revenue per unit of time of the selfish
+miner improves and makes the attack profitable.&rdquo;
+</blockquote>
+<p>
+Here you can find profitability ratio and apparent hash rate of different strategies:
+</p>
+<p style="font-size: 10px">
+(&nbsp;&nbsp;&nbsp;hm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Honest Mining Strategy,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;sm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Selfish Mining Strategy,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;lsm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lead Stubborn Mining Strategy,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;j–tsm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;j–Trail Stubborn Mining Strategy,
+<br>&nbsp;&nbsp;&nbsp;&nbsp;efsm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Equal Fork Stubborn Mining Strategy.&nbsp;&nbsp;&nbsp;)
+</p>
+<ul class="b">
+<li style="margin-bottom:40px">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- \scriptsize A_{hm}=\alpha -->
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mstyle mathsize="0.7em">
+<msub>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>h</mi>
+<mi>m</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<mi>
+&#x03B1;<!-- α -->
+</mi>
+</mstyle>
+</math>
+</li>
+<li style="margin-bottom:40px">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- \scriptsize P_{hm}=\alpha\cdot\dfrac{b}{\tau_{0}} -->
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mstyle mathsize="0.7em">
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>h</mi>
+<mi>m</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<mi>
+&#x03B1;<!-- α -->
+</mi>
+<mo>
+&#x22C5;<!-- ⋅ -->
+</mo>
+<mstyle displaystyle="true" scriptlevel="0">
+<mfrac>
+<mi>b</mi>
+<msub>
+<mi>
+&#x03C4;<!-- τ -->
+</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>0</mn>
+</mrow>
+</msub>
+</mfrac>
+</mstyle>
+</mstyle>
+</math>
+</li>
+<li style="margin-bottom:40px">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- \scriptsize {A}_{sm}=\begin{cases}\enspace\alpha-\left(1-\gamma\right)\dfrac{\beta^{2}\alpha\left(\beta-\alpha\right)}{\left(1+\beta\alpha\right)\left(\beta-\alpha\right)+\beta\alpha} & before\enspace difficulty\enspace adjustment\\\left(\alpha-\left(1-\gamma\right)\dfrac{\beta^{2}\left(\beta-\alpha\right)\left(\beta-\alpha\right)}{\left(1+\beta\alpha\right)\left(\beta-\alpha\right)+\beta\alpha}\right)\cdot\dfrac{\beta-\alpha+\beta\alpha\left(\beta-\alpha\right)\beta\alpha}{\beta^{2}\alpha+\beta-\alpha} & after\enspace difficulty\enspace adjustment\end{cases} --> 
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mrow class="MJX-TeXAtom-ORD">
+<mstyle mathsize="0.7em">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>A</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>s</mi>
+<mi>m</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<mrow>
+<mo>{</mo>
+<mtable columnalign="left left" rowspacing=".2em" columnspacing="1em" displaystyle="false">
+<mtr>
+<mtd>
+	<mrow>
+		<mo style="color:white">(</mo>
+		<mi>
+			&#x03B1;<!-- α -->
+		</mi>
+		<mo>
+			&#x2212;<!-- − -->
+		</mo>
+		<mrow>
+			<mo>(</mo>
+			<mn>1</mn>
+			<mo>
+				&#x2212;<!-- − -->
+			</mo>
+			<mi>
+				&#x03B3;<!-- γ -->
+			</mi>
+			<mo>)</mo>
+		</mrow>
+		<mstyle displaystyle="true" scriptlevel="0">
+			<mfrac>
+				<mrow>
+					<msup>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mrow class="MJX-TeXAtom-ORD">
+							<mn>2</mn>
+						</mrow>
+					</msup>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mrow>
+						<mo>(</mo>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+						<mo>)</mo>
+					</mrow>
+				</mrow>
+				<mrow>
+					<mrow>
+						<mo>(</mo>
+						<mn>1</mn>
+						<mo>+</mo>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+						<mo>)</mo>
+					</mrow>
+					<mrow>
+						<mo>(</mo>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+						<mo>)</mo>
+					</mrow>
+					<mo>+</mo>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+				</mrow>
+			</mfrac>
+		</mstyle>
+		<mo style="color:white">)</mo>
+	</mrow>
+</mtd>
+<mtd>
+	<mi>b</mi>
+	<mi>e</mi>
+	<mi>f</mi>
+	<mi>o</mi>
+	<mi>r</mi>
+	<mi>e</mi>
+	<mspace width=".5em" />
+	<mi>d</mi>
+	<mi>i</mi>
+	<mi>f</mi>
+	<mi>f</mi>
+	<mi>i</mi>
+	<mi>c</mi>
+	<mi>u</mi>
+	<mi>l</mi>
+	<mi>t</mi>
+	<mi>y</mi>
+	<mspace width=".5em" />
+	<mi>a</mi>
+	<mi>d</mi>
+	<mi>j</mi>
+	<mi>u</mi>
+	<mi>s</mi>
+	<mi>t</mi>
+	<mi>m</mi>
+	<mi>e</mi>
+	<mi>n</mi>
+	<mi>t</mi>
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+	<mrow>
+		<mo>(</mo>
+		<mi>
+			&#x03B1;<!-- α -->
+		</mi>
+		<mo>
+			&#x2212;<!-- − -->
+		</mo>
+		<mrow>
+			<mo>(</mo>
+			<mn>1</mn>
+			<mo>
+				&#x2212;<!-- − -->
+			</mo>
+			<mi>
+				&#x03B3;<!-- γ -->
+			</mi>
+			<mo>)</mo>
+		</mrow>
+		<mstyle displaystyle="true" scriptlevel="0">
+			<mfrac>
+				<mrow>
+					<msup>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mrow class="MJX-TeXAtom-ORD">
+							<mn>2</mn>
+						</mrow>
+					</msup>
+					<mrow>
+						<mo>(</mo>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+						<mo>)</mo>
+					</mrow>
+					<mrow>
+						<mo>(</mo>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+						<mo>)</mo>
+					</mrow>
+				</mrow>
+				<mrow>
+					<mrow>
+						<mo>(</mo>
+						<mn>1</mn>
+						<mo>+</mo>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+						<mo>)</mo>
+					</mrow>
+					<mrow>
+						<mo>(</mo>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+						<mo>)</mo>
+					</mrow>
+					<mo>+</mo>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+				</mrow>
+			</mfrac>
+		</mstyle>
+		<mo>)</mo>
+	</mrow>
+	<mo>
+		&#x22C5;<!-- ⋅ -->
+	</mo>
+	<mstyle displaystyle="true" scriptlevel="0">
+		<mfrac>
+			<mrow>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+				<mo>+</mo>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+				<mrow>
+					<mo>(</mo>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+			</mrow>
+			<mrow>
+				<msup>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mrow class="MJX-TeXAtom-ORD">
+						<mn>2</mn>
+					</mrow>
+				</msup>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+				<mo>+</mo>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+			</mrow>
+		</mfrac>
+	</mstyle>
+</mtd>
+<mtd>
+	<mi>a</mi>
+	<mi>f</mi>
+	<mi>t</mi>
+	<mi>e</mi>
+	<mi>r</mi>
+	<mspace width=".5em" />
+	<mi>d</mi>
+	<mi>i</mi>
+	<mi>f</mi>
+	<mi>f</mi>
+	<mi>i</mi>
+	<mi>c</mi>
+	<mi>u</mi>
+	<mi>l</mi>
+	<mi>t</mi>
+	<mi>y</mi>
+	<mspace width=".5em" />
+	<mi>a</mi>
+	<mi>d</mi>
+	<mi>j</mi>
+	<mi>u</mi>
+	<mi>s</mi>
+	<mi>t</mi>
+	<mi>m</mi>
+	<mi>e</mi>
+	<mi>n</mi>
+	<mi>t</mi>
+</mtd>
+</mtr>
+</mtable>
+<mo fence="true" stretchy="true"></mo>
+</mrow>
+</mstyle>
+</mrow>
+</math>
+</li>
+<li style="margin-bottom:40px">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- \scriptsize P_{sm}=\begin{cases}\left(\alpha-\left(1-\gamma\right)\dfrac{\beta^{2}\alpha\left(\beta-\alpha\right)}{\left(1+\beta\alpha\right)\left(\beta-\alpha\right)+\beta\alpha}\right)\cdot\dfrac{b}{\tau_{0}} & before\enspace difficulty\enspace adjustment\\\left(\alpha-\left(1-\gamma\right)\dfrac{\beta^{2}\left(\beta-\alpha\right)\left(\beta-\alpha\right)}{\left(1+\beta\alpha\right)\left(\beta-\alpha\right)+\beta\alpha}\right)\cdot\dfrac{\beta-\alpha+\beta\alpha\left(\beta-\alpha\right)\beta\alpha}{\beta^{2}\alpha+\beta-\alpha}\cdot\dfrac{b}{\tau_{0}} & after\enspace difficulty\enspace adjustment\end{cases} --> 
+<math xmlns="http://www.w3.org/1998/Math/MathML" >
+<mstyle mathsize="0.7em">
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>s</mi>
+<mi>m</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<mrow>
+<mo>{</mo>
+<mtable columnalign="left left" rowspacing=".2em" columnspacing="1em" displaystyle="false">
+<mtr>
+<mtd>
+<mrow>
+	<mo>(</mo>
+	<mi>
+		&#x03B1;<!-- α -->
+	</mi>
+	<mo>
+		&#x2212;<!-- − -->
+	</mo>
+	<mrow>
+		<mo>(</mo>
+		<mn>1</mn>
+		<mo>
+			&#x2212;<!-- − -->
+		</mo>
+		<mi>
+			&#x03B3;<!-- γ -->
+		</mi>
+		<mo>)</mo>
+	</mrow>
+	<mstyle displaystyle="true" scriptlevel="0">
+		<mfrac>
+			<mrow>
+				<msup>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mrow class="MJX-TeXAtom-ORD">
+						<mn>2</mn>
+					</mrow>
+				</msup>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+				<mrow>
+					<mo>(</mo>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+			</mrow>
+			<mrow>
+				<mrow>
+					<mo>(</mo>
+					<mn>1</mn>
+					<mo>+</mo>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+				<mrow>
+					<mo>(</mo>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+				<mo>+</mo>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+			</mrow>
+		</mfrac>
+	</mstyle>
+	<mo>)</mo>
+</mrow>
+<mo>
+	&#x22C5;<!-- ⋅ -->
+</mo>
+<mstyle displaystyle="true" scriptlevel="0">
+	<mfrac>
+		<mi>b</mi>
+		<msub>
+			<mi>
+				&#x03C4;<!-- τ -->
+			</mi>
+			<mrow class="MJX-TeXAtom-ORD">
+				<mn>0</mn>
+			</mrow>
+		</msub>
+	</mfrac>
+</mstyle>
+</mtd>
+<mtd>
+<mi>b</mi>
+<mi>e</mi>
+<mi>f</mi>
+<mi>o</mi>
+<mi>r</mi>
+<mi>e</mi>
+<mspace width=".5em" />
+<mi>d</mi>
+<mi>i</mi>
+<mi>f</mi>
+<mi>f</mi>
+<mi>i</mi>
+<mi>c</mi>
+<mi>u</mi>
+<mi>l</mi>
+<mi>t</mi>
+<mi>y</mi>
+<mspace width=".5em" />
+<mi>a</mi>
+<mi>d</mi>
+<mi>j</mi>
+<mi>u</mi>
+<mi>s</mi>
+<mi>t</mi>
+<mi>m</mi>
+<mi>e</mi>
+<mi>n</mi>
+<mi>t</mi>
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+<mrow>
+	<mo>(</mo>
+	<mi>
+		&#x03B1;<!-- α -->
+	</mi>
+	<mo>
+		&#x2212;<!-- − -->
+	</mo>
+	<mrow>
+		<mo>(</mo>
+		<mn>1</mn>
+		<mo>
+			&#x2212;<!-- − -->
+		</mo>
+		<mi>
+			&#x03B3;<!-- γ -->
+		</mi>
+		<mo>)</mo>
+	</mrow>
+	<mstyle displaystyle="true" scriptlevel="0">
+		<mfrac>
+			<mrow>
+				<msup>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mrow class="MJX-TeXAtom-ORD">
+						<mn>2</mn>
+					</mrow>
+				</msup>
+				<mrow>
+					<mo>(</mo>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+				<mrow>
+					<mo>(</mo>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+			</mrow>
+			<mrow>
+				<mrow>
+					<mo>(</mo>
+					<mn>1</mn>
+					<mo>+</mo>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+				<mrow>
+					<mo>(</mo>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+				<mo>+</mo>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+			</mrow>
+		</mfrac>
+	</mstyle>
+	<mo>)</mo>
+</mrow>
+<mo>
+	&#x22C5;<!-- ⋅ -->
+</mo>
+<mstyle displaystyle="true" scriptlevel="0">
+	<mfrac>
+		<mrow>
+			<mi>
+				&#x03B2;<!-- β -->
+			</mi>
+			<mo>
+				&#x2212;<!-- − -->
+			</mo>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+			<mo>+</mo>
+			<mi>
+				&#x03B2;<!-- β -->
+			</mi>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+			<mrow>
+				<mo>(</mo>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+				<mo>)</mo>
+			</mrow>
+			<mi>
+				&#x03B2;<!-- β -->
+			</mi>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+		</mrow>
+		<mrow>
+			<msup>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mrow class="MJX-TeXAtom-ORD">
+					<mn>2</mn>
+				</mrow>
+			</msup>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+			<mo>+</mo>
+			<mi>
+				&#x03B2;<!-- β -->
+			</mi>
+			<mo>
+				&#x2212;<!-- − -->
+			</mo>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+		</mrow>
+	</mfrac>
+</mstyle>
+<mo>
+	&#x22C5;<!-- ⋅ -->
+</mo>
+<mstyle displaystyle="true" scriptlevel="0">
+	<mfrac>
+		<mi>b</mi>
+		<msub>
+			<mi>
+				&#x03C4;<!-- τ -->
+			</mi>
+			<mrow class="MJX-TeXAtom-ORD">
+				<mn>0</mn>
+			</mrow>
+		</msub>
+	</mfrac>
+</mstyle>
+</mtd>
+<mtd>
+<mi>a</mi>
+<mi>f</mi>
+<mi>t</mi>
+<mi>e</mi>
+<mi>r</mi>
+<mspace width=".5em" />
+<mi>d</mi>
+<mi>i</mi>
+<mi>f</mi>
+<mi>f</mi>
+<mi>i</mi>
+<mi>c</mi>
+<mi>u</mi>
+<mi>l</mi>
+<mi>t</mi>
+<mi>y</mi>
+<mspace width=".5em" />
+<mi>a</mi>
+<mi>d</mi>
+<mi>j</mi>
+<mi>u</mi>
+<mi>s</mi>
+<mi>t</mi>
+<mi>m</mi>
+<mi>e</mi>
+<mi>n</mi>
+<mi>t</mi>
+</mtd>
+</mtr>
+</mtable>
+<mo fence="true" stretchy="true"></mo>
+</mrow>
+</mstyle>
+</math>
+</li>
+<li style="margin-bottom:40px">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- \scriptsize {A}_{lsm}=\begin{cases}\left(\alpha-\dfrac{\beta\alpha\left(\beta-\alpha\right)\left(1-\gamma\right)}{\gamma}\cdot\dfrac{1-\beta\left(1-\gamma\right)C\left(\left(1-\gamma\right)\beta\alpha\right)}{\beta+\alpha\left(\beta-\alpha\right)}\right) & before\enspace difficulty\enspace adjustment\\\left(\alpha-\dfrac{\beta\alpha\left(\beta-\alpha\right)\left(1-\gamma\right)}{\gamma}\cdot\dfrac{1-\beta\left(1-\gamma\right)C\left(\left(1-\gamma\right)\beta\alpha\right)}{\beta+\alpha\left(\beta-\alpha\right)}\right)\cdot\dfrac{\beta+\beta\alpha-\alpha^{2}}{\beta+\beta\alpha-\alpha} & after\enspace difficulty\enspace adjustment\end{cases} -->
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mstyle mathsize="0.7em">
+<msub>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>A</mi>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>l</mi>
+<mi>s</mi>
+<mi>m</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<mrow>
+<mo>{</mo>
+<mtable columnalign="left left" rowspacing=".2em" columnspacing="1em" displaystyle="false">
+<mtr>
+<mtd>
+<mrow>
+	<mo style="color:white">(</mo>
+	<mi>
+		&#x03B1;<!-- α -->
+	</mi>
+	<mo>
+		&#x2212;<!-- − -->
+	</mo>
+	<mstyle displaystyle="true" scriptlevel="0">
+		<mfrac>
+			<mrow>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+				<mrow>
+					<mo>(</mo>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+				<mrow>
+					<mo>(</mo>
+					<mn>1</mn>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mi>
+						&#x03B3;<!-- γ -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+			</mrow>
+			<mi>
+				&#x03B3;<!-- γ -->
+			</mi>
+		</mfrac>
+	</mstyle>
+	<mo>
+		&#x22C5;<!-- ⋅ -->
+	</mo>
+	<mstyle displaystyle="true" scriptlevel="0">
+		<mfrac>
+			<mrow>
+				<mn>1</mn>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mrow>
+					<mo>(</mo>
+					<mn>1</mn>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mi>
+						&#x03B3;<!-- γ -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+				<mi>C</mi>
+				<mrow>
+					<mo>(</mo>
+					<mrow>
+						<mo>(</mo>
+						<mn>1</mn>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<mi>
+							&#x03B3;<!-- γ -->
+						</mi>
+						<mo>)</mo>
+					</mrow>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+			</mrow>
+			<mrow>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mo>+</mo>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+				<mrow>
+					<mo>(</mo>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+			</mrow>
+		</mfrac>
+	</mstyle>
+	<mo style="color:white">)</mo>
+</mrow>
+</mtd>
+<mtd>
+<mi>b</mi>
+<mi>e</mi>
+<mi>f</mi>
+<mi>o</mi>
+<mi>r</mi>
+<mi>e</mi>
+<mspace width=".5em" />
+<mi>d</mi>
+<mi>i</mi>
+<mi>f</mi>
+<mi>f</mi>
+<mi>i</mi>
+<mi>c</mi>
+<mi>u</mi>
+<mi>l</mi>
+<mi>t</mi>
+<mi>y</mi>
+<mspace width=".5em" />
+<mi>a</mi>
+<mi>d</mi>
+<mi>j</mi>
+<mi>u</mi>
+<mi>s</mi>
+<mi>t</mi>
+<mi>m</mi>
+<mi>e</mi>
+<mi>n</mi>
+<mi>t</mi>
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+<mrow>
+	<mo>(</mo>
+	<mi>
+		&#x03B1;<!-- α -->
+	</mi>
+	<mo>
+		&#x2212;<!-- − -->
+	</mo>
+	<mstyle displaystyle="true" scriptlevel="0">
+		<mfrac>
+			<mrow>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+				<mrow>
+					<mo>(</mo>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+				<mrow>
+					<mo>(</mo>
+					<mn>1</mn>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mi>
+						&#x03B3;<!-- γ -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+			</mrow>
+			<mi>
+				&#x03B3;<!-- γ -->
+			</mi>
+		</mfrac>
+	</mstyle>
+	<mo>
+		&#x22C5;<!-- ⋅ -->
+	</mo>
+	<mstyle displaystyle="true" scriptlevel="0">
+		<mfrac>
+			<mrow>
+				<mn>1</mn>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mrow>
+					<mo>(</mo>
+					<mn>1</mn>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mi>
+						&#x03B3;<!-- γ -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+				<mi>C</mi>
+				<mrow>
+					<mo>(</mo>
+					<mrow>
+						<mo>(</mo>
+						<mn>1</mn>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<mi>
+							&#x03B3;<!-- γ -->
+						</mi>
+						<mo>)</mo>
+					</mrow>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+			</mrow>
+			<mrow>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mo>+</mo>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+				<mrow>
+					<mo>(</mo>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+			</mrow>
+		</mfrac>
+	</mstyle>
+	<mo>)</mo>
+</mrow>
+<mo>
+	&#x22C5;<!-- ⋅ -->
+</mo>
+<mstyle displaystyle="true" scriptlevel="0">
+	<mfrac>
+		<mrow>
+			<mi>
+				&#x03B2;<!-- β -->
+			</mi>
+			<mo>+</mo>
+			<mi>
+				&#x03B2;<!-- β -->
+			</mi>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+			<mo>
+				&#x2212;<!-- − -->
+			</mo>
+			<msup>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+				<mrow class="MJX-TeXAtom-ORD">
+					<mn>2</mn>
+				</mrow>
+			</msup>
+		</mrow>
+		<mrow>
+			<mi>
+				&#x03B2;<!-- β -->
+			</mi>
+			<mo>+</mo>
+			<mi>
+				&#x03B2;<!-- β -->
+			</mi>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+			<mo>
+				&#x2212;<!-- − -->
+			</mo>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+		</mrow>
+	</mfrac>
+</mstyle>
+</mtd>
+<mtd>
+<mi>a</mi>
+<mi>f</mi>
+<mi>t</mi>
+<mi>e</mi>
+<mi>r</mi>
+<mspace width=".5em" />
+<mi>d</mi>
+<mi>i</mi>
+<mi>f</mi>
+<mi>f</mi>
+<mi>i</mi>
+<mi>c</mi>
+<mi>u</mi>
+<mi>l</mi>
+<mi>t</mi>
+<mi>y</mi>
+<mspace width=".5em" />
+<mi>a</mi>
+<mi>d</mi>
+<mi>j</mi>
+<mi>u</mi>
+<mi>s</mi>
+<mi>t</mi>
+<mi>m</mi>
+<mi>e</mi>
+<mi>n</mi>
+<mi>t</mi>
+</mtd>
+</mtr>
+</mtable>
+<mo fence="true" stretchy="true"></mo>
+</mrow>
+</mstyle>
+</math>
+</li>
+<li style="margin-bottom:40px">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- \scriptsize P_{lsm}=\begin{cases}\left(\alpha-\dfrac{\beta\alpha\left(\beta-\alpha\right)\left(1-\gamma\right)}{\gamma}\cdot\dfrac{1-\beta\left(1-\gamma\right)C\left(\left(1-\gamma\right)\beta\alpha\right)}{\beta+\alpha\left(\beta-\alpha\right)}\right)\cdot\dfrac{b}{\tau_{0}} & before\enspace difficulty\enspace adjustment\\\left(\alpha-\dfrac{\beta\alpha\left(\beta-\alpha\right)\left(1-\gamma\right)}{\gamma}\cdot\dfrac{1-\beta\left(1-\gamma\right)C\left(\left(1-\gamma\right)\beta\alpha\right)}{\beta+\alpha\left(\beta-\alpha\right)}\right)\cdot\dfrac{\beta+\beta\alpha-\alpha^{2}}{\beta+\beta\alpha-\alpha}\cdot\dfrac{b}{\tau_{0}} & after\enspace difficulty\enspace adjustment\end{cases} -->
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mstyle mathsize="0.7em">
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>l</mi>
+<mi>s</mi>
+<mi>m</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<mrow>
+<mo>{</mo>
+<mtable columnalign="left left" rowspacing=".2em" columnspacing="1em" displaystyle="false">
+<mtr>
+<mtd>
+<mrow>
+	<mo>(</mo>
+	<mi>
+		&#x03B1;<!-- α -->
+	</mi>
+	<mo>
+		&#x2212;<!-- − -->
+	</mo>
+	<mstyle displaystyle="true" scriptlevel="0">
+		<mfrac>
+			<mrow>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+				<mrow>
+					<mo>(</mo>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+				<mrow>
+					<mo>(</mo>
+					<mn>1</mn>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mi>
+						&#x03B3;<!-- γ -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+			</mrow>
+			<mi>
+				&#x03B3;<!-- γ -->
+			</mi>
+		</mfrac>
+	</mstyle>
+	<mo>
+		&#x22C5;<!-- ⋅ -->
+	</mo>
+	<mstyle displaystyle="true" scriptlevel="0">
+		<mfrac>
+			<mrow>
+				<mn>1</mn>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mrow>
+					<mo>(</mo>
+					<mn>1</mn>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mi>
+						&#x03B3;<!-- γ -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+				<mi>C</mi>
+				<mrow>
+					<mo>(</mo>
+					<mrow>
+						<mo>(</mo>
+						<mn>1</mn>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<mi>
+							&#x03B3;<!-- γ -->
+						</mi>
+						<mo>)</mo>
+					</mrow>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+			</mrow>
+			<mrow>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mo>+</mo>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+				<mrow>
+					<mo>(</mo>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+			</mrow>
+		</mfrac>
+	</mstyle>
+	<mo>)</mo>
+</mrow>
+<mo>
+	&#x22C5;<!-- ⋅ -->
+</mo>
+<mstyle displaystyle="true" scriptlevel="0">
+	<mfrac>
+		<mi>b</mi>
+		<msub>
+			<mi>
+				&#x03C4;<!-- τ -->
+			</mi>
+			<mrow class="MJX-TeXAtom-ORD">
+				<mn>0</mn>
+			</mrow>
+		</msub>
+	</mfrac>
+</mstyle>
+</mtd>
+<mtd>
+<mi>b</mi>
+<mi>e</mi>
+<mi>f</mi>
+<mi>o</mi>
+<mi>r</mi>
+<mi>e</mi>
+<mspace width=".5em" />
+<mi>d</mi>
+<mi>i</mi>
+<mi>f</mi>
+<mi>f</mi>
+<mi>i</mi>
+<mi>c</mi>
+<mi>u</mi>
+<mi>l</mi>
+<mi>t</mi>
+<mi>y</mi>
+<mspace width=".5em" />
+<mi>a</mi>
+<mi>d</mi>
+<mi>j</mi>
+<mi>u</mi>
+<mi>s</mi>
+<mi>t</mi>
+<mi>m</mi>
+<mi>e</mi>
+<mi>n</mi>
+<mi>t</mi>
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+<mrow>
+	<mo>(</mo>
+	<mi>
+		&#x03B1;<!-- α -->
+	</mi>
+	<mo>
+		&#x2212;<!-- − -->
+	</mo>
+	<mstyle displaystyle="true" scriptlevel="0">
+		<mfrac>
+			<mrow>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+				<mrow>
+					<mo>(</mo>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+				<mrow>
+					<mo>(</mo>
+					<mn>1</mn>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mi>
+						&#x03B3;<!-- γ -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+			</mrow>
+			<mi>
+				&#x03B3;<!-- γ -->
+			</mi>
+		</mfrac>
+	</mstyle>
+	<mo>
+		&#x22C5;<!-- ⋅ -->
+	</mo>
+	<mstyle displaystyle="true" scriptlevel="0">
+		<mfrac>
+			<mrow>
+				<mn>1</mn>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mrow>
+					<mo>(</mo>
+					<mn>1</mn>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mi>
+						&#x03B3;<!-- γ -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+				<mi>C</mi>
+				<mrow>
+					<mo>(</mo>
+					<mrow>
+						<mo>(</mo>
+						<mn>1</mn>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<mi>
+							&#x03B3;<!-- γ -->
+						</mi>
+						<mo>)</mo>
+					</mrow>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+			</mrow>
+			<mrow>
+				<mi>
+					&#x03B2;<!-- β -->
+				</mi>
+				<mo>+</mo>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+				<mrow>
+					<mo>(</mo>
+					<mi>
+						&#x03B2;<!-- β -->
+					</mi>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mi>
+						&#x03B1;<!-- α -->
+					</mi>
+					<mo>)</mo>
+				</mrow>
+			</mrow>
+		</mfrac>
+	</mstyle>
+	<mo>)</mo>
+</mrow>
+<mo>
+	&#x22C5;<!-- ⋅ -->
+</mo>
+<mstyle displaystyle="true" scriptlevel="0">
+	<mfrac>
+		<mrow>
+			<mi>
+				&#x03B2;<!-- β -->
+			</mi>
+			<mo>+</mo>
+			<mi>
+				&#x03B2;<!-- β -->
+			</mi>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+			<mo>
+				&#x2212;<!-- − -->
+			</mo>
+			<msup>
+				<mi>
+					&#x03B1;<!-- α -->
+				</mi>
+				<mrow class="MJX-TeXAtom-ORD">
+					<mn>2</mn>
+				</mrow>
+			</msup>
+		</mrow>
+		<mrow>
+			<mi>
+				&#x03B2;<!-- β -->
+			</mi>
+			<mo>+</mo>
+			<mi>
+				&#x03B2;<!-- β -->
+			</mi>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+			<mo>
+				&#x2212;<!-- − -->
+			</mo>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+		</mrow>
+	</mfrac>
+</mstyle>
+<mo>
+	&#x22C5;<!-- ⋅ -->
+</mo>
+<mstyle displaystyle="true" scriptlevel="0">
+	<mfrac>
+		<mi>b</mi>
+		<msub>
+			<mi>
+				&#x03C4;<!-- τ -->
+			</mi>
+			<mrow class="MJX-TeXAtom-ORD">
+				<mn>0</mn>
+			</mrow>
+		</msub>
+	</mfrac>
+</mstyle>
+</mtd>
+<mtd>
+<mi>a</mi>
+<mi>f</mi>
+<mi>t</mi>
+<mi>e</mi>
+<mi>r</mi>
+<mspace width=".5em" />
+<mi>d</mi>
+<mi>i</mi>
+<mi>f</mi>
+<mi>f</mi>
+<mi>i</mi>
+<mi>c</mi>
+<mi>u</mi>
+<mi>l</mi>
+<mi>t</mi>
+<mi>y</mi>
+<mspace width=".5em" />
+<mi>a</mi>
+<mi>d</mi>
+<mi>j</mi>
+<mi>u</mi>
+<mi>s</mi>
+<mi>t</mi>
+<mi>m</mi>
+<mi>e</mi>
+<mi>n</mi>
+<mi>t</mi>
+</mtd>
+</mtr>
+</mtable>
+<mo fence="true" stretchy="true"></mo>
+</mrow>
+</mstyle>
+</math>
+</li>
+<li style="margin-bottom:40px">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- \scriptsize A_{efsm}=\begin{cases}\left(\alpha-\dfrac{1-\gamma}{\gamma}\left(\beta-\alpha\right)\left(1-\beta C\left(\left(1-\gamma\right)\beta\alpha\right)\right)\right) & before\enspace difficulty\enspace adjustment\\\left(\alpha-\dfrac{1-\gamma}{\gamma}\left(\beta-\alpha\right)\left(1-\beta C\left(\left(1-\gamma\right)\beta\alpha\right)\right)\right)\cdot\dfrac{1}{\beta} & after\enspace difficulty\enspace adjustment\end{cases} -->
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mstyle mathsize="0.7em">
+<msub>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>e</mi>
+<mi>f</mi>
+<mi>s</mi>
+<mi>m</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<mrow>
+<mo>{</mo>
+<mtable columnalign="left left" rowspacing=".2em" columnspacing="1em" displaystyle="false">
+<mtr>
+<mtd>
+<mrow>
+	<mo style="color:white">(</mo>
+	<mi>
+		&#x03B1;<!-- α -->
+	</mi>
+	<mo>
+		&#x2212;<!-- − -->
+	</mo>
+	<mstyle displaystyle="true" scriptlevel="0">
+		<mfrac>
+			<mrow>
+				<mn>1</mn>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mi>
+					&#x03B3;<!-- γ -->
+				</mi>
+			</mrow>
+			<mi>
+				&#x03B3;<!-- γ -->
+			</mi>
+		</mfrac>
+	</mstyle>
+	<mrow>
+		<mo>(</mo>
+		<mi>
+			&#x03B2;<!-- β -->
+		</mi>
+		<mo>
+			&#x2212;<!-- − -->
+		</mo>
+		<mi>
+			&#x03B1;<!-- α -->
+		</mi>
+		<mo>)</mo>
+	</mrow>
+	<mrow>
+		<mo>(</mo>
+		<mn>1</mn>
+		<mo>
+			&#x2212;<!-- − -->
+		</mo>
+		<mi>
+			&#x03B2;<!-- β -->
+		</mi>
+		<mi>C</mi>
+		<mrow>
+			<mo>(</mo>
+			<mrow>
+				<mo>(</mo>
+				<mn>1</mn>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mi>
+					&#x03B3;<!-- γ -->
+				</mi>
+				<mo>)</mo>
+			</mrow>
+			<mi>
+				&#x03B2;<!-- β -->
+			</mi>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+			<mo>)</mo>
+		</mrow>
+		<mo>)</mo>
+	</mrow>
+	<mo style="color:white">)</mo>
+</mrow>
+</mtd>
+<mtd>
+<mi>b</mi>
+<mi>e</mi>
+<mi>f</mi>
+<mi>o</mi>
+<mi>r</mi>
+<mi>e</mi>
+<mspace width=".5em" />
+<mi>d</mi>
+<mi>i</mi>
+<mi>f</mi>
+<mi>f</mi>
+<mi>i</mi>
+<mi>c</mi>
+<mi>u</mi>
+<mi>l</mi>
+<mi>t</mi>
+<mi>y</mi>
+<mspace width=".5em" />
+<mi>a</mi>
+<mi>d</mi>
+<mi>j</mi>
+<mi>u</mi>
+<mi>s</mi>
+<mi>t</mi>
+<mi>m</mi>
+<mi>e</mi>
+<mi>n</mi>
+<mi>t</mi>
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+<mrow>
+	<mo>(</mo>
+	<mi>
+		&#x03B1;<!-- α -->
+	</mi>
+	<mo>
+		&#x2212;<!-- − -->
+	</mo>
+	<mstyle displaystyle="true" scriptlevel="0">
+		<mfrac>
+			<mrow>
+				<mn>1</mn>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mi>
+					&#x03B3;<!-- γ -->
+				</mi>
+			</mrow>
+			<mi>
+				&#x03B3;<!-- γ -->
+			</mi>
+		</mfrac>
+	</mstyle>
+	<mrow>
+		<mo>(</mo>
+		<mi>
+			&#x03B2;<!-- β -->
+		</mi>
+		<mo>
+			&#x2212;<!-- − -->
+		</mo>
+		<mi>
+			&#x03B1;<!-- α -->
+		</mi>
+		<mo>)</mo>
+	</mrow>
+	<mrow>
+		<mo>(</mo>
+		<mn>1</mn>
+		<mo>
+			&#x2212;<!-- − -->
+		</mo>
+		<mi>
+			&#x03B2;<!-- β -->
+		</mi>
+		<mi>C</mi>
+		<mrow>
+			<mo>(</mo>
+			<mrow>
+				<mo>(</mo>
+				<mn>1</mn>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mi>
+					&#x03B3;<!-- γ -->
+				</mi>
+				<mo>)</mo>
+			</mrow>
+			<mi>
+				&#x03B2;<!-- β -->
+			</mi>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+			<mo>)</mo>
+		</mrow>
+		<mo>)</mo>
+	</mrow>
+	<mo>)</mo>
+</mrow>
+<mo>
+	&#x22C5;<!-- ⋅ -->
+</mo>
+<mstyle displaystyle="true" scriptlevel="0">
+	<mfrac>
+		<mn>1</mn>
+		<mi>
+			&#x03B2;<!-- β -->
+		</mi>
+	</mfrac>
+</mstyle>
+</mtd>
+<mtd>
+<mi>a</mi>
+<mi>f</mi>
+<mi>t</mi>
+<mi>e</mi>
+<mi>r</mi>
+<mspace width=".5em" />
+<mi>d</mi>
+<mi>i</mi>
+<mi>f</mi>
+<mi>f</mi>
+<mi>i</mi>
+<mi>c</mi>
+<mi>u</mi>
+<mi>l</mi>
+<mi>t</mi>
+<mi>y</mi>
+<mspace width=".5em" />
+<mi>a</mi>
+<mi>d</mi>
+<mi>j</mi>
+<mi>u</mi>
+<mi>s</mi>
+<mi>t</mi>
+<mi>m</mi>
+<mi>e</mi>
+<mi>n</mi>
+<mi>t</mi>
+</mtd>
+</mtr>
+</mtable>
+<mo fence="true" stretchy="true"></mo>
+</mrow>
+</mstyle>
+</math>
+</li>
+<li style="margin-bottom:40px">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- \scriptsize P_{efsm}=\begin{cases}\left(\alpha-\dfrac{1-\gamma}{\gamma}\left(\beta-\alpha\right)\left(1-\beta C\left(\left(1-\gamma\right)\beta\alpha\right)\right)\right)\cdot\dfrac{b}{\tau_{0}} & before\enspace difficulty\enspace adjustment\\\left(\alpha-\dfrac{1-\gamma}{\gamma}\left(\beta-\alpha\right)\left(1-\beta C\left(\left(1-\gamma\right)\beta\alpha\right)\right)\right)\cdot\dfrac{1}{\beta}\cdot\dfrac{b}{\tau_{0}} & after\enspace difficulty\enspace adjustment\end{cases} -->
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mstyle mathsize="0.7em">
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>e</mi>
+<mi>f</mi>
+<mi>s</mi>
+<mi>m</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<mrow>
+<mo>{</mo>
+<mtable columnalign="left left" rowspacing=".2em" columnspacing="1em" displaystyle="false">
+<mtr>
+<mtd>
+<mrow>
+	<mo>(</mo>
+	<mi>
+		&#x03B1;<!-- α -->
+	</mi>
+	<mo>
+		&#x2212;<!-- − -->
+	</mo>
+	<mstyle displaystyle="true" scriptlevel="0">
+		<mfrac>
+			<mrow>
+				<mn>1</mn>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mi>
+					&#x03B3;<!-- γ -->
+				</mi>
+			</mrow>
+			<mi>
+				&#x03B3;<!-- γ -->
+			</mi>
+		</mfrac>
+	</mstyle>
+	<mrow>
+		<mo>(</mo>
+		<mi>
+			&#x03B2;<!-- β -->
+		</mi>
+		<mo>
+			&#x2212;<!-- − -->
+		</mo>
+		<mi>
+			&#x03B1;<!-- α -->
+		</mi>
+		<mo>)</mo>
+	</mrow>
+	<mrow>
+		<mo>(</mo>
+		<mn>1</mn>
+		<mo>
+			&#x2212;<!-- − -->
+		</mo>
+		<mi>
+			&#x03B2;<!-- β -->
+		</mi>
+		<mi>C</mi>
+		<mrow>
+			<mo>(</mo>
+			<mrow>
+				<mo>(</mo>
+				<mn>1</mn>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mi>
+					&#x03B3;<!-- γ -->
+				</mi>
+				<mo>)</mo>
+			</mrow>
+			<mi>
+				&#x03B2;<!-- β -->
+			</mi>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+			<mo>)</mo>
+		</mrow>
+		<mo>)</mo>
+	</mrow>
+	<mo>)</mo>
+</mrow>
+<mo>
+	&#x22C5;<!-- ⋅ -->
+</mo>
+<mstyle displaystyle="true" scriptlevel="0">
+	<mfrac>
+		<mi>b</mi>
+		<msub>
+			<mi>
+				&#x03C4;<!-- τ -->
+			</mi>
+			<mrow class="MJX-TeXAtom-ORD">
+				<mn>0</mn>
+			</mrow>
+		</msub>
+	</mfrac>
+</mstyle>
+</mtd>
+<mtd>
+<mi>b</mi>
+<mi>e</mi>
+<mi>f</mi>
+<mi>o</mi>
+<mi>r</mi>
+<mi>e</mi>
+<mspace width=".5em" />
+<mi>d</mi>
+<mi>i</mi>
+<mi>f</mi>
+<mi>f</mi>
+<mi>i</mi>
+<mi>c</mi>
+<mi>u</mi>
+<mi>l</mi>
+<mi>t</mi>
+<mi>y</mi>
+<mspace width=".5em" />
+<mi>a</mi>
+<mi>d</mi>
+<mi>j</mi>
+<mi>u</mi>
+<mi>s</mi>
+<mi>t</mi>
+<mi>m</mi>
+<mi>e</mi>
+<mi>n</mi>
+<mi>t</mi>
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+<mrow>
+	<mo>(</mo>
+	<mi>
+		&#x03B1;<!-- α -->
+	</mi>
+	<mo>
+		&#x2212;<!-- − -->
+	</mo>
+	<mstyle displaystyle="true" scriptlevel="0">
+		<mfrac>
+			<mrow>
+				<mn>1</mn>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mi>
+					&#x03B3;<!-- γ -->
+				</mi>
+			</mrow>
+			<mi>
+				&#x03B3;<!-- γ -->
+			</mi>
+		</mfrac>
+	</mstyle>
+	<mrow>
+		<mo>(</mo>
+		<mi>
+			&#x03B2;<!-- β -->
+		</mi>
+		<mo>
+			&#x2212;<!-- − -->
+		</mo>
+		<mi>
+			&#x03B1;<!-- α -->
+		</mi>
+		<mo>)</mo>
+	</mrow>
+	<mrow>
+		<mo>(</mo>
+		<mn>1</mn>
+		<mo>
+			&#x2212;<!-- − -->
+		</mo>
+		<mi>
+			&#x03B2;<!-- β -->
+		</mi>
+		<mi>C</mi>
+		<mrow>
+			<mo>(</mo>
+			<mrow>
+				<mo>(</mo>
+				<mn>1</mn>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mi>
+					&#x03B3;<!-- γ -->
+				</mi>
+				<mo>)</mo>
+			</mrow>
+			<mi>
+				&#x03B2;<!-- β -->
+			</mi>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+			<mo>)</mo>
+		</mrow>
+		<mo>)</mo>
+	</mrow>
+	<mo>)</mo>
+</mrow>
+<mo>
+	&#x22C5;<!-- ⋅ -->
+</mo>
+<mstyle displaystyle="true" scriptlevel="0">
+	<mfrac>
+		<mn>1</mn>
+		<mi>
+			&#x03B2;<!-- β -->
+		</mi>
+	</mfrac>
+</mstyle>
+<mo>
+	&#x22C5;<!-- ⋅ -->
+</mo>
+<mstyle displaystyle="true" scriptlevel="0">
+	<mfrac>
+		<mi>b</mi>
+		<msub>
+			<mi>
+				&#x03C4;<!-- τ -->
+			</mi>
+			<mrow class="MJX-TeXAtom-ORD">
+				<mn>0</mn>
+			</mrow>
+		</msub>
+	</mfrac>
+</mstyle>
+</mtd>
+<mtd>
+<mi>a</mi>
+<mi>f</mi>
+<mi>t</mi>
+<mi>e</mi>
+<mi>r</mi>
+<mspace width=".5em" />
+<mi>d</mi>
+<mi>i</mi>
+<mi>f</mi>
+<mi>f</mi>
+<mi>i</mi>
+<mi>c</mi>
+<mi>u</mi>
+<mi>l</mi>
+<mi>t</mi>
+<mi>y</mi>
+<mspace width=".5em" />
+<mi>a</mi>
+<mi>d</mi>
+<mi>j</mi>
+<mi>u</mi>
+<mi>s</mi>
+<mi>t</mi>
+<mi>m</mi>
+<mi>e</mi>
+<mi>n</mi>
+<mi>t</mi>
+</mtd>
+</mtr>
+</mtable>
+<mo fence="true" stretchy="true"></mo>
+</mrow>
+</mstyle>
+</math>
+</li>
+<li style="margin-bottom:40px">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- \scriptsize A_{j–tsm}=\begin{cases} \dfrac { \alpha + \dfrac { ( 1 - \gamma ) \beta \alpha ( \beta - \alpha ) } { \left( \beta + \beta \alpha - \alpha ^ { 2 } \right) [ j + 1 ] } \left( \left( [ j - 1 ] + \dfrac { 1 } { \beta } \dfrac { P _ { j } ( \lambda ) } { [ j + 1 ] } \right) \lambda ^ { 2 } - \dfrac { 2 } { \sqrt { 1 - 4 ( 1 - \gamma ) \beta \alpha } + \beta - \alpha } \right) } { 1 + \dfrac { ( 1 - \gamma ) \beta \alpha } { \beta + \beta \alpha - \alpha ^ { 2 } } ( j + 1 ) \left( \dfrac { [ 2 ] } { [ j + 1 ] } - \dfrac { 2 } { j + 1 } \right) } & before\enspace difficulty\enspace adjustment\\ \dfrac { \alpha + \dfrac { ( 1 - \gamma ) \beta \alpha ( \beta - \alpha ) } { \left( \beta + \beta \alpha - \alpha ^ { 2 } \right) [ j + 1 ] } \left( \left( [ j - 1 ] + \dfrac { 1 } { \beta } \dfrac { P _ { j } ( \lambda ) } { [ j + 1 ] } \right) \lambda ^ { 2 } - \dfrac { 2 } { \sqrt { 1 - 4 ( 1 - \gamma ) \beta \alpha } + \beta - \alpha } \right) } { \dfrac { \beta + \beta \alpha - \alpha } { \beta + \beta \alpha - \alpha ^ { 2 } } + \dfrac { ( 1 - \gamma ) \beta \alpha } { \beta + \beta \alpha - \alpha ^ { 2 } } ( j + \lambda ) \left( \dfrac { 1 } { [ j + 1 ] } - \dfrac { 1 } { j + \lambda } \right) } & after\enspace difficulty\enspace adjustment\end{cases} -->
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mstyle mathsize="0.7em">
+<msub>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+<mo>&#x2013;</mo>
+<mi>t</mi>
+<mi>s</mi>
+<mi>m</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<mrow>
+<mo>{</mo>
+<mtable columnalign="left left" rowspacing=".2em" columnspacing="1em" displaystyle="false">
+<mtr>
+<mtd>
+<mstyle displaystyle="true" scriptlevel="0">
+	<mfrac>
+		<mrow>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+			<mo>+</mo>
+			<mstyle displaystyle="true" scriptlevel="0">
+				<mfrac>
+					<mrow>
+						<mo stretchy="false">(</mo>
+						<mn>1</mn>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<mi>
+							&#x03B3;<!-- γ -->
+						</mi>
+						<mo stretchy="false">)</mo>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+						<mo stretchy="false">(</mo>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+						<mo stretchy="false">)</mo>
+					</mrow>
+					<mrow>
+						<mrow>
+							<mo>(</mo>
+							<mi>
+								&#x03B2;<!-- β -->
+							</mi>
+							<mo>+</mo>
+							<mi>
+								&#x03B2;<!-- β -->
+							</mi>
+							<mi>
+								&#x03B1;<!-- α -->
+							</mi>
+							<mo>
+								&#x2212;<!-- − -->
+							</mo>
+							<msup>
+								<mi>
+									&#x03B1;<!-- α -->
+								</mi>
+								<mrow class="MJX-TeXAtom-ORD">
+									<mn>2</mn>
+								</mrow>
+							</msup>
+							<mo>)</mo>
+						</mrow>
+						<mo stretchy="false">[</mo>
+						<mi>j</mi>
+						<mo>+</mo>
+						<mn>1</mn>
+						<mo stretchy="false">]</mo>
+					</mrow>
+				</mfrac>
+			</mstyle>
+			<mrow>
+				<mo>(</mo>
+				<mrow>
+					<mo>(</mo>
+					<mo stretchy="false">[</mo>
+					<mi>j</mi>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mn>1</mn>
+					<mo stretchy="false">]</mo>
+					<mo>+</mo>
+					<mstyle displaystyle="true" scriptlevel="0">
+						<mfrac>
+							<mn>1</mn>
+							<mi>
+								&#x03B2;<!-- β -->
+							</mi>
+						</mfrac>
+					</mstyle>
+					<mstyle displaystyle="true" scriptlevel="0">
+						<mfrac>
+							<mrow>
+								<msub>
+									<mi>P</mi>
+									<mrow class="MJX-TeXAtom-ORD">
+										<mi>j</mi>
+									</mrow>
+								</msub>
+								<mo stretchy="false">(</mo>
+								<mi>
+									&#x03BB;<!-- λ -->
+								</mi>
+								<mo stretchy="false">)</mo>
+							</mrow>
+							<mrow>
+								<mo stretchy="false">[</mo>
+								<mi>j</mi>
+								<mo>+</mo>
+								<mn>1</mn>
+								<mo stretchy="false">]</mo>
+							</mrow>
+						</mfrac>
+					</mstyle>
+					<mo>)</mo>
+				</mrow>
+				<msup>
+					<mi>
+						&#x03BB;<!-- λ -->
+					</mi>
+					<mrow class="MJX-TeXAtom-ORD">
+						<mn>2</mn>
+					</mrow>
+				</msup>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mstyle displaystyle="true" scriptlevel="0">
+					<mfrac>
+						<mn>2</mn>
+						<mrow>
+							<msqrt>
+								<mn>1</mn>
+								<mo>
+									&#x2212;<!-- − -->
+								</mo>
+								<mn>4</mn>
+								<mo stretchy="false">(</mo>
+								<mn>1</mn>
+								<mo>
+									&#x2212;<!-- − -->
+								</mo>
+								<mi>
+									&#x03B3;<!-- γ -->
+								</mi>
+								<mo stretchy="false">)</mo>
+								<mi>
+									&#x03B2;<!-- β -->
+								</mi>
+								<mi>
+									&#x03B1;<!-- α -->
+								</mi>
+							</msqrt>
+							<mo>+</mo>
+							<mi>
+								&#x03B2;<!-- β -->
+							</mi>
+							<mo>
+								&#x2212;<!-- − -->
+							</mo>
+							<mi>
+								&#x03B1;<!-- α -->
+							</mi>
+						</mrow>
+					</mfrac>
+				</mstyle>
+				<mo>)</mo>
+			</mrow>
+		</mrow>
+		<mrow>
+			<mn>1</mn>
+			<mo>+</mo>
+			<mstyle displaystyle="true" scriptlevel="0">
+				<mfrac>
+					<mrow>
+						<mo stretchy="false">(</mo>
+						<mn>1</mn>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<mi>
+							&#x03B3;<!-- γ -->
+						</mi>
+						<mo stretchy="false">)</mo>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+					</mrow>
+					<mrow>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mo>+</mo>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<msup>
+							<mi>
+								&#x03B1;<!-- α -->
+							</mi>
+							<mrow class="MJX-TeXAtom-ORD">
+								<mn>2</mn>
+							</mrow>
+						</msup>
+					</mrow>
+				</mfrac>
+			</mstyle>
+			<mo stretchy="false">(</mo>
+			<mi>j</mi>
+			<mo>+</mo>
+			<mn>1</mn>
+			<mo stretchy="false">)</mo>
+			<mrow>
+				<mo>(</mo>
+				<mstyle displaystyle="true" scriptlevel="0">
+					<mfrac>
+						<mrow>
+							<mo stretchy="false">[</mo>
+							<mn>2</mn>
+							<mo stretchy="false">]</mo>
+						</mrow>
+						<mrow>
+							<mo stretchy="false">[</mo>
+							<mi>j</mi>
+							<mo>+</mo>
+							<mn>1</mn>
+							<mo stretchy="false">]</mo>
+						</mrow>
+					</mfrac>
+				</mstyle>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mstyle displaystyle="true" scriptlevel="0">
+					<mfrac>
+						<mn>2</mn>
+						<mrow>
+							<mi>j</mi>
+							<mo>+</mo>
+							<mn>1</mn>
+						</mrow>
+					</mfrac>
+				</mstyle>
+				<mo>)</mo>
+			</mrow>
+		</mrow>
+	</mfrac>
+</mstyle>
+</mtd>
+<mtd>
+<mi>b</mi>
+<mi>e</mi>
+<mi>f</mi>
+<mi>o</mi>
+<mi>r</mi>
+<mi>e</mi>
+<mspace width=".5em" />
+<mi>d</mi>
+<mi>i</mi>
+<mi>f</mi>
+<mi>f</mi>
+<mi>i</mi>
+<mi>c</mi>
+<mi>u</mi>
+<mi>l</mi>
+<mi>t</mi>
+<mi>y</mi>
+<mspace width=".5em" />
+<mi>a</mi>
+<mi>d</mi>
+<mi>j</mi>
+<mi>u</mi>
+<mi>s</mi>
+<mi>t</mi>
+<mi>m</mi>
+<mi>e</mi>
+<mi>n</mi>
+<mi>t</mi>
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+<mstyle displaystyle="true" scriptlevel="0">
+	<mfrac>
+		<mrow>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+			<mo>+</mo>
+			<mstyle displaystyle="true" scriptlevel="0">
+				<mfrac>
+					<mrow>
+						<mo stretchy="false">(</mo>
+						<mn>1</mn>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<mi>
+							&#x03B3;<!-- γ -->
+						</mi>
+						<mo stretchy="false">)</mo>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+						<mo stretchy="false">(</mo>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+						<mo stretchy="false">)</mo>
+					</mrow>
+					<mrow>
+						<mrow>
+							<mo>(</mo>
+							<mi>
+								&#x03B2;<!-- β -->
+							</mi>
+							<mo>+</mo>
+							<mi>
+								&#x03B2;<!-- β -->
+							</mi>
+							<mi>
+								&#x03B1;<!-- α -->
+							</mi>
+							<mo>
+								&#x2212;<!-- − -->
+							</mo>
+							<msup>
+								<mi>
+									&#x03B1;<!-- α -->
+								</mi>
+								<mrow class="MJX-TeXAtom-ORD">
+									<mn>2</mn>
+								</mrow>
+							</msup>
+							<mo>)</mo>
+						</mrow>
+						<mo stretchy="false">[</mo>
+						<mi>j</mi>
+						<mo>+</mo>
+						<mn>1</mn>
+						<mo stretchy="false">]</mo>
+					</mrow>
+				</mfrac>
+			</mstyle>
+			<mrow>
+				<mo>(</mo>
+				<mrow>
+					<mo>(</mo>
+					<mo stretchy="false">[</mo>
+					<mi>j</mi>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mn>1</mn>
+					<mo stretchy="false">]</mo>
+					<mo>+</mo>
+					<mstyle displaystyle="true" scriptlevel="0">
+						<mfrac>
+							<mn>1</mn>
+							<mi>
+								&#x03B2;<!-- β -->
+							</mi>
+						</mfrac>
+					</mstyle>
+					<mstyle displaystyle="true" scriptlevel="0">
+						<mfrac>
+							<mrow>
+								<msub>
+									<mi>P</mi>
+									<mrow class="MJX-TeXAtom-ORD">
+										<mi>j</mi>
+									</mrow>
+								</msub>
+								<mo stretchy="false">(</mo>
+								<mi>
+									&#x03BB;<!-- λ -->
+								</mi>
+								<mo stretchy="false">)</mo>
+							</mrow>
+							<mrow>
+								<mo stretchy="false">[</mo>
+								<mi>j</mi>
+								<mo>+</mo>
+								<mn>1</mn>
+								<mo stretchy="false">]</mo>
+							</mrow>
+						</mfrac>
+					</mstyle>
+					<mo>)</mo>
+				</mrow>
+				<msup>
+					<mi>
+						&#x03BB;<!-- λ -->
+					</mi>
+					<mrow class="MJX-TeXAtom-ORD">
+						<mn>2</mn>
+					</mrow>
+				</msup>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mstyle displaystyle="true" scriptlevel="0">
+					<mfrac>
+						<mn>2</mn>
+						<mrow>
+							<msqrt>
+								<mn>1</mn>
+								<mo>
+									&#x2212;<!-- − -->
+								</mo>
+								<mn>4</mn>
+								<mo stretchy="false">(</mo>
+								<mn>1</mn>
+								<mo>
+									&#x2212;<!-- − -->
+								</mo>
+								<mi>
+									&#x03B3;<!-- γ -->
+								</mi>
+								<mo stretchy="false">)</mo>
+								<mi>
+									&#x03B2;<!-- β -->
+								</mi>
+								<mi>
+									&#x03B1;<!-- α -->
+								</mi>
+							</msqrt>
+							<mo>+</mo>
+							<mi>
+								&#x03B2;<!-- β -->
+							</mi>
+							<mo>
+								&#x2212;<!-- − -->
+							</mo>
+							<mi>
+								&#x03B1;<!-- α -->
+							</mi>
+						</mrow>
+					</mfrac>
+				</mstyle>
+				<mo>)</mo>
+			</mrow>
+		</mrow>
+		<mrow>
+			<mstyle displaystyle="true" scriptlevel="0">
+				<mfrac>
+					<mrow>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mo>+</mo>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+					</mrow>
+					<mrow>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mo>+</mo>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<msup>
+							<mi>
+								&#x03B1;<!-- α -->
+							</mi>
+							<mrow class="MJX-TeXAtom-ORD">
+								<mn>2</mn>
+							</mrow>
+						</msup>
+					</mrow>
+				</mfrac>
+			</mstyle>
+			<mo>+</mo>
+			<mstyle displaystyle="true" scriptlevel="0">
+				<mfrac>
+					<mrow>
+						<mo stretchy="false">(</mo>
+						<mn>1</mn>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<mi>
+							&#x03B3;<!-- γ -->
+						</mi>
+						<mo stretchy="false">)</mo>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+					</mrow>
+					<mrow>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mo>+</mo>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<msup>
+							<mi>
+								&#x03B1;<!-- α -->
+							</mi>
+							<mrow class="MJX-TeXAtom-ORD">
+								<mn>2</mn>
+							</mrow>
+						</msup>
+					</mrow>
+				</mfrac>
+			</mstyle>
+			<mo stretchy="false">(</mo>
+			<mi>j</mi>
+			<mo>+</mo>
+			<mi>
+				&#x03BB;<!-- λ -->
+			</mi>
+			<mo stretchy="false">)</mo>
+			<mrow>
+				<mo>(</mo>
+				<mstyle displaystyle="true" scriptlevel="0">
+					<mfrac>
+						<mn>1</mn>
+						<mrow>
+							<mo stretchy="false">[</mo>
+							<mi>j</mi>
+							<mo>+</mo>
+							<mn>1</mn>
+							<mo stretchy="false">]</mo>
+						</mrow>
+					</mfrac>
+				</mstyle>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mstyle displaystyle="true" scriptlevel="0">
+					<mfrac>
+						<mn>1</mn>
+						<mrow>
+							<mi>j</mi>
+							<mo>+</mo>
+							<mi>
+								&#x03BB;<!-- λ -->
+							</mi>
+						</mrow>
+					</mfrac>
+				</mstyle>
+				<mo>)</mo>
+			</mrow>
+		</mrow>
+	</mfrac>
+</mstyle>
+</mtd>
+<mtd>
+<mi>a</mi>
+<mi>f</mi>
+<mi>t</mi>
+<mi>e</mi>
+<mi>r</mi>
+<mspace width=".5em" />
+<mi>d</mi>
+<mi>i</mi>
+<mi>f</mi>
+<mi>f</mi>
+<mi>i</mi>
+<mi>c</mi>
+<mi>u</mi>
+<mi>l</mi>
+<mi>t</mi>
+<mi>y</mi>
+<mspace width=".5em" />
+<mi>a</mi>
+<mi>d</mi>
+<mi>j</mi>
+<mi>u</mi>
+<mi>s</mi>
+<mi>t</mi>
+<mi>m</mi>
+<mi>e</mi>
+<mi>n</mi>
+<mi>t</mi>
+</mtd>
+</mtr>
+</mtable>
+<mo fence="true" stretchy="true"></mo>
+</mrow>
+</mstyle>
+</math>
+</li>
+<li style="margin-bottom:40px">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"> <mstyle mathsize="0.7em"> <msub> <mi>A</mi> <mrow class="MJX-TeXAtom-ORD"> <mi>j</mi> <mo>&#x2013;</mo> <mi>t</mi> <mi>s</mi> <mi>m</mi> </mrow> </msub> <mo>=</mo> <mrow> <mo>{</mo> <mtable columnalign="left left" rowspacing=".2em" columnspacing="1em" displaystyle="false"> <mtr> <mtd> <mstyle displaystyle="true" scriptlevel="0"> <mfrac> <mrow> <mi>&#x03B1;<!-- α -->
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mstyle mathsize="0.7em">
+<msub>
+<mi>A</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+<mo>&#x2013;</mo>
+<mi>t</mi>
+<mi>s</mi>
+<mi>m</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<mrow>
+<mo>{</mo>
+<mtable columnalign="left left" rowspacing=".2em" columnspacing="1em" displaystyle="false">
+<mtr>
+<mtd>
+<mstyle displaystyle="true" scriptlevel="0">
+	<mfrac>
+		<mrow>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+			<mo>+</mo>
+			<mstyle displaystyle="true" scriptlevel="0">
+				<mfrac>
+					<mrow>
+						<mo stretchy="false">(</mo>
+						<mn>1</mn>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<mi>
+							&#x03B3;<!-- γ -->
+						</mi>
+						<mo stretchy="false">)</mo>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+						<mo stretchy="false">(</mo>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+						<mo stretchy="false">)</mo>
+					</mrow>
+					<mrow>
+						<mrow>
+							<mo>(</mo>
+							<mi>
+								&#x03B2;<!-- β -->
+							</mi>
+							<mo>+</mo>
+							<mi>
+								&#x03B2;<!-- β -->
+							</mi>
+							<mi>
+								&#x03B1;<!-- α -->
+							</mi>
+							<mo>
+								&#x2212;<!-- − -->
+							</mo>
+							<msup>
+								<mi>
+									&#x03B1;<!-- α -->
+								</mi>
+								<mrow class="MJX-TeXAtom-ORD">
+									<mn>2</mn>
+								</mrow>
+							</msup>
+							<mo>)</mo>
+						</mrow>
+						<mo stretchy="false">[</mo>
+						<mi>j</mi>
+						<mo>+</mo>
+						<mn>1</mn>
+						<mo stretchy="false">]</mo>
+					</mrow>
+				</mfrac>
+			</mstyle>
+			<mrow>
+				<mo>(</mo>
+				<mrow>
+					<mo>(</mo>
+					<mo stretchy="false">[</mo>
+					<mi>j</mi>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mn>1</mn>
+					<mo stretchy="false">]</mo>
+					<mo>+</mo>
+					<mstyle displaystyle="true" scriptlevel="0">
+						<mfrac>
+							<mn>1</mn>
+							<mi>
+								&#x03B2;<!-- β -->
+							</mi>
+						</mfrac>
+					</mstyle>
+					<mstyle displaystyle="true" scriptlevel="0">
+						<mfrac>
+							<mrow>
+								<msub>
+									<mi>P</mi>
+									<mrow class="MJX-TeXAtom-ORD">
+										<mi>j</mi>
+									</mrow>
+								</msub>
+								<mo stretchy="false">(</mo>
+								<mi>
+									&#x03BB;<!-- λ -->
+								</mi>
+								<mo stretchy="false">)</mo>
+							</mrow>
+							<mrow>
+								<mo stretchy="false">[</mo>
+								<mi>j</mi>
+								<mo>+</mo>
+								<mn>1</mn>
+								<mo stretchy="false">]</mo>
+							</mrow>
+						</mfrac>
+					</mstyle>
+					<mo>)</mo>
+				</mrow>
+				<msup>
+					<mi>
+						&#x03BB;<!-- λ -->
+					</mi>
+					<mrow class="MJX-TeXAtom-ORD">
+						<mn>2</mn>
+					</mrow>
+				</msup>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mstyle displaystyle="true" scriptlevel="0">
+					<mfrac>
+						<mn>2</mn>
+						<mrow>
+							<msqrt>
+								<mn>1</mn>
+								<mo>
+									&#x2212;<!-- − -->
+								</mo>
+								<mn>4</mn>
+								<mo stretchy="false">(</mo>
+								<mn>1</mn>
+								<mo>
+									&#x2212;<!-- − -->
+								</mo>
+								<mi>
+									&#x03B3;<!-- γ -->
+								</mi>
+								<mo stretchy="false">)</mo>
+								<mi>
+									&#x03B2;<!-- β -->
+								</mi>
+								<mi>
+									&#x03B1;<!-- α -->
+								</mi>
+							</msqrt>
+							<mo>+</mo>
+							<mi>
+								&#x03B2;<!-- β -->
+							</mi>
+							<mo>
+								&#x2212;<!-- − -->
+							</mo>
+							<mi>
+								&#x03B1;<!-- α -->
+							</mi>
+						</mrow>
+					</mfrac>
+				</mstyle>
+				<mo>)</mo>
+			</mrow>
+		</mrow>
+		<mrow>
+			<mn>1</mn>
+			<mo>+</mo>
+			<mstyle displaystyle="true" scriptlevel="0">
+				<mfrac>
+					<mrow>
+						<mo stretchy="false">(</mo>
+						<mn>1</mn>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<mi>
+							&#x03B3;<!-- γ -->
+						</mi>
+						<mo stretchy="false">)</mo>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+					</mrow>
+					<mrow>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mo>+</mo>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<msup>
+							<mi>
+								&#x03B1;<!-- α -->
+							</mi>
+							<mrow class="MJX-TeXAtom-ORD">
+								<mn>2</mn>
+							</mrow>
+						</msup>
+					</mrow>
+				</mfrac>
+			</mstyle>
+			<mo stretchy="false">(</mo>
+			<mi>j</mi>
+			<mo>+</mo>
+			<mn>1</mn>
+			<mo stretchy="false">)</mo>
+			<mrow>
+				<mo>(</mo>
+				<mstyle displaystyle="true" scriptlevel="0">
+					<mfrac>
+						<mrow>
+							<mo stretchy="false">[</mo>
+							<mn>2</mn>
+							<mo stretchy="false">]</mo>
+						</mrow>
+						<mrow>
+							<mo stretchy="false">[</mo>
+							<mi>j</mi>
+							<mo>+</mo>
+							<mn>1</mn>
+							<mo stretchy="false">]</mo>
+						</mrow>
+					</mfrac>
+				</mstyle>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mstyle displaystyle="true" scriptlevel="0">
+					<mfrac>
+						<mn>2</mn>
+						<mrow>
+							<mi>j</mi>
+							<mo>+</mo>
+							<mn>1</mn>
+						</mrow>
+					</mfrac>
+				</mstyle>
+				<mo>)</mo>
+			</mrow>
+		</mrow>
+	</mfrac>
+</mstyle>
+<mo>
+	&#x22C5;<!-- ⋅ -->
+</mo>
+<mstyle displaystyle="true" scriptlevel="0">
+	<mfrac>
+		<mi>b</mi>
+		<msub>
+			<mi>
+				&#x03C4;<!-- τ -->
+			</mi>
+			<mrow class="MJX-TeXAtom-ORD">
+				<mn>0</mn>
+			</mrow>
+		</msub>
+	</mfrac>
+</mstyle>
+</mtd>
+<mtd>
+<mi>b</mi>
+<mi>e</mi>
+<mi>f</mi>
+<mi>o</mi>
+<mi>r</mi>
+<mi>e</mi>
+<mspace width=".5em" />
+<mi>d</mi>
+<mi>i</mi>
+<mi>f</mi>
+<mi>f</mi>
+<mi>i</mi>
+<mi>c</mi>
+<mi>u</mi>
+<mi>l</mi>
+<mi>t</mi>
+<mi>y</mi>
+<mspace width=".5em" />
+<mi>a</mi>
+<mi>d</mi>
+<mi>j</mi>
+<mi>u</mi>
+<mi>s</mi>
+<mi>t</mi>
+<mi>m</mi>
+<mi>e</mi>
+<mi>n</mi>
+<mi>t</mi>
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+<mstyle displaystyle="true" scriptlevel="0">
+	<mfrac>
+		<mrow>
+			<mi>
+				&#x03B1;<!-- α -->
+			</mi>
+			<mo>+</mo>
+			<mstyle displaystyle="true" scriptlevel="0">
+				<mfrac>
+					<mrow>
+						<mo stretchy="false">(</mo>
+						<mn>1</mn>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<mi>
+							&#x03B3;<!-- γ -->
+						</mi>
+						<mo stretchy="false">)</mo>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+						<mo stretchy="false">(</mo>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+						<mo stretchy="false">)</mo>
+					</mrow>
+					<mrow>
+						<mrow>
+							<mo>(</mo>
+							<mi>
+								&#x03B2;<!-- β -->
+							</mi>
+							<mo>+</mo>
+							<mi>
+								&#x03B2;<!-- β -->
+							</mi>
+							<mi>
+								&#x03B1;<!-- α -->
+							</mi>
+							<mo>
+								&#x2212;<!-- − -->
+							</mo>
+							<msup>
+								<mi>
+									&#x03B1;<!-- α -->
+								</mi>
+								<mrow class="MJX-TeXAtom-ORD">
+									<mn>2</mn>
+								</mrow>
+							</msup>
+							<mo>)</mo>
+						</mrow>
+						<mo stretchy="false">[</mo>
+						<mi>j</mi>
+						<mo>+</mo>
+						<mn>1</mn>
+						<mo stretchy="false">]</mo>
+					</mrow>
+				</mfrac>
+			</mstyle>
+			<mrow>
+				<mo>(</mo>
+				<mrow>
+					<mo>(</mo>
+					<mo stretchy="false">[</mo>
+					<mi>j</mi>
+					<mo>
+						&#x2212;<!-- − -->
+					</mo>
+					<mn>1</mn>
+					<mo stretchy="false">]</mo>
+					<mo>+</mo>
+					<mstyle displaystyle="true" scriptlevel="0">
+						<mfrac>
+							<mn>1</mn>
+							<mi>
+								&#x03B2;<!-- β -->
+							</mi>
+						</mfrac>
+					</mstyle>
+					<mstyle displaystyle="true" scriptlevel="0">
+						<mfrac>
+							<mrow>
+								<msub>
+									<mi>P</mi>
+									<mrow class="MJX-TeXAtom-ORD">
+										<mi>j</mi>
+									</mrow>
+								</msub>
+								<mo stretchy="false">(</mo>
+								<mi>
+									&#x03BB;<!-- λ -->
+								</mi>
+								<mo stretchy="false">)</mo>
+							</mrow>
+							<mrow>
+								<mo stretchy="false">[</mo>
+								<mi>j</mi>
+								<mo>+</mo>
+								<mn>1</mn>
+								<mo stretchy="false">]</mo>
+							</mrow>
+						</mfrac>
+					</mstyle>
+					<mo>)</mo>
+				</mrow>
+				<msup>
+					<mi>
+						&#x03BB;<!-- λ -->
+					</mi>
+					<mrow class="MJX-TeXAtom-ORD">
+						<mn>2</mn>
+					</mrow>
+				</msup>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mstyle displaystyle="true" scriptlevel="0">
+					<mfrac>
+						<mn>2</mn>
+						<mrow>
+							<msqrt>
+								<mn>1</mn>
+								<mo>
+									&#x2212;<!-- − -->
+								</mo>
+								<mn>4</mn>
+								<mo stretchy="false">(</mo>
+								<mn>1</mn>
+								<mo>
+									&#x2212;<!-- − -->
+								</mo>
+								<mi>
+									&#x03B3;<!-- γ -->
+								</mi>
+								<mo stretchy="false">)</mo>
+								<mi>
+									&#x03B2;<!-- β -->
+								</mi>
+								<mi>
+									&#x03B1;<!-- α -->
+								</mi>
+							</msqrt>
+							<mo>+</mo>
+							<mi>
+								&#x03B2;<!-- β -->
+							</mi>
+							<mo>
+								&#x2212;<!-- − -->
+							</mo>
+							<mi>
+								&#x03B1;<!-- α -->
+							</mi>
+						</mrow>
+					</mfrac>
+				</mstyle>
+				<mo>)</mo>
+			</mrow>
+		</mrow>
+		<mrow>
+			<mstyle displaystyle="true" scriptlevel="0">
+				<mfrac>
+					<mrow>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mo>+</mo>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+					</mrow>
+					<mrow>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mo>+</mo>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<msup>
+							<mi>
+								&#x03B1;<!-- α -->
+							</mi>
+							<mrow class="MJX-TeXAtom-ORD">
+								<mn>2</mn>
+							</mrow>
+						</msup>
+					</mrow>
+				</mfrac>
+			</mstyle>
+			<mo>+</mo>
+			<mstyle displaystyle="true" scriptlevel="0">
+				<mfrac>
+					<mrow>
+						<mo stretchy="false">(</mo>
+						<mn>1</mn>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<mi>
+							&#x03B3;<!-- γ -->
+						</mi>
+						<mo stretchy="false">)</mo>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+					</mrow>
+					<mrow>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mo>+</mo>
+						<mi>
+							&#x03B2;<!-- β -->
+						</mi>
+						<mi>
+							&#x03B1;<!-- α -->
+						</mi>
+						<mo>
+							&#x2212;<!-- − -->
+						</mo>
+						<msup>
+							<mi>
+								&#x03B1;<!-- α -->
+							</mi>
+							<mrow class="MJX-TeXAtom-ORD">
+								<mn>2</mn>
+							</mrow>
+						</msup>
+					</mrow>
+				</mfrac>
+			</mstyle>
+			<mo stretchy="false">(</mo>
+			<mi>j</mi>
+			<mo>+</mo>
+			<mi>
+				&#x03BB;<!-- λ -->
+			</mi>
+			<mo stretchy="false">)</mo>
+			<mrow>
+				<mo>(</mo>
+				<mstyle displaystyle="true" scriptlevel="0">
+					<mfrac>
+						<mn>1</mn>
+						<mrow>
+							<mo stretchy="false">[</mo>
+							<mi>j</mi>
+							<mo>+</mo>
+							<mn>1</mn>
+							<mo stretchy="false">]</mo>
+						</mrow>
+					</mfrac>
+				</mstyle>
+				<mo>
+					&#x2212;<!-- − -->
+				</mo>
+				<mstyle displaystyle="true" scriptlevel="0">
+					<mfrac>
+						<mn>1</mn>
+						<mrow>
+							<mi>j</mi>
+							<mo>+</mo>
+							<mi>
+								&#x03BB;<!-- λ -->
+							</mi>
+						</mrow>
+					</mfrac>
+				</mstyle>
+				<mo>)</mo>
+			</mrow>
+		</mrow>
+	</mfrac>
+</mstyle>
+<mo>
+	&#x22C5;<!-- ⋅ -->
+</mo>
+<mstyle displaystyle="true" scriptlevel="0">
+	<mfrac>
+		<mi>b</mi>
+		<msub>
+			<mi>
+				&#x03C4;<!-- τ -->
+			</mi>
+			<mrow class="MJX-TeXAtom-ORD">
+				<mn>0</mn>
+			</mrow>
+		</msub>
+	</mfrac>
+</mstyle>
+</mtd>
+<mtd>
+<mi>a</mi>
+<mi>f</mi>
+<mi>t</mi>
+<mi>e</mi>
+<mi>r</mi>
+<mspace width=".5em" />
+<mi>d</mi>
+<mi>i</mi>
+<mi>f</mi>
+<mi>f</mi>
+<mi>i</mi>
+<mi>c</mi>
+<mi>u</mi>
+<mi>l</mi>
+<mi>t</mi>
+<mi>y</mi>
+<mspace width=".5em" />
+<mi>a</mi>
+<mi>d</mi>
+<mi>j</mi>
+<mi>u</mi>
+<mi>s</mi>
+<mi>t</mi>
+<mi>m</mi>
+<mi>e</mi>
+<mi>n</mi>
+<mi>t</mi>
+</mtd>
+</mtr>
+</mtable>
+<mo fence="true" stretchy="true"></mo>
+</mrow>
+</mstyle>
+</math>
+</li>
+</ul>
+<p>
+In Equal fork stubborn mining 
+<math>
+<mi>C</mi>
+<mi>(</mi>
+<mi>x</mi>
+<mi>)</mi>
+</math>
+is generating series for Catalan numbers and is the n-th Catalan number
+</p>
+<p style="margin-bottom:20px">
+<!-- \scriptsize C\left(x\right)=\sum_{n=0}^{+\infty}C_{n}x^{n}=\frac{1-\sqrt{1-4x}}{2x}=\frac{2}{1+\sqrt{1-4x}} -->
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+<mstyle mathsize="0.7em">
+<mi>C</mi>
+<mrow>
+<mo>(</mo>
+<mi>x</mi>
+<mo>)</mo>
+</mrow>
+<mo>=</mo>
+<munderover>
+<mo>&#x2211;</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+<mo>=</mo>
+<mn>0</mn>
+</mrow>
+<mrow class="MJX-TeXAtom-ORD">
+<mo>+</mo>
+<mi mathvariant="normal">&#x221E;</mi>
+</mrow>
+</munderover>
+<msub>
+<mi>C</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+</msub>
+<msup>
+<mi>x</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+</msup>
+<mo>=</mo>
+<mfrac>
+<mrow>
+<mn>1</mn>
+<mo>&#x2212;</mo>
+<msqrt>
+<mn>1</mn>
+<mo>&#x2212;</mo>
+<mn>4</mn>
+<mi>x</mi>
+</msqrt>
+</mrow>
+<mrow>
+<mn>2</mn>
+<mi>x</mi>
+</mrow>
+</mfrac>
+<mo>=</mo>
+<mfrac>
+<mn>2</mn>
+<mrow>
+<mn>1</mn>
+<mo>+</mo>
+<msqrt>
+<mn>1</mn>
+<mo>&#x2212;</mo>
+<mn>4</mn>
+<mi>x</mi>
+</msqrt>
+</mrow>
+</mfrac>
+</mstyle>
+</math>
+</p>
+<p style="margin-bottom:40px">
+<!-- \scriptsize C_{n}=\frac{1}{2n+1}\left(\begin{array}{c}2n\\ n\end{array}\right)=\frac{\left(2n\right)!}{n!\left(n+1\right)!} -->
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+<mstyle mathsize="0.7em">
+<msub>
+<mi>C</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>n</mi>
+</mrow>
+</msub>
+<mo>=</mo>
+<mfrac>
+<mn>1</mn>
+<mrow>
+<mn>2</mn>
+<mi>n</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</mfrac>
+<mrow>
+<mo>(</mo>
+<mtable rowspacing="4pt" columnspacing="1em">
+<mtr>
+<mtd>
+<mn>2</mn>
+<mi>n</mi>
+</mtd>
+</mtr>
+<mtr>
+<mtd>
+<mi>n</mi>
+</mtd>
+</mtr>
+</mtable>
+<mo>)</mo>
+</mrow>
+<mo>=</mo>
+<mfrac>
+<mrow>
+<mrow>
+<mo>(</mo>
+<mn>2</mn>
+<mi>n</mi>
+<mo>)</mo>
+</mrow>
+<mo>!</mo>
+</mrow>
+<mrow>
+<mi>n</mi>
+<mo>!</mo>
+<mrow>
+<mo>(</mo>
+<mi>n</mi>
+<mo>+</mo>
+<mn>1</mn>
+<mo>)</mo>
+</mrow>
+<mo>!</mo>
+</mrow>
+</mfrac>
+</mstyle>
+</math>
+</p>
+<p>
+In j–trail stubborn mining 
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mi>j</mi>
+<mo>&#x2265;</mo>
+<mn>1</mn>
+</math>
+and 
+<math>
+<mstyle>
+<mi>j</mi>
+<mo>&#x2208;</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mi mathvariant="double-struck">N</mi>
+</mrow>
+</mstyle>
+</math>
+</p>
+<p style="margin-bottom:20px">
+<!-- \scriptsize [ j ] = \frac { 1 - \lambda ^ { j } } { 1 - \lambda } -->
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+<mstyle mathsize="0.7em">
+<mo stretchy="false">[</mo>
+<mi>j</mi>
+<mo stretchy="false">]</mo>
+<mo>=</mo>
+<mfrac>
+<mrow>
+<mn>1</mn>
+<mo>
+&#x2212;<!-- − -->
+</mo>
+<msup>
+<mi>
+&#x03BB;<!-- λ -->
+</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msup>
+</mrow>
+<mrow>
+<mn>1</mn>
+<mo>
+&#x2212;<!-- − -->
+</mo>
+<mi>
+&#x03BB;<!-- λ -->
+</mi>
+</mrow>
+</mfrac>
+</mstyle>
+</math>
+</p>
+<p style="margin-bottom:40px">
+<!-- \scriptsize P _ { j } ( \lambda ) = \frac { 1 - j \lambda ^ { j - 1 } + j \lambda ^ { j + 1 } - \lambda ^ { 2 j } } { ( 1 - \lambda ) ^ { 3 } } -->
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+<mstyle mathsize="0.7em">
+<msub>
+<mi>P</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+</mrow>
+</msub>
+<mo stretchy="false">(</mo>
+<mi>
+&#x03BB;<!-- λ -->
+</mi>
+<mo stretchy="false">)</mo>
+<mo>=</mo>
+<mfrac>
+<mrow>
+<mn>1</mn>
+<mo>
+&#x2212;<!-- − -->
+</mo>
+<mi>j</mi>
+<msup>
+<mi>
+&#x03BB;<!-- λ -->
+</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+<mo>
+&#x2212;<!-- − -->
+</mo>
+<mn>1</mn>
+</mrow>
+</msup>
+<mo>+</mo>
+<mi>j</mi>
+<msup>
+<mi>
+&#x03BB;<!-- λ -->
+</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mi>j</mi>
+<mo>+</mo>
+<mn>1</mn>
+</mrow>
+</msup>
+<mo>
+&#x2212;<!-- − -->
+</mo>
+<msup>
+<mi>
+&#x03BB;<!-- λ -->
+</mi>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>2</mn>
+<mi>j</mi>
+</mrow>
+</msup>
+</mrow>
+<mrow>
+<mo stretchy="false">(</mo>
+<mn>1</mn>
+<mo>
+&#x2212;<!-- − -->
+</mo>
+<mi>
+&#x03BB;<!-- λ -->
+</mi>
+<msup>
+<mo stretchy="false">)</mo>
+<mrow class="MJX-TeXAtom-ORD">
+<mn>3</mn>
+</mrow>
+</msup>
+</mrow>
+</mfrac>
+</mstyle>
+</math>
+</p>
+</div>
+</div>
+<!-- Read -->
+<div class="w3-container" id="read" style="margin-top:75px">
+<h1 class="w3-xxlarge w3-text-red"><b>Read more.</b></h1>
+<hr style="width:50px;border:5px solid #f04836" class="w3-round">
+<p>If you are intrested in these stuff, here is some links for you :</p>
+<p>For selfish mining <a href="https://arxiv.org/abs/1311.0243"><b>this</b></a> is probably the best source.</p>
+<p>For stubborn mining <a href="https://users.cs.duke.edu/~kartik/papers/5_stubborn_eclipse.pdf"><b>this</b></a> is the best source.</p>
+<p>For mathematics of selfish mining <a href="https://arxiv.org/abs/1805.08281"><b>this</b></a> is the best source.</p>
+<p>For mathematics of stubborn mining <a href="https://arxiv.org/abs/1808.01041"><b>this</b></a> and <a href="https://arxiv.org/abs/1811.09322"><b>this</b></a> are absolutely the best sources.</p>
+</div>
+<!-- Contact -->
+<div class="w3-container" id="contact" style="margin-top:75px">
+<h1 class="w3-xxlarge w3-text-red"><b>Contact.</b></h1>
+<hr style="width:50px;border:5px solid #f04836" class="w3-round">
+<p><b>Do you have any question?</b></p>
+<p>makh.khosravi@gmail.com</p>
+<p>mohammad.khosravi@devinci.fr</p>
+<p>mohammad.khosravi@studenti.unipd.it</p>
+</div>
+<!-- End page content -->
+<div class="footer">
+<a href="https://www.esilv.fr/en/"><img src="ESILV.png" width="60" height="60" alt=""/></a>
+<a href="https://www.unipd.it/en/"><img src="UNIPD.png" width="60" height="60" alt=""/></a>
+<a href="https://www.facebook.com/arman.khosravi" class="fa fa-facebook"></a>
+<a href="https://twitter.com/ArmanKhosravi3" class="fa fa-twitter"></a>
+<a href="https://plus.google.com/108729344513071992508" class="fa fa-google"></a>
+<a href="https://www.youtube.com/channel/UCNDnL0pZlVz-sUQMHTZO61g" class="fa fa-youtube"></a>
+<a href="https://www.instagram.com/zirorooy/?hl=en" class="fa fa-instagram"></a>
+<a href="https://www.pinterest.com/makhosravi/" class="fa fa-pinterest"></a>
+<a href="https://hatscripts.com/addskype/?m.a.khosravi" class="fa fa-skype"></a>
+<a href="mailto:makh.khosravi@yahoo.com" class="fa fa-yahoo"></a>
+</div>
+</div>
+<script>
+// Script to open and close sidebar
+function w3_open() {
+document.getElementById("mySidebar").style.display = "block";
+document.getElementById("myOverlay").style.display = "block";
+}
+
+function w3_close() {
+document.getElementById("mySidebar").style.display = "none";
+document.getElementById("myOverlay").style.display = "none";
+}
+</script>
+<script src="strategies.js"></script>
+<script src="draw.js"></script>
+<script src="profitability.js"></script>
+</body>
+</html>
