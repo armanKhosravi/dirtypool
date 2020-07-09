@@ -11,10 +11,16 @@
 <link rel="stylesheet" href="draw.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
 <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-<script src="https://cdn.babylonjs.com/viewer/babylon.viewer.js"></script>						
+<script src="https://cdn.babylonjs.com/viewer/babylon.viewer.js"></script>
+	
+						
 </head>
 						
 <body>
+	
+	
+	
+
 <!-- Sidebar/menu -->
 <nav class="w3-sidebar w3-red w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold;" id="mySidebar">
 <br>
@@ -364,12 +370,12 @@ can be shorter.
 	
 	<div class="row">
   <div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Expected <span style="color: red">Time Before Profitability of Selfish Strategy</span> based on <a href="https://arxiv.org/abs/1805.08281"><b>On Profitability of Selfish Mining</b></a> for propagation factor of 50% (&gamma;=0.50).</b></p></div>
-  <div class="columnR"><img src="Figures/analytical.jpg" style="width:300px;height:300px;"></div>
+  <div class="columnR"><img src="Figures/analytical.jpg" style="width:100%"></div>
 </div>
 	
 	<div class="row">
   <div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Simulated <span style="color: red">Time Before Profitabilty of Selfish Strategy</span> based on our peer-to-peer network simulation for propagation factor of 50% (&gamma;=0.50).</b></p></div>
-  <div class="columnR"><img src="Figures/simulation_selfish.jpg" style="width:300px;height:300px;"></div>
+  <div class="columnR"><img src="Figures/simulation_selfish.jpg" style="width:100%"></div>
 </div>
 
 
@@ -377,15 +383,15 @@ In the next figures we can see the same pattern in all strategies for different 
 shares and propagation factors of &gamma;=0.15, &gamma;=0.50 and &gamma;=0.85.
 		<div class="row">
   <div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Simulated <span style="color: red">Time Before Profitabilty of All Strategies</span> based on our peer-to-peer network simulation for propagation factor of 15% (&gamma;=0.15).</b></p></div>
-  <div class="columnR"><img src="Figures/simulation_all_15.jpg" style="width:300px;height:300px;"></div>
+  <div class="columnR"><img src="Figures/simulation_all_15.jpg" style="width:100%"></div>
 </div>
 	<div class="row">
   <div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Simulated <span style="color: red">Time Before Profitabilty of All Strategies</span> based on our peer-to-peer network simulation for propagation factor of 50% (&gamma;=0.50).</b></p></div>
-  <div class="columnR"><img src="Figures/simulation_all.jpg" style="width:300px;height:300px;"></div>
+  <div class="columnR"><img src="Figures/simulation_all.jpg" style="width:100%"></div>
 </div>
 	<div class="row">
   <div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Simulated <span style="color: red">Time Before Profitabilty of All Strategies</span> based on our peer-to-peer network simulation for propagation factor of 85% (&gamma;=0.85).</b></p></div>
-  <div class="columnR"><img src="Figures/simulation_all_85.jpg" style="width:300px;height:300px;"></div>
+  <div class="columnR"><img src="Figures/simulation_all_85.jpg" style="width:100%"></div>
 </div>
 <b>
 We can see the same pattern in each strategy which consits of having a decrease in time before profitability by increasing the hashrate share until we reach the minimum time and start to see an increase until we get around 4 weeks as the time before profitability. 
@@ -396,23 +402,56 @@ We can see the same pattern in each strategy which consits of having a decrease 
 	
 	<div class="row">
 	<div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Expected <span style="color: red">Difficulty Adjestment for Selfish Strategy</span> based on <a href="https://arxiv.org/abs/1805.08281"><b>On Profitability of Selfish Mining</b></a> for hashrate shares between 0% to 50% (&alpha;∈[0,0.50]).</b></p></div>
-	<div class="columnR"><img src="Figures/delta_S_analytical.png" style="width:300px;height:300px;"></div>
+	<div class="columnR"><img src="Figures/delta_S_analytical.png" style="width:100%"></div>
 	</div>
 
 	<div class="row">
 	<div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Simulated <span style="color: red">Difficulty Adjestment for Selfish Strategy</span> based on our peer-to-peer network simulation for hashrate shares between 0% to 50% (&alpha;∈[0,0.50]).</b></p></div>
-	<div class="columnR"><img src="Figures/delta_S_sim.png" style="width:300px;height:300px;"></div>
+	<div class="columnR"><img src="Figures/delta_S_sim.png" style="width:100%"></div>
 	</div>
 	
 	<div class="row">
 	<div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Simulated <span style="color: red">Difficulty Adjestment for All Strategies</span> based on our peer-to-peer network simulation for hashrate shares between 0% to 50% (&alpha;∈[0,0.50]).</b></p></div>
-	<div class="columnR"><img src="Figures/delta_all_sim.png" style="width:300px;height:300px;"></div>
+	<div class="columnR"><img src="Figures/delta_all_sim.png" style="width:100%"></div>
 	</div>
 	
 	<p>
 		Based on <a href="https://arxiv.org/abs/1805.08281"><b>On Profitability of Selfish Mining</b></a> the difficulty of a pool containing selfish mining is alwasys between 1 and 2, this is exactly the case in our simulation as can be seen in the previous visualizations.
 	</p>
+	<p>
+		Now we can visualize the minimum time before profitability place on our winner strategy diagrams. This regardless of the value of minimum time before profitability, this way for each value of the hashrate share we can see where the minimum occurs. 
+	</p>
 	
+	<img src="Figures/minHS_simVsExpected.png" style="width:50%"></div>
+	<div class="row">
+	<div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Expected <span style="color: red">Minimum Time Before Profitablity for Selfish strategy</span> based on <a href="https://arxiv.org/abs/1805.08281"><b>On Profitability of Selfish Mining</b></a> for hashrate shares between 0% to 50% (&alpha;∈[0,0.50]).</b></p></div>
+	<div class="columnR"><img src="Figures/minHS.png" style="width:100%"></div>
+	</div>
+	<div class="row">
+	<div class="row">
+	<div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Simulated <span style="color: red">Minimum Time Before Profitablity for Selfish strategy</span> based on our peer-to-peer network simulation for hashrate shares between 0% to 50% (&alpha;∈[0,0.50]).</b></p></div>
+	<div class="columnR"><img src="Figures/minHS_sim.png" style="width:100%"></div>
+	</div>
+	<div class="row">
+	<div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Simulated <span style="color: red">Minimum Time Before Profitablity for Lead strategy</span> based on our peer-to-peer network simulation for hashrate shares between 0% to 50% (&alpha;∈[0,0.50]).</b></p></div>
+	<div class="columnR"><img src="Figures/minHL_sim.png" style="width:100%"></div>
+	</div>
+	<div class="row">
+	<div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Simulated <span style="color: red">Minimum Time Before Profitablity for 2-Trail strategy</span> based on our peer-to-peer network simulation for hashrate shares between 0% to 50% (&alpha;∈[0,0.50]).</b></p></div>
+	<div class="columnR"><img src="Figures/minHT2_sim.png" style="width:100%"></div>
+	</div>
+	<div class="row">
+	<div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Simulated <span style="color: red">Minimum Time Before Profitablity for 3-Trail strategy</span> based on our peer-to-peer network simulation for hashrate shares between 0% to 50% (&alpha;∈[0,0.50]).</b></p></div>
+	<div class="columnR"><img src="Figures/minHT3_sim.png" style="width:100%"></div>
+	</div>
+	<div class="row">
+	<div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Simulated <span style="color: red">Minimum Time Before Profitablity for 4-Trail strategy</span> based on our peer-to-peer network simulation for hashrate shares between 0% to 50% (&alpha;∈[0,0.50]).</b></p></div>
+	<div class="columnR"><img src="Figures/minHT4_sim.png" style="width:100%"></div>
+	</div>
+	<div class="row">
+	<div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Simulated <span style="color: red">Minimum Time Before Profitablity for Equal Fork strategy</span> based on our peer-to-peer network simulation for hashrate shares between 0% to 50% (&alpha;∈[0,0.50]).</b></p></div>
+	<div class="columnR"><img src="Figures/minHE_sim.png" style="width:100%"></div>
+	</div>
 	
 	
 	
