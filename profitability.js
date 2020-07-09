@@ -33,7 +33,16 @@ function simulatedProfits(a, g, b, t, strategy, youPublished, totalPublished, to
     var result = [apparentHashrate, revenueRatio];
     return result;
 }
+function probability(A,L){
+	return	(1-A*Math.pow(L,A-1)+A*Math.pow(L,A+1)-Math.pow(L,2*A)) / (Math.pow(1-L,3));
+}
+function brackets(A,L) {
+	return (1-Math.pow(L,A))/(1-L);
+}
 function theoreticalProfits(a, g, b, t, strategy, totalPublished, initialPoint) {
+	var L = a/(1-a)
+	var p = 1-a;
+	var j;
     // for defining initialPoint later outside this function you have to use: var initialPoint = Math.floor(Math.random() * 2016) + 1;  Returns a random integer between 1 and 2016 (1 and 2016 are included).
     a = parseFloat(a);
     g = parseFloat(g);
@@ -41,50 +50,43 @@ function theoreticalProfits(a, g, b, t, strategy, totalPublished, initialPoint) 
     t = parseFloat(t);
     switch (strategy) {
         case 's': // Selfish Mining Strategy
-            var apparentHashrate = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? a - (1 - g) * (((1 - a) * (1 - a) * a* (1 - a - a)) / (((1 + (1 - a) * a) * (1 - a - a)+(1 - a) * a))) :
+            apparentHashrate = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? a - (1 - g) * (((1 - a) * (1 - a) * a * (1 - a - a)) / (((1 + (1 - a) * a) * (1 - a - a) + (1 - a) * a))) :
                     (a - ((1 - g) * (1 - a) * (1 - a) * a * (1 - a - a)) / ((1 + (1 - a) * a) * (1 - a - a) + (1 - a) * a)) * ((1 - a - a + (1 - a) * a * (1 - a - a) + (1 - a) * a) / ((1 - a) * (1 - a) * a + 1 - a - a));
-            var revenueRatio = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? (a - (1 - g) * (((1 - a) * (1 - a) * a* (1 - a - a)) / (((1 + (1 - a) * a) * (1 - a - a)+(1 - a) * a)))) * b / t : 
-                    ((a - ((1 - g) * (1 - a) * (1 - a) * a * (1 - a - a)) / ((1 + (1 - a) * a) * (1 - a - a) + (1 - a) * a)) * ((1 - a - a + (1 - a) * a * (1 - a - a) + (1 - a) * a) / ((1 - a) * (1 - a) * a + 1 - a - a))) * b / t;
-            break;
+			
+			var revenueRatio = apparentHashrate * b / t;
+			break;
         case 'l': // Lead Mining Strategy
-            var apparentHashrate = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? a - (((1 - a) * a * (1 - a - a) * (1 - g)) / g) * ((1 - (1 - a) * (1 - g) * (2 / (1 + Math.sqrt(1 - 4 * (1 - g) * (1 - a) * a)))) / (1 - a + (1 - a) * a - a)) :
-                    a * ((1 - a + (1 - a) * a - a * a) / (1 - a + (1 - a) * a - a)) - (((1 - a) * a * (1 - a - a) * (1 - g)) / (g)) * ((1 - (1 - a) * (1 - g) * (2 / (1 + Math.sqrt(1 - 4 * (1 - g) * (1 - a) * a)))) / (1 - a + (1 - a) * a - a));
-            var revenueRatio = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? (a - (((1 - a) * a * (1 - a - a) * (1 - g)) / g) * ((1 - (1 - a) * (1 - g) * (2 / (1 + Math.sqrt(1 - 4 * (1 - g) * (1 - a) * a)))) / (1 - a + (1 - a) * a - a))) * b / t :
-                    (a * ((1 - a + (1 - a) * a - a * a) / (1 - a + (1 - a) * a - a)) - (((1 - a) * a * (1 - a - a) * (1 - g)) / (g)) * ((1 - (1 - a) * (1 - g) * (2 / (1 + Math.sqrt(1 - 4 * (1 - g) * (1 - a) * a)))) / (1 - a + (1 - a) * a - a))) * b / t;
-            break;
-        case 't2': // 2-Trail Mining Strategy
+            apparentHashrate = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? a - (((1 - a) * a * (1 - a - a) * (1 - g)) / g) * ((1 - (1 - a) * (1 - g) * (2 / (1 + Math.sqrt(1 - 4 * (1 - g) * (1 - a) * a)))) / (1 - a + (1 - a) * a - a)) :
+			a * ((1 - a + (1 - a) * a - a * a) / (1 - a + (1 - a) * a - a)) - (((1 - a) * a * (1 - a - a) * (1 - g)) / (g)) * ((1 - (1 - a) * (1 - g) * (2 / (1 + Math.sqrt(1 - 4 * (1 - g) * (1 - a) * a)))) / (1 - a + (1 - a) * a - a));
+			
+			revenueRatio = apparentHashrate * b / t;
+			break;
+		case 't2': // 2-Trail Mining Strategy
+            if (a === 0.5) a = 0.49999;
             j = 2;
+            apparentHashrate = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? (a+((1-g)*p*a*(p-a)/((p+p*a-a*a)*brackets(j+1,L)))*((brackets(j-1,L)+1/p*probability(j,L)/brackets(j+1,L))*L*L-(2/(Math.sqrt(1-4*(1-g)*p*a)+p-a)))) / (1+((1-g)*p*a/(p+p*a-a*a))*(j+1)*(brackets(2,L)/brackets(j+1,L)-2/(j+1))) : (a+((1-g)*p*a*(p-a))/((p+p*a-a*a)*brackets(j+1,L))*((brackets(j-1,L)+(1)/(p)*(probability(j,L))/(brackets(j+1,L)))*L*L-(2)/(Math.sqrt(1-4*(1-g)*p*a)+p-a))) / ((p+p*a-a)/(p+p*a-a*a)+((1-g)*p*a)/(p+p*a-a*a)*(j+L)*((1)/(brackets(j+1,L))-(1)/(j+L)));
+			
+			revenueRatio = apparentHashrate * b / t;
+			break;        case 't3': // 3-Trail Mining Strategy
             if (a === 0.5) a = 0.49999;
-            var apparentHashrate = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? (a + (1 - g) * (1 - a) * a * ((1 - a) - a) / ((1 - a) + (1 - a) * a - a * a * (1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a)))) * (((1 - (a / (1 - a)) ** (j - 1)) / (1 - (a / (1 - a))) + 1 / (1 - a) * ((1 - j * (a / (1 - a)) ** (j - 1) + j * (a / (1 - a)) ** (j + 1) - (a / (1 - a)) ** (2 * j)) / (1 - (a / (1 - a))) ** 3) / ((1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a))))) * (a / (1 - a)) * (a / (1 - a)) - 2 / ((1 - 4 * (1 - g) * (1 - a) * a) ** 0.5 + (1 - a) - a))) / (1 + (1 - g) * (1 - a) * a / ((1 - a) + (1 - a) * a - a * a) * (j + 1) * (((1 - (a / (1 - a)) ** 2) / (1 - (a / (1 - a)))) / ((1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a)))) - 2 / (j + 1))):
-                    (a + (1 - g) * (1 - a) * a * ((1 - a) - a) / ((1 - a) + (1 - a) * a - a * a * (1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a)))) * (((1 - (a / (1 - a)) ** (j - 1)) / (1 - (a / (1 - a))) + 1 / (1 - a) * ((1 - j * (a / (1 - a)) ** (j - 1) + j * (a / (1 - a)) ** (j + 1) - (a / (1 - a)) ** (2 * j)) / (1 - (a / (1 - a))) ** 3) / ((1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a))))) * (a / (1 - a)) * (a / (1 - a)) - 2 / ((1 - 4 * (1 - g) * (1 - a) * a) ** 0.5 + (1 - a) - a))) / (((1 - a) + (1 - a) * a - a) / ((1 - a) + (1 - a) * a - a * a) + ((1 - g) * (1 - a) * a) / ((1 - a) + (1 - a) * a - a * a) * (j + (a / (1 - a))) * (1 / ((1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a)))) - 1 / (j + (a / (1 - a)))));
-            var revenueRatio = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? ((a + (1 - g) * (1 - a) * a * ((1 - a) - a) / ((1 - a) + (1 - a) * a - a * a * (1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a)))) * (((1 - (a / (1 - a)) ** (j - 1)) / (1 - (a / (1 - a))) + 1 / (1 - a) * ((1 - j * (a / (1 - a)) ** (j - 1) + j * (a / (1 - a)) ** (j + 1) - (a / (1 - a)) ** (2 * j)) / (1 - (a / (1 - a))) ** 3) / ((1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a))))) * (a / (1 - a)) * (a / (1 - a)) - 2 / ((1 - 4 * (1 - g) * (1 - a) * a) ** 0.5 + (1 - a) - a))) / (1 + (1 - g) * (1 - a) * a / ((1 - a) + (1 - a) * a - a * a) * (j + 1) * (((1 - (a / (1 - a)) ** 2) / (1 - (a / (1 - a)))) / ((1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a)))) - 2 / (j + 1)))) * b / t :
-                    ((a + (1 - g) * (1 - a) * a * ((1 - a) - a) / ((1 - a) + (1 - a) * a - a * a * (1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a)))) * (((1 - (a / (1 - a)) ** (j - 1)) / (1 - (a / (1 - a))) + 1 / (1 - a) * ((1 - j * (a / (1 - a)) ** (j - 1) + j * (a / (1 - a)) ** (j + 1) - (a / (1 - a)) ** (2 * j)) / (1 - (a / (1 - a))) ** 3) / ((1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a))))) * (a / (1 - a)) * (a / (1 - a)) - 2 / ((1 - 4 * (1 - g) * (1 - a) * a) ** 0.5 + (1 - a) - a))) / (((1 - a) + (1 - a) * a - a) / ((1 - a) + (1 - a) * a - a * a) + ((1 - g) * (1 - a) * a) / ((1 - a) + (1 - a) * a - a * a) * (j + (a / (1 - a))) * (1 / ((1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a)))) - 1 / (j + (a / (1 - a)))))) * b / t;
-            break;
-        case 't3': // 3-Trail Mining Strategy
             j = 3;
+            var apparentHashrate = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? (a+((1-g)*p*a*(p-a)/((p+p*a-a*a)*brackets(j+1,L)))*((brackets(j-1,L)+1/p*probability(j,L)/brackets(j+1,L))*L*L-(2/(Math.sqrt(1-4*(1-g)*p*a)+p-a)))) / (1+((1-g)*p*a/(p+p*a-a*a))*(j+1)*(brackets(2,L)/brackets(j+1,L)-2/(j+1))) : (a+((1-g)*p*a*(p-a))/((p+p*a-a*a)*brackets(j+1,L))*((brackets(j-1,L)+(1)/(p)*(probability(j,L))/(brackets(j+1,L)))*L*L-(2)/(Math.sqrt(1-4*(1-g)*p*a)+p-a))) / ((p+p*a-a)/(p+p*a-a*a)+((1-g)*p*a)/(p+p*a-a*a)*(j+L)*((1)/(brackets(j+1,L))-(1)/(j+L)));
+			
+			revenueRatio = apparentHashrate * b / t;
+			break;        case 't4': // 4-Trail Mining Strategy
             if (a === 0.5) a = 0.49999;
-            var apparentHashrate = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? (a + (1 - g) * (1 - a) * a * ((1 - a) - a) / ((1 - a) + (1 - a) * a - a * a * (1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a)))) * (((1 - (a / (1 - a)) ** (j - 1)) / (1 - (a / (1 - a))) + 1 / (1 - a) * ((1 - j * (a / (1 - a)) ** (j - 1) + j * (a / (1 - a)) ** (j + 1) - (a / (1 - a)) ** (2 * j)) / (1 - (a / (1 - a))) ** 3) / ((1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a))))) * (a / (1 - a)) * (a / (1 - a)) - 2 / ((1 - 4 * (1 - g) * (1 - a) * a) ** 0.5 + (1 - a) - a))) / (1 + (1 - g) * (1 - a) * a / ((1 - a) + (1 - a) * a - a * a) * (j + 1) * (((1 - (a / (1 - a)) ** 2) / (1 - (a / (1 - a)))) / ((1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a)))) - 2 / (j + 1))):
-                    (a + (1 - g) * (1 - a) * a * ((1 - a) - a) / ((1 - a) + (1 - a) * a - a * a * (1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a)))) * (((1 - (a / (1 - a)) ** (j - 1)) / (1 - (a / (1 - a))) + 1 / (1 - a) * ((1 - j * (a / (1 - a)) ** (j - 1) + j * (a / (1 - a)) ** (j + 1) - (a / (1 - a)) ** (2 * j)) / (1 - (a / (1 - a))) ** 3) / ((1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a))))) * (a / (1 - a)) * (a / (1 - a)) - 2 / ((1 - 4 * (1 - g) * (1 - a) * a) ** 0.5 + (1 - a) - a))) / (((1 - a) + (1 - a) * a - a) / ((1 - a) + (1 - a) * a - a * a) + ((1 - g) * (1 - a) * a) / ((1 - a) + (1 - a) * a - a * a) * (j + (a / (1 - a))) * (1 / ((1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a)))) - 1 / (j + (a / (1 - a)))));
-            var revenueRatio = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? ((a + (1 - g) * (1 - a) * a * ((1 - a) - a) / ((1 - a) + (1 - a) * a - a * a * (1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a)))) * (((1 - (a / (1 - a)) ** (j - 1)) / (1 - (a / (1 - a))) + 1 / (1 - a) * ((1 - j * (a / (1 - a)) ** (j - 1) + j * (a / (1 - a)) ** (j + 1) - (a / (1 - a)) ** (2 * j)) / (1 - (a / (1 - a))) ** 3) / ((1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a))))) * (a / (1 - a)) * (a / (1 - a)) - 2 / ((1 - 4 * (1 - g) * (1 - a) * a) ** 0.5 + (1 - a) - a))) / (1 + (1 - g) * (1 - a) * a / ((1 - a) + (1 - a) * a - a * a) * (j + 1) * (((1 - (a / (1 - a)) ** 2) / (1 - (a / (1 - a)))) / ((1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a)))) - 2 / (j + 1)))) * b / t :
-                    ((a + (1 - g) * (1 - a) * a * ((1 - a) - a) / ((1 - a) + (1 - a) * a - a * a * (1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a)))) * (((1 - (a / (1 - a)) ** (j - 1)) / (1 - (a / (1 - a))) + 1 / (1 - a) * ((1 - j * (a / (1 - a)) ** (j - 1) + j * (a / (1 - a)) ** (j + 1) - (a / (1 - a)) ** (2 * j)) / (1 - (a / (1 - a))) ** 3) / ((1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a))))) * (a / (1 - a)) * (a / (1 - a)) - 2 / ((1 - 4 * (1 - g) * (1 - a) * a) ** 0.5 + (1 - a) - a))) / (((1 - a) + (1 - a) * a - a) / ((1 - a) + (1 - a) * a - a * a) + ((1 - g) * (1 - a) * a) / ((1 - a) + (1 - a) * a - a * a) * (j + (a / (1 - a))) * (1 / ((1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a)))) - 1 / (j + (a / (1 - a)))))) * b / t;
-            break;
-        case 't4': // 4-Trail Mining Strategy
             j = 4;
-            if (a === 0.5) a = 0.49999;
-            var apparentHashrate = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? (a + (1 - g) * (1 - a) * a * ((1 - a) - a) / ((1 - a) + (1 - a) * a - a * a * (1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a)))) * (((1 - (a / (1 - a)) ** (j - 1)) / (1 - (a / (1 - a))) + 1 / (1 - a) * ((1 - j * (a / (1 - a)) ** (j - 1) + j * (a / (1 - a)) ** (j + 1) - (a / (1 - a)) ** (2 * j)) / (1 - (a / (1 - a))) ** 3) / ((1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a))))) * (a / (1 - a)) * (a / (1 - a)) - 2 / ((1 - 4 * (1 - g) * (1 - a) * a) ** 0.5 + (1 - a) - a))) / (1 + (1 - g) * (1 - a) * a / ((1 - a) + (1 - a) * a - a * a) * (j + 1) * (((1 - (a / (1 - a)) ** 2) / (1 - (a / (1 - a)))) / ((1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a)))) - 2 / (j + 1))):
-                    (a + (1 - g) * (1 - a) * a * ((1 - a) - a) / ((1 - a) + (1 - a) * a - a * a * (1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a)))) * (((1 - (a / (1 - a)) ** (j - 1)) / (1 - (a / (1 - a))) + 1 / (1 - a) * ((1 - j * (a / (1 - a)) ** (j - 1) + j * (a / (1 - a)) ** (j + 1) - (a / (1 - a)) ** (2 * j)) / (1 - (a / (1 - a))) ** 3) / ((1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a))))) * (a / (1 - a)) * (a / (1 - a)) - 2 / ((1 - 4 * (1 - g) * (1 - a) * a) ** 0.5 + (1 - a) - a))) / (((1 - a) + (1 - a) * a - a) / ((1 - a) + (1 - a) * a - a * a) + ((1 - g) * (1 - a) * a) / ((1 - a) + (1 - a) * a - a * a) * (j + (a / (1 - a))) * (1 / ((1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a)))) - 1 / (j + (a / (1 - a)))));
-            var revenueRatio = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? ((a + (1 - g) * (1 - a) * a * ((1 - a) - a) / ((1 - a) + (1 - a) * a - a * a * (1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a)))) * (((1 - (a / (1 - a)) ** (j - 1)) / (1 - (a / (1 - a))) + 1 / (1 - a) * ((1 - j * (a / (1 - a)) ** (j - 1) + j * (a / (1 - a)) ** (j + 1) - (a / (1 - a)) ** (2 * j)) / (1 - (a / (1 - a))) ** 3) / ((1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a))))) * (a / (1 - a)) * (a / (1 - a)) - 2 / ((1 - 4 * (1 - g) * (1 - a) * a) ** 0.5 + (1 - a) - a))) / (1 + (1 - g) * (1 - a) * a / ((1 - a) + (1 - a) * a - a * a) * (j + 1) * (((1 - (a / (1 - a)) ** 2) / (1 - (a / (1 - a)))) / ((1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a)))) - 2 / (j + 1)))) * b / t :
-                    ((a + (1 - g) * (1 - a) * a * ((1 - a) - a) / ((1 - a) + (1 - a) * a - a * a * (1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a)))) * (((1 - (a / (1 - a)) ** (j - 1)) / (1 - (a / (1 - a))) + 1 / (1 - a) * ((1 - j * (a / (1 - a)) ** (j - 1) + j * (a / (1 - a)) ** (j + 1) - (a / (1 - a)) ** (2 * j)) / (1 - (a / (1 - a))) ** 3) / ((1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a))))) * (a / (1 - a)) * (a / (1 - a)) - 2 / ((1 - 4 * (1 - g) * (1 - a) * a) ** 0.5 + (1 - a) - a))) / (((1 - a) + (1 - a) * a - a) / ((1 - a) + (1 - a) * a - a * a) + ((1 - g) * (1 - a) * a) / ((1 - a) + (1 - a) * a - a * a) * (j + (a / (1 - a))) * (1 / ((1 - (a / (1 - a)) ** (j + 1)) / (1 - (a / (1 - a)))) - 1 / (j + (a / (1 - a)))))) * b / t;
-            break;
-        case 'e': // Equal Fork Mining Strategy
-            var apparentHashrate = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? a - ((1 - g) * (1 - a - a) / g) * (1 - (1 - a) * (2 / (1 + Math.sqrt(1 - 4 * (1 - g) * (1 - a) * a)))) :
+            apparentHashrate = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? (a+((1-g)*p*a*(p-a)/((p+p*a-a*a)*brackets(j+1,L)))*((brackets(j-1,L)+1/p*probability(j,L)/brackets(j+1,L))*L*L-(2/(Math.sqrt(1-4*(1-g)*p*a)+p-a)))) / (1+((1-g)*p*a/(p+p*a-a*a))*(j+1)*(brackets(2,L)/brackets(j+1,L)-2/(j+1))) : (a+((1-g)*p*a*(p-a))/((p+p*a-a*a)*brackets(j+1,L))*((brackets(j-1,L)+(1)/(p)*(probability(j,L))/(brackets(j+1,L)))*L*L-(2)/(Math.sqrt(1-4*(1-g)*p*a)+p-a))) / ((p+p*a-a)/(p+p*a-a*a)+((1-g)*p*a)/(p+p*a-a*a)*(j+L)*((1)/(brackets(j+1,L))-(1)/(j+L)));
+
+			revenueRatio = apparentHashrate * b / t;
+			break;case 'e': // Equal Fork Mining Strategy
+            apparentHashrate = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? a-((1-g)/g)*(p-a)*(1-p*(2/(1+Math.sqrt(1-4*(1-g)*p*a)))) :
                     a / (1 - a) - ((1 - g) * (1 - a - a) / (g * (1 - a))) * (1 - (1 - a) * (2 / (1 + Math.sqrt(1 - 4 * (1 - g) * (1 - a) * a))));
-            var revenueRatio = Math.floor((totalPublished + initialPoint) / 2016) < 1 ? (a - ((1 - g) * (1 - a - a) / g) * (1 - (1 - a) * (2 / (1 + Math.sqrt(1 - 4 * (1 - g) * (1 - a) * a))))) * b / t :
-                    (a / (1 - a) - ((1 - g) * (1 - a - a) / (g * (1 - a))) * (1 - (1 - a) * (2 / (1 + Math.sqrt(1 - 4 * (1 - g) * (1 - a) * a))))) * b / t;
-            break;
-        case 'h': // Honest Mining Strategy
-            var apparentHashrate = a;
-            var revenueRatio = a * b / t;
+			
+			revenueRatio = apparentHashrate * b / t;
+			break;        case 'h': // Honest Mining Strategy
+            apparentHashrate = a;
+            revenueRatio = a * b / t;
             break;
     }
     var result = [apparentHashrate, revenueRatio];
