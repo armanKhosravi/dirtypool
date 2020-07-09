@@ -169,10 +169,9 @@ So
 <hr style="width:50px;border:5px solid #f04836" class="w3-round">
 
 <div>
-In this webpage you can easily calculate the profitability for any chosen &alpha; and &gamma; and see which strategy performs better in that specific situation. Now let's do the same for the whole range of &alpha; and &gamma;, this gives us a <b>2-dimentional graph</b> to compare the performance of different strategies. Below you can see the expected results from 
-	study (<a href="https://arxiv.org/abs/1805.08281"><b>On Profitability of Selfish Mining</b></a>) on the left and the results of our simulation on the right.
+In this webpage you can easily calculate the profitability for any chosen &alpha; and &gamma; and see which strategy performs better in that specific situation. Now let's do the same for the whole range of &alpha; and &gamma;, this gives us a <b>2-dimentional graph</b> to compare the performance of different strategies. Below you can see the expected results from analytical study (<a href="https://arxiv.org/abs/1805.08281"><b>On Profitability of Selfish Mining</b></a>) on the left and the results of our simulation on the right.
 <br><video width="100%" autoplay muted loop>
-<source src="/Models/3.mp4" type="video/mp4">
+<source src="Models/3.mp4" type="video/mp4">
 Your browser does not support HTML5 video.
 </video>
 <p>
@@ -180,11 +179,11 @@ Your browser does not support HTML5 video.
 	</p>
 	<p>Study of <b>time before profitability</b> is not the only advantage of a peer-to-peer network simulation, study shows the resaults obtained by such simulations are much more reliable. Here you can see some <b>finitr-state machine</b> simulations and compare the resutls with a <b>peer-to-peer network simulation.</b></p>
 <br><img 
-src="/Figures/compare1.svg" width="100%"/>
+src="Figures/compare1.svg" width="100%"/>
 <br><br><br><br>
 Below you see how a peer-to-peer network simulation can more reliable since the accuracy of the results is not as dependent to the number of runs of the simulation as finite-state machine simulations.
 	<br><br><img 
-src="/Figures/compare2.svg" width="100%"/>
+src="Figures/compare2.svg" width="100%"/>
 	<p class="w3-xlarge w3-text-black" style="margin-top:75px"><b>Let's add another dimension.</b></p>	
 	<p>By considering the <b>Apparent Hashrate</b> as the third dimension we can better understand why there is not a dominant strategy for any choice of &alpha; and &gamma;. To do so for each strategy we consider a surface which for any choice of <b>&alpha;</b> and <b>&gamma;</b> shows the <b>apparent hashrate (&alpha;')</b> of the strategy. Take a look at this visualization to understand better.
 		
@@ -193,7 +192,7 @@ src="/Figures/compare2.svg" width="100%"/>
 		
 		
 <video width="80%" autoplay muted loop id="myVideo2">
-<source src="/Models/2.mp4" type="video/mp4">
+<source src="Models/2.mp4" type="video/mp4">
 Your browser does not support HTML5 video.
 </video>
 		
@@ -205,7 +204,7 @@ Your browser does not support HTML5 video.
 		
 		<br>
 		<video width="100%" autoplay muted loop>
-<source src="/Models/5.mp4" type="video/mp4">
+<source src="Models/5.mp4" type="video/mp4">
 Your browser does not support HTML5 video.
 </video>
 	<div>Now let's take a closer look at the surfaces and how they compete with each other. First we visualize<sup>*</sup> honest and selfish mining surfaces then we combine them toghether to see how they perform against each other.
@@ -231,18 +230,18 @@ Your browser does not support HTML5 video.
 	<div class="row">
   <div class="column">	<p class="w3-large w3-text-black" style="margin-top:75px"><b><span style="color: red">Honest</span> mining Surface.</b></p></div>	
 				
-  <div class="column"><babylon model="/Models/h.glb"></babylon></div>
+  <div class="column"><babylon model="Models/h.glb"></babylon></div>
 	  
 	  
 	  
 </div>
 	<div class="row">
   <div class="column">	<p class="w3-large w3-text-black" style="margin-top:75px"><b><span style="color: red">Selfish</span> mining Surface.</b></p></div>
-  <div class="column"><babylon model="/Models/s.glb"></babylon></div>
+  <div class="column"><babylon model="Models/s.glb"></babylon></div>
 </div>
 	<div class="row">
   <div class="column">	<p class="w3-large w3-text-black" style="margin-top:75px"><b><span style="color: red">Honest</span> & <span style="color: red">Selfish</span> mining against each other.</b></p></div>
-  <div class="column"><babylon model="/Models/hs.glb"></babylon></div>
+  <div class="column"><babylon model="Models/hs.glb"></babylon></div>
 </div>
 	
 
@@ -251,12 +250,12 @@ Your browser does not support HTML5 video.
 
 	<div class="row">
   <div class="column">	<p class="w3-large w3-text-black" style="margin-top:75px"><b><span style="color: red">All the strategies</span> against each other.</b></p></div>
-  <div class="column"><babylon model="/Models/all-analytical.glb"></babylon></div>
+  <div class="column"><babylon model="Models/all-analytical.glb"></babylon></div>
 </div>
 	
 	<div class="row">
   <div class="column">	<p class="w3-large w3-text-black" style="margin-top:75px"><b><span style="color: red">Simulated</span> results.</b></p></div>
-  <div class="column"><babylon model="/Models/all-simulation.glb"></babylon></div>
+  <div class="column"><babylon model="Models/all-simulation.glb"></babylon></div>
 </div>
 	
 	
@@ -280,7 +279,7 @@ presence of a block withholding miner, this is no longer applicable.
 	<p>If we consider the number of difficulty adjustments as the third dimension then we get this visualization.</p>
 	<br>
 	<video width="50%" autoplay muted loop id="myVideo1">
-<source src="/Models/1.mp4" type="video/mp4">
+<source src="Models/1.mp4" type="video/mp4">
 Your browser does not support HTML5 video.
 </video>
 	<p>In the next visualization we see the optimal strategy before and after the difficulty
@@ -296,8 +295,8 @@ of each adjustment.
 	
 	
 	<div class="row">
-  <div class="column"><img src="/Figures/t.svg" height="100%"/></div>
-  <div class="column"><img src="/Figures/s.svg" height="100%"/></div>
+  <div class="column"><img src="Figures/t.svg" height="100%"/></div>
+  <div class="column"><img src="Figures/s.svg" height="100%"/></div>
 </div>
 	
 	
@@ -371,12 +370,12 @@ can be shorter.
 	
 	<div class="row">
   <div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Expected <span style="color: red">Time Before Profitability of Selfish Strategy</span> based on <a href="https://arxiv.org/abs/1805.08281"><b>On Profitability of Selfish Mining</b></a> for propagation factor of 50% (&gamma;=0.50).</b></p></div>
-  <div class="columnR"><img src="Figures/analytical.JPG" style="width:300px;height:300px;"></div>
+  <div class="columnR"><img src="Figures/analytical.jpg" style="width:300px;height:300px;"></div>
 </div>
 	
 	<div class="row">
   <div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Simulated <span style="color: red">Time Before Profitabilty of Selfish Strategy</span> based on our peer-to-peer network simulation for propagation factor of 50% (&gamma;=0.50).</b></p></div>
-  <div class="columnR"><img src="/Figures/simulation_selfish.JPG" style="width:300px;height:300px;"></div>
+  <div class="columnR"><img src="Figures/simulation_selfish.jpg" style="width:300px;height:300px;"></div>
 </div>
 
 
@@ -384,7 +383,7 @@ In the next figures we can see the same pattern in all strategies for different 
 shares and propagation factors of &gamma;=0.15, &gamma;=0.50 and &gamma;=0.85.
 		<div class="row">
   <div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Simulated <span style="color: red">Time Before Profitabilty of All Strategies</span> based on our peer-to-peer network simulation for propagation factor of 15% (&gamma;=0.15).</b></p></div>
-  <div class="columnR"><img src="/Figures/simulation_all_15.jpg" style="width:300px;height:300px;"></div>
+  <div class="columnR"><img src="Figures/simulation_all_15.jpg" style="width:300px;height:300px;"></div>
 </div>
 	<div class="row">
   <div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Simulated <span style="color: red">Time Before Profitabilty of All Strategies</span> based on our peer-to-peer network simulation for propagation factor of 50% (&gamma;=0.50).</b></p></div>
@@ -392,7 +391,7 @@ shares and propagation factors of &gamma;=0.15, &gamma;=0.50 and &gamma;=0.85.
 </div>
 	<div class="row">
   <div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Simulated <span style="color: red">Time Before Profitabilty of All Strategies</span> based on our peer-to-peer network simulation for propagation factor of 85% (&gamma;=0.85).</b></p></div>
-  <div class="columnR"><img src="/Figures/simulation_all_85.jpg" style="width:300px;height:300px;"></div>
+  <div class="columnR"><img src="Figures/simulation_all_85.jpg" style="width:300px;height:300px;"></div>
 </div>
 <b>
 We can see the same pattern in each strategy which consits of having a decrease in time before profitability by increasing the hashrate share until we reach the minimum time and start to see an increase until we get around 4 weeks as the time before profitability. 
@@ -403,17 +402,17 @@ We can see the same pattern in each strategy which consits of having a decrease 
 	
 	<div class="row">
 	<div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Expected <span style="color: red">Difficulty Adjestment for Selfish Strategy</span> based on <a href="https://arxiv.org/abs/1805.08281"><b>On Profitability of Selfish Mining</b></a> for hashrate shares between 0% to 50% (&alpha;∈[0,0.50]).</b></p></div>
-	<div class="columnR"><img src="/Figures/delta_S_analytical.png" style="width:300px;height:300px;"></div>
+	<div class="columnR"><img src="Figures/delta_S_analytical.png" style="width:300px;height:300px;"></div>
 	</div>
 
 	<div class="row">
 	<div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Simulated <span style="color: red">Difficulty Adjestment for Selfish Strategy</span> based on our peer-to-peer network simulation for hashrate shares between 0% to 50% (&alpha;∈[0,0.50]).</b></p></div>
-	<div class="columnR"><img src="/Figures/delta_S_sim.png" style="width:300px;height:300px;"></div>
+	<div class="columnR"><img src="Figures/delta_S_sim.png" style="width:300px;height:300px;"></div>
 	</div>
 	
 	<div class="row">
 	<div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Simulated <span style="color: red">Difficulty Adjestment for All Strategies</span> based on our peer-to-peer network simulation for hashrate shares between 0% to 50% (&alpha;∈[0,0.50]).</b></p></div>
-	<div class="columnR"><img src="/Figures/delta_all_sim.png" style="width:300px;height:300px;"></div>
+	<div class="columnR"><img src="Figures/delta_all_sim.png" style="width:300px;height:300px;"></div>
 	</div>
 	
 	<p>
