@@ -54,7 +54,7 @@
 <!-- Header -->
 <div class="w3-container" style="margin-top:80px">
 <h1 class="w3-xxxlarge" align="center">
-<b>Dirty Pool<br>A full fledged simuilation for selfish mining in Bitcoin</b>
+<b>Dirty Pool<br>A full-fledged simulation for selfish mining in Bitcoin</b>
 </h1>
 </div>
 <!-- Selfish -->
@@ -181,7 +181,7 @@ Your browser does not support HTML5 video.
 <br><img 
 src="Figures/compare1.svg" width="100%"/>
 <br><br><br><br>
-Below you see how a peer-to-peer network simulation can more reliable since the accuracy of the results is not as dependent to the number of runs of the simulation as finite-state machine simulations.
+Below you see how a peer-to-peer network simulation can more reliable since the accuracy of the results is not as dependent on the number of runs of the simulation as finite-state machine simulations.
 	<br><br><img 
 src="Figures/compare2.svg" width="100%"/>
 	<p class="w3-xlarge w3-text-black" style="margin-top:75px"><b>Let's add another dimension.</b></p>	
@@ -245,7 +245,7 @@ Your browser does not support HTML5 video.
 </div>
 	
 
-	<div style="margin-top:75px">Now let's include other strategies as well to see which strategy is the best in which is the worst for the spesific values of &alpha;; and &gamma;. When we combine the surfaces, we see where eachs strategy performs better, also we get a rough idea of how much better the winner strategy performs. Below you can compare all the surafaces together.</div>
+	<div style="margin-top:75px">Now let's include other strategies as well to see which strategy is the best in which is the worst for the specific values of &alpha;; and &gamma;. When we combine the surfaces, we see where each strategy performs better, also we get a rough idea of how much better the winner strategy performs. Below you can compare all the surfaces together.</div>
 
 
 	<div class="row">
@@ -267,7 +267,7 @@ Your browser does not support HTML5 video.
 property of a network including a block withholding strategy; no strategy is
 more profitable than the honest strategy before a difficulty adjustment. This
 means there would be no benefit of adopting a block withholding strategy in
-short term, no matter how high is your hashrate share or propagation factor,
+short term no matter how high is your hashrate share or propagation factor,
 since the attacker has to wait for the difficulty adjustment to start its profit.
 Apparently, the block withholding strategies exploit a flaw in the difficulty
 adjustment formula since the parameter used to update the mining difficulty
@@ -284,8 +284,8 @@ Your browser does not support HTML5 video.
 </video>
 	<p>In the next visualization we see the optimal strategy before and after the difficulty
 adjustment, based on analytical results of <a href="https://arxiv.org/abs/1805.08281"><b>On Profitability of Selfish Mining</b></a> on the left, which shows these strategies can only become profitable after the difficulty adjustment,
-otherwise, the honest mining will remain the optimal strategy.
-Now let’s compare that with the results obtained by our peer-to-peer simulation. Yoy see on the right we included the exact diagram of our simulated results which you see earlier but this time in different sections of increasing mined blocks, specifically each section is exactly one
+otherwise, honest mining will remain the optimal strategy.
+Now let’s compare that with the results obtained by our peer-to-peer simulation. You see on the right we included the exact diagram of our simulated results which you see earlier but this time in different sections of increasing mined blocks, specifically each section is exactly one
 block behind the next difficulty adjustment to demonstrate the full impact
 of each adjustment.
 </p>
@@ -320,23 +320,23 @@ of each adjustment.
 <h1 class="w3-xxlarge w3-text-red"><b>Pre&ndash;Profitability Period.</b></h1>
 <hr style="width:50px;border:5px solid #f04836" class="w3-round">
 <p>
-After finding the winner strategy in the previous section, it's very important to realize which strategy leads to profit in a shorter time period. Time before profit or pre-profitibily period is the minimum time for a strategy such that the number of blocks mined by the selfish miner in the official blockchain would be greater than the average number of blocks mined by the miner if they chose to mine honestly from the beginning. You can read more about this in <a href="https://arxiv.org/abs/1805.08281"><b>On Profitability of Selfish Mining</b></a>.
+After finding the winner strategy in the previous section, it's very important to realize which strategy leads to profit in a shorter time period. The time before profit or pre-profitability period is the minimum time for a strategy such that the number of blocks mined by the selfish miner in the official blockchain would be greater than the average number of blocks mined by the miner if they chose to mine honestly from the beginning. You can read more about this in <a href="https://arxiv.org/abs/1805.08281"><b>On Profitability of Selfish Mining</b></a>.
 </p>
 <p>
 Now let's compare the simulation results<sup>*</sup>  with the findings of the <a href="https://arxiv.org/abs/1805.08281"><b>On Profitability of Selfish Mining</b></a> specially the part related to time before profit.
 </p>
 <p>
-<sup>*</sup> The folowing results come from another more sophisticated simulation that the one you find on this webpage.
+<sup>*</sup> The following results come from another more sophisticated simulation that the one you find on this webpage.
 </p>
 <p>
 The minimum time in which the attacker becomes profitable has been studied in
 <a href="https://arxiv.org/abs/1805.08281"><b> On Profitability of Selfish Mining</b></a> for the first time. It means the duration of time in which the attacker
-overcomes the honest miners. Such an analysis of time, was not possible
+overcomes the honest miners. Such an analysis of time was not possible
 using only Markov models. The authors used their new approach to model
 the duration of the attack cycles and consequently they could compute that
 how long it would take for the selfish mining strategy to become profitable,
 as the previously proved such a block withholding strategy is not profitable
-at the beginning before any difficulty change.
+at the beginning before any difficulty changes.
 </p>
 <p>
 Below you can see if we consider γ = 0.50 and compute the time after which the selfish mining
@@ -357,7 +357,7 @@ fifty percent, there would be an optimum point for hashrate share of a selfish
 miner between twenty-five and fifty percent hashrate share which leads to a
 duration of fewer than four weeks.
 </p>
-On the other hand in the second figure which is based on the results of our simulation we can see the
+On the other hand in the second figure which is based on the results of our simulation, we can see the
 same pattern. Specifically, the minimum pre-profitability period occurs at α ≈ 0.42 in around two weeks and two days. In general, the pre-profitability period in the simulation is a little bit less than expected
 analytical results of <a href="https://arxiv.org/abs/1805.08281"><b> On Profitability of Selfish Mining</b></a>. This could be the result of the fact that
 the performance of the selfish mining strategy in action in terms of apparent
@@ -379,7 +379,7 @@ can be shorter.
 </div>
 
 
-In the next figures we can see the same pattern in all strategies for different hashrate
+In the next figures, we can see the same pattern in all strategies for different hashrate
 shares and propagation factors of &gamma;=0.15, &gamma;=0.50 and &gamma;=0.85.
 		<div class="row">
   <div class="columnL"><p class="w3-large w3-text-black" style="margin-top:75px"><b>Simulated <span style="color: red">Time Before Profitabilty of All Strategies</span> based on our peer-to-peer network simulation for propagation factor of 15% (&gamma;=0.15).</b></p></div>
