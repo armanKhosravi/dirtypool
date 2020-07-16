@@ -1,5 +1,3 @@
-
-
 /*
  function lead1(alpha, gamma, attempts) {
  var state = 0;
@@ -287,10 +285,6 @@
 
 
 
-
-
-
-
 /*  to acheive more consistent P.
     var check = (selfishTheory[1]-0.05<selfishSim[1] && selfishSim[1]<selfishTheory[1]+0.05)? true:false;
     var check = (leadTheory[1]-0.05<leadSim[1] && leadSim[1]<leadTheory[1]+0.05)? true:false;
@@ -381,8 +375,8 @@
      document.getElementById("t163").innerHTML = (100 * leadTheory[1] / honestTheory[1] - 100).toFixed(2) >= 0 ? (100 * leadTheory[1] / honestTheory[1] - 100).toFixed(2) + ' % More Than Being Honest' : (100 - 100 * leadTheory[1] / honestTheory[1]).toFixed(2) + ' % Less Than Being Honest';
      document.getElementById("t164").innerHTML = (100 * equalForkTheory[1] / honestTheory[1] - 100).toFixed(2) >= 0 ? (100 * equalForkTheory[1] / honestTheory[1] - 100).toFixed(2) + ' % More Than Being Honest' : (100 - 100 * equalForkTheory[1] / honestTheory[1]).toFixed(2) + ' % Less Than Being Honest'; // or better? equalForkTheory[1] + ' (' + 100*equalForkTheory[1] + ' % of the pool)'
      */
-    
-    /*cell = {t11:honestStats[0], t12:selfishStats[0], t13:leadStats[0], t14:equalForkStats[0],
+
+/*cell = {t11:honestStats[0], t12:selfishStats[0], t13:leadStats[0], t14:equalForkStats[0],
             t21:honestStats[1], t22:selfishStats[1], t23:leadStats[1], t24:equalForkStats[1],
             t31:honestStats[2], t32:selfishStats[2], t33:leadStats[2], t34:equalForkStats[2],
             t41:honestStats[3], t42:selfishStats[3], t43:leadStats[3], t44:equalForkStats[3],
